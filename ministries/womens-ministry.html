@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Women's Ministry — Living Word Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:   #FF4D00;
+      --gold:   #FFB800;
+      --rose:   #E879A0;
+      --rose2:  #A8336A;
+      --deep:   #0A0A1A;
+      --card:   #13132A;
+      --card2:  #1a0012;
+      --text:   #F0F0FF;
+      --muted:  #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50%  0%,  rgba(232,121,160,0.32) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80%  80%, rgba(168,51,106,0.2)   0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 10%  65%, rgba(232,121,160,0.12) 0%, transparent 50%),
+        var(--deep);
+    }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, #A8336A, #E879A0);
+      border-radius: 2px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(65px); opacity: 0.28;
+      animation: floatOrb 9s ease-in-out infinite;
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(28px,-28px) scale(1.07); }
+    }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--rose); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    /* Leader cards */
+    .leader-card {
+      background: linear-gradient(135deg, #1a0012, #2e0020);
+      border: 1px solid rgba(232,121,160,0.22);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    }
+    .leader-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(232,121,160,0.2);
+    }
+    .leader-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 1rem 1rem 0 0; }
+
+    /* Feature cards */
+    .feature-card {
+      background: rgba(232,121,160,0.06);
+      border: 1px solid rgba(232,121,160,0.18);
+    }
+
+    /* Gallery */
+    .gallery-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 1rem; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+    .gallery-item { position: relative; overflow: hidden; border-radius: 1rem; border: 1px solid rgba(232,121,160,0.15); }
+    .gallery-item:hover .gallery-img { transform: scale(1.05); }
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,0,18,0.75) 0%, transparent 60%); mix-blend-mode: multiply; }
+
+    /* Fade up */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.12s; }
+    .delay-2 { transition-delay: 0.22s; }
+    .delay-3 { transition-delay: 0.32s; }
+    .delay-4 { transition-delay: 0.42s; }
+
+    .section-card { background: var(--card); }
+    .section-deep { background: var(--deep); }
+
+    .btn-rose {
+      background: linear-gradient(135deg, #A8336A, #E879A0);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 24px rgba(232,121,160,0.38), 0 1px 4px rgba(0,0,0,0.4);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-rose:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(232,121,160,0.48); }
+    .btn-rose:active { transform: scale(0.98); }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.92);border-bottom:1px solid rgba(232,121,160,0.14);backdrop-filter:blur(16px)">
+    <a href="../index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-xl sm:text-2xl flex-shrink-0">🌸</span>
+      <span class="font-display font-bold text-sm sm:text-base truncate" style="color:var(--text)">Women's Ministry</span>
+    </div>
+    <a href="../index.html#connect" class="btn-rose px-4 sm:px-5 py-2 text-xs sm:text-sm hidden sm:inline-flex">Get Involved</a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-bg grain relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
+    <div class="orb w-96 h-96 -top-20 -left-20" style="background:#A8336A"></div>
+    <div class="orb w-72 h-72 bottom-10 right-0 opacity-20" style="background:#E879A0;animation-delay:3.5s"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <div class="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 fade-up delay-1"
+           style="background:rgba(232,121,160,0.15);color:var(--rose)">Women's Ministry · All Women Welcome</div>
+      <h1 class="font-display font-bold mb-6 fade-up delay-2"
+          style="font-size:clamp(2.8rem,7vw,5.5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Women's<br/>
+        <span style="color:var(--rose)">Ministry</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto font-light leading-[1.75] fade-up delay-3" style="color:var(--muted)">
+        A place for women of all walks of life to gather, connect, and grow together in faith. Throughout the year, we come together for events, fellowship, and the kind of sisterhood that only God can build.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-10 fade-up delay-4">
+        <div class="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 rounded-2xl" style="background:rgba(232,121,160,0.1);border:1px solid rgba(232,121,160,0.22)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Periodic Events Throughout the Year</span>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 rounded-2xl" style="background:rgba(232,121,160,0.1);border:1px solid rgba(232,121,160,0.22)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">All Women Welcome</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="section-card py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="fade-up">
+          <div class="fire-divider mb-5"></div>
+          <p class="font-semibold uppercase tracking-widest text-sm mb-3" style="color:var(--rose)">Who We Are</p>
+          <h2 class="font-display font-bold mb-5" style="font-size:clamp(2rem,4vw,3rem);letter-spacing:-0.03em;color:var(--text)">
+            Women Rooted in Faith,<br/>Walking Together
+          </h2>
+          <p class="text-base leading-[1.8] mb-4 font-light" style="color:var(--muted)">
+            Our Women's Ministry is open to every woman at Living Word — no matter where you are in your walk with God, what season of life you're in, or how long you've been coming to church.
+          </p>
+          <p class="text-base leading-[1.8] font-light" style="color:var(--muted)">
+            We gather throughout the year for events designed to encourage, equip, and connect. From intimate dinners to larger celebrations, each gathering is a chance to deepen friendships, grow in the Word, and be reminded that you are not walking this road alone.
+          </p>
+        </div>
+        <div class="fade-up delay-1 relative">
+          <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(232,121,160,0.2)">
+            <img src="https://placehold.co/600x420/1a0012/E879A0?text=Women%27s+Ministry" alt="Women's Ministry" class="w-full object-cover" />
+          </div>
+          <div class="absolute -bottom-4 -right-4 rounded-2xl px-5 py-4 text-center hidden md:block"
+               style="background:var(--card2);border:1px solid rgba(232,121,160,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.6)">
+            <div class="text-3xl leading-none mb-1">🌸</div>
+            <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:var(--muted)">All Are Welcome</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHAT TO EXPECT ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--rose)">What to Expect</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          More Than an Event
+        </h2>
+        <p class="text-base max-w-lg mx-auto mt-4 font-light fade-up delay-2" style="color:var(--muted)">
+          Every gathering is intentionally designed to nourish the whole woman — spirit, soul, and relationships.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="feature-card rounded-2xl p-5 sm:p-7 text-center fade-up">
+          <div class="text-3xl mb-4">📖</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--text)">Word & Devotion</h3>
+          <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Scripture-centered teaching that speaks directly to the heart of where women are today.</p>
+        </div>
+        <div class="feature-card rounded-2xl p-7 text-center fade-up delay-1">
+          <div class="text-3xl mb-4">🤝</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--text)">Real Sisterhood</h3>
+          <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Authentic friendships built through shared experiences, honest conversations, and genuine care.</p>
+        </div>
+        <div class="feature-card rounded-2xl p-7 text-center fade-up delay-2">
+          <div class="text-3xl mb-4">🙏</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--text)">Prayer & Ministry</h3>
+          <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Space to bring your burdens, receive prayer, and minister to the women around you.</p>
+        </div>
+        <div class="feature-card rounded-2xl p-7 text-center fade-up delay-3">
+          <div class="text-3xl mb-4">🎉</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--text)">Celebration</h3>
+          <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Joy-filled events that celebrate the women of Living Word and the season God has them in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LEADERS ==================== -->
+  <section class="section-card py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--rose)">Meet the Team</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Ministry Leaders
+        </h2>
+        <p class="text-base max-w-lg mx-auto mt-4 font-light fade-up delay-2" style="color:var(--muted)">
+          Women who lead with love, serve with humility, and make every gathering feel like home.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="leader-card rounded-2xl overflow-hidden fade-up">
+          <div class="relative">
+            <img src="https://placehold.co/400x400/1a0012/E879A0?text=Leader+Photo" alt="Leader" class="leader-img" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,0,18,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--rose)">Ministry Director</div>
+            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Leader Name</h3>
+            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Passionate about seeing every woman at Living Word feel seen, valued, and deeply rooted in her identity in Christ.</p>
+          </div>
+        </div>
+
+        <div class="leader-card rounded-2xl overflow-hidden fade-up delay-1">
+          <div class="relative">
+            <img src="https://placehold.co/400x400/1a0012/E879A0?text=Leader+Photo" alt="Leader" class="leader-img" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,0,18,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--rose)">Events Coordinator</div>
+            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Leader Name</h3>
+            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Crafting meaningful gatherings throughout the year that bring women together and leave them refreshed and encouraged.</p>
+          </div>
+        </div>
+
+        <div class="leader-card rounded-2xl overflow-hidden fade-up delay-2">
+          <div class="relative">
+            <img src="https://placehold.co/400x400/1a0012/E879A0?text=Leader+Photo" alt="Leader" class="leader-img" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,0,18,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--rose)">Discipleship Lead</div>
+            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Leader Name</h3>
+            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Walking alongside women in their personal growth — through prayer, Scripture, and intentional one-on-one connection.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GALLERY ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--rose)">Ministry in Action</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Life Together
+        </h2>
+        <p class="text-base max-w-lg mx-auto mt-4 font-light fade-up delay-2" style="color:var(--muted)">
+          A glimpse into the events, fellowship, and moments that make Women's Ministry what it is.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="gallery-item fade-up">
+          <img src="https://placehold.co/600x450/1a0012/E879A0?text=Women%27s+Gathering" alt="Gathering" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Annual Gathering</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-1">
+          <img src="https://placehold.co/600x450/1a0012/E879A0?text=Prayer+%26+Worship" alt="Prayer" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Prayer & Worship</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-2">
+          <img src="https://placehold.co/600x450/1a0012/E879A0?text=Fellowship+Dinner" alt="Dinner" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Fellowship Dinner</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-1">
+          <img src="https://placehold.co/600x450/1a0012/E879A0?text=Bible+Study" alt="Bible Study" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Bible Study</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-2">
+          <img src="https://placehold.co/600x450/1a0012/E879A0?text=Community+Outreach" alt="Outreach" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Community Outreach</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-3">
+          <img src="https://placehold.co/600x450/1a0012/E879A0?text=Special+Event" alt="Special Event" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Special Events</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="section-card py-20 md:py-24 text-center">
+    <div class="max-w-2xl mx-auto px-6">
+      <span class="text-5xl block mb-6 fade-up">🌸</span>
+      <h2 class="font-display font-bold mb-4 fade-up delay-1" style="font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.03em;color:var(--text)">
+        You Belong Here
+      </h2>
+      <p class="text-base font-light leading-[1.8] mb-8 fade-up delay-2" style="color:var(--muted)">
+        No matter your story, your season, or where you're at in your faith — there is a place for you in Women's Ministry. We'd love to meet you.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="../index.html#connect" class="btn-rose px-8 py-4 text-base inline-flex items-center gap-2">
+          Get Connected
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-colors duration-200"
+           style="background:rgba(232,121,160,0.1);border:1px solid rgba(232,121,160,0.24);color:var(--rose)"
+           onmouseover="this.style.background='rgba(232,121,160,0.18)'" onmouseout="this.style.background='rgba(232,121,160,0.1)'">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="py-8 text-center" style="background:var(--deep);border-top:1px solid rgba(232,121,160,0.12)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2025 Living Word Church · Adairville, Kentucky ·
+      <a href="../index.html" style="color:var(--rose)" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">livingwordky.com</a>
+    </p>
+  </footer>
+
+  <script>
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Children's Church — Living Word Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:   #FF4D00;
+      --gold:   #FFB800;
+      --sky:    #00C2FF;
+      --accent: #00C2FF;
+      --accent2:#0077B6;
+      --deep:   #0A0A1A;
+      --card:   #13132A;
+      --card2:  #001224;
+      --text:   #F0F0FF;
+      --muted:  #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%,  rgba(0,194,255,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,119,182,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 10% 60%, rgba(0,194,255,0.15) 0%, transparent 50%),
+        var(--deep);
+    }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, var(--sky), #0077B6);
+      border-radius: 2px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); opacity: 0.3;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(30px,-30px) scale(1.08); }
+    }
+
+    /* Nav */
+    .nav-link { color: var(--muted); transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--sky); }
+
+    /* Leader cards */
+    .leader-card {
+      background: linear-gradient(135deg, #001224, #003060);
+      border: 1px solid rgba(0,194,255,0.25);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    }
+    .leader-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,194,255,0.2);
+    }
+    .leader-img {
+      width: 100%; aspect-ratio: 1/1; object-fit: cover;
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    /* Event cards */
+    .event-card {
+      background: rgba(0,194,255,0.06);
+      border: 1px solid rgba(0,194,255,0.2);
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .event-card:hover {
+      background: rgba(0,194,255,0.12);
+      border-color: rgba(0,194,255,0.4);
+    }
+
+    /* Gallery */
+    .gallery-img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: 1rem;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .gallery-item {
+      position: relative; overflow: hidden; border-radius: 1rem;
+      border: 1px solid rgba(0,194,255,0.15);
+    }
+    .gallery-item:hover .gallery-img { transform: scale(1.05); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,10,30,0.7) 0%, transparent 60%);
+      mix-blend-mode: multiply;
+    }
+
+    /* Fade up */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.12s; }
+    .delay-2 { transition-delay: 0.22s; }
+    .delay-3 { transition-delay: 0.32s; }
+    .delay-4 { transition-delay: 0.42s; }
+
+    /* Back button */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--sky); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    /* Section */
+    .section-card { background: var(--card); }
+    .section-deep { background: var(--deep); }
+
+    /* Btn */
+    .btn-sky {
+      background: linear-gradient(135deg, #00C2FF, #0077B6);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 24px rgba(0,194,255,0.35), 0 1px 4px rgba(0,0,0,0.4);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-sky:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(0,194,255,0.45); }
+    .btn-sky:active { transform: scale(0.98); }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.92);border-bottom:1px solid rgba(0,194,255,0.12);backdrop-filter:blur(16px)">
+    <a href="../index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-xl sm:text-2xl flex-shrink-0">📖</span>
+      <span class="font-display font-bold text-sm sm:text-base truncate" style="color:var(--text)">Children's Church</span>
+    </div>
+    <a href="../index.html#connect" class="btn-sky px-4 sm:px-5 py-2 text-xs sm:text-sm hidden sm:inline-flex">Get Involved</a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-bg grain relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
+    <div class="orb w-96 h-96 -top-20 -left-20" style="background:#00C2FF"></div>
+    <div class="orb w-64 h-64 bottom-10 right-10 opacity-20" style="background:#0077B6;animation-delay:3s"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <div class="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 fade-up delay-1"
+           style="background:rgba(0,194,255,0.15);color:var(--sky)">Children's Ministry · Ages 0–11</div>
+      <h1 class="font-display font-bold mb-6 fade-up delay-2"
+          style="font-size:clamp(2.8rem,7vw,5.5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Children's<br/>
+        <span style="color:var(--sky)">Church</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto font-light leading-[1.75] fade-up delay-3" style="color:var(--muted)">
+        A safe, fun, and faith-building environment where the youngest members discover God's love through engaging lessons, worship, and activities built just for them.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-10 fade-up delay-4">
+        <div class="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 rounded-2xl" style="background:rgba(0,194,255,0.1);border:1px solid rgba(0,194,255,0.2)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Sundays · 10:30 AM</span>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 rounded-2xl" style="background:rgba(0,194,255,0.1);border:1px solid rgba(0,194,255,0.2)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Wednesdays · 6:00 PM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="section-card py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="fade-up">
+          <div class="fire-divider mb-5"></div>
+          <p class="font-semibold uppercase tracking-widest text-sm mb-3" style="color:var(--sky)">Who We Are</p>
+          <h2 class="font-display font-bold mb-5" style="font-size:clamp(2rem,4vw,3rem);letter-spacing:-0.03em;color:var(--text)">
+            Growing Little Lights<br/>for God
+          </h2>
+          <p class="text-base leading-[1.8] mb-4 font-light" style="color:var(--muted)">
+            Children's Church at Living Word is more than just childcare during the service — it's a dynamic, age-appropriate worship experience designed to plant deep roots of faith in every child.
+          </p>
+          <p class="text-base leading-[1.8] font-light" style="color:var(--muted)">
+            From nursery through 5th grade, our dedicated leaders create an atmosphere where kids feel known, loved, and excited to encounter God. Every Sunday and Wednesday is a new adventure in faith.
+          </p>
+        </div>
+        <div class="fade-up delay-1 relative">
+          <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(0,194,255,0.2)">
+            <img src="https://placehold.co/600x420/001224/00C2FF?text=Children%27s+Church" alt="Children's Church" class="w-full object-cover" />
+            <div style="background:linear-gradient(to top,rgba(0,18,36,0.6) 0%,transparent 60%);position:absolute;inset:0;border-radius:1rem"></div>
+          </div>
+          <div class="absolute -bottom-4 -right-4 rounded-2xl px-5 py-4 text-center hidden md:block"
+               style="background:var(--card2);border:1px solid rgba(0,194,255,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.6)">
+            <div class="font-display font-bold text-3xl leading-none" style="color:var(--sky)">0–11</div>
+            <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:var(--muted)">Ages Served</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LEADERS ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--sky)">Meet the Pastors</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Your Children's Church Leaders
+        </h2>
+      </div>
+
+      <!-- Pastor card -->
+      <div class="rounded-3xl overflow-hidden fade-up delay-2"
+           style="background:linear-gradient(135deg,#001224,#003060);border:1px solid rgba(0,194,255,0.25);box-shadow:0 24px 80px rgba(0,0,0,0.5)">
+        <div class="grid md:grid-cols-2">
+
+          <!-- Photo -->
+          <div class="relative" style="min-height:380px">
+            <img src="../images/pastors/pastor-phil-andrea-family-2.jpg"
+                 alt="Pastor Phil & Andrea Scott with family"
+                 class="w-full h-full object-cover object-top" style="min-height:380px" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(0,18,36,0.88))"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,18,36,0.5) 0%,transparent 40%)"></div>
+            <div class="absolute top-5 left-5">
+              <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+                    style="background:rgba(0,194,255,0.18);border:1px solid rgba(0,194,255,0.35);color:var(--sky)">
+                Children's Church Pastor
+              </span>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="p-7 sm:p-10 md:p-12 flex flex-col justify-center">
+            <div class="mb-6" style="width:40px;height:3px;background:linear-gradient(90deg,var(--sky),#0077B6);border-radius:2px"></div>
+
+            <h3 class="font-display font-bold mb-1"
+                style="font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-0.02em;color:var(--text);line-height:1.1">
+              Pastor
+            </h3>
+            <h3 class="font-display font-bold mb-5"
+                style="font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-0.02em;color:var(--text);line-height:1.1">
+              Andrea Scott
+            </h3>
+
+            <p class="text-sm leading-[1.85] mb-4 font-light" style="color:var(--muted)">
+              Pastor Andrea Scott has a deep heart for children and families. She believes that faith planted early grows deep — and she has built Children's Church to be a place where every child feels safe, seen, and excited about God.
+            </p>
+            <p class="text-sm leading-[1.85] mb-8 font-light" style="color:var(--muted)">
+              From nursery through 5th grade, her team creates a joyful, Spirit-filled environment where kids don't just learn about Jesus — they encounter Him.
+            </p>
+
+            <a href="../index.html#connect"
+               class="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold"
+               style="background:linear-gradient(135deg,#00C2FF,#0077B6);color:#fff;box-shadow:0 4px 20px rgba(0,194,255,0.35);transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.2s ease"
+               onmouseover="this.style.transform='translateY(-2px) scale(1.03)';this.style.boxShadow='0 8px 30px rgba(0,194,255,0.5)'"
+               onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(0,194,255,0.35)'">
+              Get Connected
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GALLERY ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--sky)">Ministry in Action</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Moments of Faith
+        </h2>
+        <p class="text-base max-w-lg mx-auto mt-4 font-light fade-up delay-2" style="color:var(--muted)">
+          Every week is a new memory made. Here's a glimpse into what Children's Church looks like.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="gallery-item fade-up">
+          <img src="https://placehold.co/600x450/001224/00C2FF?text=Kids+Worship" alt="Kids Worship" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Sunday Worship</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-1">
+          <img src="https://placehold.co/600x450/001224/00C2FF?text=Bible+Lesson" alt="Bible Lesson" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Bible Time</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-2">
+          <img src="https://placehold.co/600x450/001224/00C2FF?text=Arts+%26+Crafts" alt="Arts and Crafts" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Arts & Crafts</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-1">
+          <img src="https://placehold.co/600x450/001224/00C2FF?text=Group+Activity" alt="Group Activity" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Group Time</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-2">
+          <img src="https://placehold.co/600x450/001224/00C2FF?text=Prayer+%26+Ministry" alt="Prayer Time" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Prayer Time</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-3">
+          <img src="https://placehold.co/600x450/001224/00C2FF?text=Special+Events" alt="Special Events" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Special Events</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="section-card py-20 md:py-24 text-center">
+    <div class="max-w-2xl mx-auto px-6">
+      <span class="text-5xl block mb-6 fade-up">📖</span>
+      <h2 class="font-display font-bold mb-4 fade-up delay-1" style="font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.03em;color:var(--text)">
+        Ready to Bring Your Kids?
+      </h2>
+      <p class="text-base font-light leading-[1.8] mb-8 fade-up delay-2" style="color:var(--muted)">
+        We'd love to meet your family. Join us this Sunday at 10:30 AM — your kids will leave with big smiles and bigger faith.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="../index.html#connect" class="btn-sky px-8 py-4 text-base inline-flex items-center gap-2">
+          Plan Your Visit
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-colors duration-200"
+           style="background:rgba(0,194,255,0.1);border:1px solid rgba(0,194,255,0.25);color:var(--sky)"
+           onmouseover="this.style.background='rgba(0,194,255,0.18)'" onmouseout="this.style.background='rgba(0,194,255,0.1)'">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="py-8 text-center" style="background:var(--deep);border-top:1px solid rgba(0,194,255,0.12)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2025 Living Word Church · Adairville, Kentucky ·
+      <a href="../index.html" style="color:var(--sky)" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">livingwordky.com</a>
+    </p>
+  </footer>
+
+  <script>
+    // Fade-up on scroll
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

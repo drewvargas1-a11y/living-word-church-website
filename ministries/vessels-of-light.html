@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vessels of Light — Living Word Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:    #FF4D00;
+      --gold:    #FFB800;
+      --amber:   #F0A070;
+      --amber2:  #C8663A;
+      --deep:    #0A0A1A;
+      --card:    #13132A;
+      --card2:   #180b02;
+      --text:    #F0F0FF;
+      --muted:   #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50%  0%,  rgba(240,160,112,0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80%  80%, rgba(200,102,58,0.18)  0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 10%  65%, rgba(240,160,112,0.12) 0%, transparent 50%),
+        var(--deep);
+    }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, #C8663A, #F0A070);
+      border-radius: 2px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(65px); opacity: 0.28;
+      animation: floatOrb 9s ease-in-out infinite;
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(28px,-28px) scale(1.07); }
+    }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--amber); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    /* Leader cards */
+    .leader-card {
+      background: linear-gradient(135deg, #180b02, #2e1605);
+      border: 1px solid rgba(240,160,112,0.22);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    }
+    .leader-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(240,160,112,0.18);
+    }
+    .leader-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 1rem 1rem 0 0; }
+
+    /* Gallery */
+    .gallery-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 1rem; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+    .gallery-item { position: relative; overflow: hidden; border-radius: 1rem; border: 1px solid rgba(240,160,112,0.15); }
+    .gallery-item:hover .gallery-img { transform: scale(1.05); }
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(24,11,2,0.75) 0%, transparent 60%); mix-blend-mode: multiply; }
+
+    /* Fade up */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.12s; }
+    .delay-2 { transition-delay: 0.22s; }
+    .delay-3 { transition-delay: 0.32s; }
+    .delay-4 { transition-delay: 0.42s; }
+
+    .section-card { background: var(--card); }
+    .section-deep { background: var(--deep); }
+
+    .btn-amber {
+      background: linear-gradient(135deg, #C8663A, #F0A070);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 24px rgba(240,160,112,0.35), 0 1px 4px rgba(0,0,0,0.4);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-amber:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(240,160,112,0.45); }
+    .btn-amber:active { transform: scale(0.98); }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.92);border-bottom:1px solid rgba(240,160,112,0.14);backdrop-filter:blur(16px)">
+    <a href="../index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-xl sm:text-2xl flex-shrink-0">🕯️</span>
+      <span class="font-display font-bold text-sm sm:text-base truncate" style="color:var(--text)">Vessels of Light</span>
+    </div>
+    <a href="../index.html#connect" class="btn-amber px-4 sm:px-5 py-2 text-xs sm:text-sm hidden sm:inline-flex">Get Involved</a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-bg grain relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
+    <div class="orb w-96 h-96 -top-20 -left-20" style="background:#C8663A"></div>
+    <div class="orb w-64 h-64 bottom-10 right-10 opacity-18" style="background:#F0A070;animation-delay:3.5s"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <div class="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 fade-up delay-1"
+           style="background:rgba(240,160,112,0.14);color:var(--amber)">Elders Ministry</div>
+      <h1 class="font-display font-bold mb-6 fade-up delay-2"
+          style="font-size:clamp(2.8rem,7vw,5.5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Vessels of<br/>
+        <span style="color:var(--amber)">Light</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto font-light leading-[1.75] fade-up delay-3" style="color:var(--muted)">
+        A ministry for the elders of Living Word — gathering periodically for dinner, fellowship, and the kind of deep community that only comes with years of faithful walking together.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-10 fade-up delay-4">
+        <div class="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 rounded-2xl" style="background:rgba(240,160,112,0.1);border:1px solid rgba(240,160,112,0.22)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Periodic Gatherings</span>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 rounded-2xl" style="background:rgba(240,160,112,0.1);border:1px solid rgba(240,160,112,0.22)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Dinner & Fellowship</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="section-card py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="fade-up">
+          <div class="fire-divider mb-5"></div>
+          <p class="font-semibold uppercase tracking-widest text-sm mb-3" style="color:var(--amber)">Who We Are</p>
+          <h2 class="font-display font-bold mb-5" style="font-size:clamp(2rem,4vw,3rem);letter-spacing:-0.03em;color:var(--text)">
+            The Wisdom of Years,<br/>the Warmth of Family
+          </h2>
+          <p class="text-base leading-[1.8] mb-4 font-light" style="color:var(--muted)">
+            Vessels of Light honors the elders of Living Word — the men and women whose faithful years of walking with God have made this church who it is. This ministry is a space set aside just for them.
+          </p>
+          <p class="text-base leading-[1.8] font-light" style="color:var(--muted)">
+            Through periodic dinners and fellowship gatherings, Vessels of Light gives our elders the opportunity to connect with one another, share stories, pray together, and be poured back into. Their presence is a gift to this church — and they deserve to be celebrated.
+          </p>
+        </div>
+        <div class="fade-up delay-1 relative">
+          <div class="rounded-2xl overflow-hidden" style="border:1px solid rgba(240,160,112,0.2)">
+            <img src="https://placehold.co/600x420/180b02/F0A070?text=Vessels+of+Light" alt="Vessels of Light" class="w-full object-cover" />
+          </div>
+          <div class="absolute -bottom-4 -right-4 rounded-2xl px-5 py-4 text-center hidden md:block"
+               style="background:var(--card2);border:1px solid rgba(240,160,112,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.6)">
+            <div class="text-3xl leading-none mb-1">🕯️</div>
+            <div class="text-xs font-semibold uppercase tracking-wider mt-1" style="color:var(--muted)">Elders Ministry</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHAT TO EXPECT ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--amber)">What to Expect</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          An Evening Worth Savoring
+        </h2>
+        <p class="text-base max-w-lg mx-auto mt-4 font-light fade-up delay-2" style="color:var(--muted)">
+          Each gathering is a time to slow down, share a meal, and simply be together — the way the church was always meant to be.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="rounded-2xl p-5 sm:p-7 text-center fade-up"
+             style="background:rgba(240,160,112,0.07);border:1px solid rgba(240,160,112,0.18)">
+          <div class="text-3xl mb-4">🍽️</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--text)">Shared Dinner</h3>
+          <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">A warm, home-style meal shared around the table — good food and even better company.</p>
+        </div>
+        <div class="rounded-2xl p-7 text-center fade-up delay-1"
+             style="background:rgba(240,160,112,0.07);border:1px solid rgba(240,160,112,0.18)">
+          <div class="text-3xl mb-4">🙏</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--text)">Prayer Together</h3>
+          <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Time to lift one another up in prayer, intercede for the church, and seek God together.</p>
+        </div>
+        <div class="rounded-2xl p-7 text-center fade-up delay-2"
+             style="background:rgba(240,160,112,0.07);border:1px solid rgba(240,160,112,0.18)">
+          <div class="text-3xl mb-4">💬</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--text)">Fellowship</h3>
+          <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Laughter, stories, and genuine connection — the deep friendship that only years together can build.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LEADERS ==================== -->
+  <section class="section-card py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--amber)">Meet the Team</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Ministry Leaders
+        </h2>
+        <p class="text-base max-w-lg mx-auto mt-4 font-light fade-up delay-2" style="color:var(--muted)">
+          Those who serve and shepherd the Vessels of Light ministry with love and care.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="leader-card rounded-2xl overflow-hidden fade-up">
+          <div class="relative">
+            <img src="https://placehold.co/400x400/180b02/F0A070?text=Leader+Photo" alt="Leader" class="leader-img" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,11,2,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--amber)">Ministry Coordinator</div>
+            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Leader Name</h3>
+            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Dedicated to honoring and celebrating the elders of Living Word through intentional gatherings and heartfelt care.</p>
+          </div>
+        </div>
+
+        <div class="leader-card rounded-2xl overflow-hidden fade-up delay-1">
+          <div class="relative">
+            <img src="https://placehold.co/400x400/180b02/F0A070?text=Leader+Photo" alt="Leader" class="leader-img" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,11,2,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--amber)">Hospitality Lead</div>
+            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Leader Name</h3>
+            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Creating warm, welcoming environments where every elder feels seen, valued, and at home.</p>
+          </div>
+        </div>
+
+        <div class="leader-card rounded-2xl overflow-hidden fade-up delay-2">
+          <div class="relative">
+            <img src="https://placehold.co/400x400/180b02/F0A070?text=Leader+Photo" alt="Leader" class="leader-img" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,11,2,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--amber)">Prayer Coordinator</div>
+            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Leader Name</h3>
+            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Leading the prayer and devotional time during each gathering — drawing the group into God's presence together.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GALLERY ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--amber)">Ministry in Action</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Moments Together
+        </h2>
+        <p class="text-base max-w-lg mx-auto mt-4 font-light fade-up delay-2" style="color:var(--muted)">
+          A glimpse into the warmth and joy of Vessels of Light gatherings.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="gallery-item fade-up">
+          <img src="https://placehold.co/600x450/180b02/F0A070?text=Fellowship+Dinner" alt="Fellowship Dinner" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Fellowship Dinner</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-1">
+          <img src="https://placehold.co/600x450/180b02/F0A070?text=Prayer+%26+Worship" alt="Prayer Time" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Prayer Time</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-2">
+          <img src="https://placehold.co/600x450/180b02/F0A070?text=Around+the+Table" alt="Around the Table" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Around the Table</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-1">
+          <img src="https://placehold.co/600x450/180b02/F0A070?text=Stories+%26+Laughter" alt="Stories" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Stories & Laughter</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-2">
+          <img src="https://placehold.co/600x450/180b02/F0A070?text=Community+%26+Care" alt="Community" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">Community & Care</span>
+          </div>
+        </div>
+        <div class="gallery-item fade-up delay-3">
+          <img src="https://placehold.co/600x450/180b02/F0A070?text=A+Warm+Gathering" alt="Gathering" class="gallery-img" />
+          <div class="gallery-overlay"></div>
+          <div class="absolute bottom-0 left-0 p-4">
+            <span class="text-xs font-semibold uppercase tracking-wider" style="color:rgba(240,240,255,0.7)">A Warm Gathering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="section-card py-20 md:py-24 text-center">
+    <div class="max-w-2xl mx-auto px-6">
+      <span class="text-5xl block mb-6 fade-up">🕯️</span>
+      <h2 class="font-display font-bold mb-4 fade-up delay-1" style="font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.03em;color:var(--text)">
+        You've Earned Your Seat at This Table
+      </h2>
+      <p class="text-base font-light leading-[1.8] mb-8 fade-up delay-2" style="color:var(--muted)">
+        If you're an elder of Living Word and would like to be included in our next gathering, we'd love to have you. Reach out and let us know.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="../index.html#connect" class="btn-amber px-8 py-4 text-base inline-flex items-center gap-2">
+          Get in Touch
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-colors duration-200"
+           style="background:rgba(240,160,112,0.1);border:1px solid rgba(240,160,112,0.24);color:var(--amber)"
+           onmouseover="this.style.background='rgba(240,160,112,0.18)'" onmouseout="this.style.background='rgba(240,160,112,0.1)'">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="py-8 text-center" style="background:var(--deep);border-top:1px solid rgba(240,160,112,0.12)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2025 Living Word Church · Adairville, Kentucky ·
+      <a href="../index.html" style="color:var(--amber)" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">livingwordky.com</a>
+    </p>
+  </footer>
+
+  <script>
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events — Living Word Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:   #FF4D00;
+      --gold:   #FFB800;
+      --sky:    #00C2FF;
+      --purple: #C97AFF;
+      --deep:   #0A0A1A;
+      --card:   #13132A;
+      --card2:  #1A1A35;
+      --text:   #F0F0FF;
+      --muted:  #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 70% 55% at 50%  0%,  rgba(255,77,0,0.28)   0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10%  80%, rgba(255,184,0,0.18)  0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 90%  70%, rgba(139,43,226,0.18) 0%, transparent 50%),
+        var(--deep);
+    }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      border-radius: 2px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(70px); opacity: 0.28;
+      animation: floatOrb 9s ease-in-out infinite;
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(28px,-28px) scale(1.07); }
+    }
+
+    /* Nav */
+    .nav-link {
+      position: relative; color: var(--muted);
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      transition: width 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-link:hover::after { width: 100%; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--fire); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    /* Filter tabs */
+    .filter-tab {
+      padding: 0.4rem 0.85rem; border-radius: 9999px;
+      font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    @media (min-width: 640px) {
+      .filter-tab { padding: 0.5rem 1.25rem; font-size: 0.8rem; }
+    }
+    .filter-tab:hover, .filter-tab.active {
+      background: rgba(255,77,0,0.15);
+      border-color: rgba(255,77,0,0.4);
+      color: var(--text);
+    }
+    .filter-tab.active { color: #FF7A40; }
+
+    /* Featured event card */
+    .featured-card {
+      background: linear-gradient(135deg, #1a0800, #2d1200);
+      border: 1px solid rgba(255,77,0,0.3);
+      transition: box-shadow 0.3s ease;
+    }
+    .featured-card:hover { box-shadow: 0 20px 60px rgba(255,77,0,0.18); }
+
+    /* Regular event card */
+    .event-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .event-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,184,0,0.25);
+      transform: translateY(-3px);
+    }
+
+    /* Ministry badge colors */
+    .badge-kids     { background: rgba(0,194,255,0.15); color: #00C2FF; }
+    .badge-nexgen   { background: rgba(201,122,255,0.15); color: #C97AFF; }
+    .badge-nexlevel { background: rgba(255,184,0,0.15); color: #FFB800; }
+    .badge-church   { background: rgba(255,77,0,0.15); color: #FF7A40; }
+    .badge-women    { background: rgba(255,77,0,0.15); color: #FF7A40; }
+    .badge-all      { background: rgba(255,255,255,0.1); color: var(--muted); }
+
+    /* Date block */
+    .date-block {
+      flex-shrink: 0; text-align: center;
+      border-radius: 0.75rem; padding: 0.75rem 1rem;
+      min-width: 64px;
+    }
+
+    /* Fade up */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.18s; }
+    .delay-3 { transition-delay: 0.26s; }
+    .delay-4 { transition-delay: 0.34s; }
+    .delay-5 { transition-delay: 0.42s; }
+    .delay-6 { transition-delay: 0.5s; }
+
+    /* Btn */
+    .btn-fire {
+      background: linear-gradient(135deg, #FF4D00, #FF8C00);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(255,77,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-fire:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 30px rgba(255,77,0,0.45); }
+    .btn-fire:active { transform: scale(0.98); }
+
+    .section-card { background: var(--card); }
+    .section-deep { background: var(--deep); }
+
+    /* Loading skeleton pulse */
+    @keyframes skeletonPulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 0.7; }
+    }
+    .skeleton {
+      background: rgba(255,255,255,0.07);
+      border-radius: 0.5rem;
+      animation: skeletonPulse 1.6s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.93);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <div class="hidden sm:flex items-center gap-6">
+      <a href="ministries/childrens-church.html"      class="nav-link text-sm font-medium tracking-wide uppercase">Kids</a>
+      <a href="ministries/nexgen-youth.html"          class="nav-link text-sm font-medium tracking-wide uppercase">NexGen</a>
+      <a href="ministries/nexlevel-young-adults.html" class="nav-link text-sm font-medium tracking-wide uppercase">NexLevel</a>
+    </div>
+    <a href="index.html#connect" class="btn-fire px-5 py-2 text-sm">Plan a Visit</a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-bg grain relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="orb w-80 h-80 -top-16 -left-16" style="background:#FF4D00"></div>
+    <div class="orb w-64 h-64 top-10 right-0 opacity-20" style="background:#FFB800;animation-delay:2.5s"></div>
+    <div class="orb w-48 h-48 bottom-0 left-1/2 opacity-15" style="background:#C97AFF;animation-delay:5s"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--fire)">Living Word Church</p>
+      <h1 class="font-display font-bold mb-5 fade-up delay-2"
+          style="font-size:clamp(2.4rem,8vw,6rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Upcoming<br/>
+        <span style="background:linear-gradient(90deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Events</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-xl mx-auto font-light leading-[1.75] fade-up delay-3" style="color:var(--muted)">
+        Something is always happening at Living Word. From worship nights to outreach events — find your next moment to connect.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURED EVENT ==================== -->
+  <section class="section-deep py-16 md:py-20" id="featured-section-wrapper">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <p class="font-semibold uppercase tracking-widest text-xs mb-6 fade-up" style="color:var(--fire)">Featured Event</p>
+      <!-- Populated by loadEvents() -->
+      <div id="featured-section">
+        <div class="featured-card rounded-3xl overflow-hidden" style="min-height:260px;display:flex;align-items:center;justify-content:center">
+          <div class="flex flex-col items-center gap-3 p-8 w-full max-w-sm">
+            <div class="skeleton w-full h-6 mb-2"></div>
+            <div class="skeleton w-3/4 h-4"></div>
+            <div class="skeleton w-1/2 h-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ALL EVENTS ==================== -->
+  <section class="section-card py-16 md:py-24">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5 mb-10">
+        <div>
+          <div class="fire-divider mb-4"></div>
+          <h2 class="font-display font-bold fade-up" style="font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.03em;color:var(--text)">All Events</h2>
+        </div>
+        <!-- Filter tabs -->
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 fade-up delay-1">
+          <button class="filter-tab active" onclick="filterEvents('all', this)">All</button>
+          <button class="filter-tab" onclick="filterEvents('church', this)">Church</button>
+          <button class="filter-tab" onclick="filterEvents('kids', this)">Kids</button>
+          <button class="filter-tab" onclick="filterEvents('nexgen', this)">NexGen</button>
+          <button class="filter-tab" onclick="filterEvents('nexlevel', this)">NexLevel</button>
+          <button class="filter-tab" onclick="filterEvents('women', this)">Women</button>
+        </div>
+      </div>
+
+      <!-- Populated by loadEvents() -->
+      <div id="events-container">
+        <div class="flex flex-col gap-3">
+          <div class="event-card rounded-2xl p-5 flex items-center gap-4">
+            <div class="skeleton rounded-xl" style="width:64px;height:72px;flex-shrink:0"></div>
+            <div class="flex-1 flex flex-col gap-2">
+              <div class="skeleton h-3 w-24"></div>
+              <div class="skeleton h-5 w-3/4"></div>
+              <div class="skeleton h-3 w-1/2"></div>
+            </div>
+          </div>
+          <div class="event-card rounded-2xl p-5 flex items-center gap-4">
+            <div class="skeleton rounded-xl" style="width:64px;height:72px;flex-shrink:0"></div>
+            <div class="flex-1 flex flex-col gap-2">
+              <div class="skeleton h-3 w-20"></div>
+              <div class="skeleton h-5 w-2/3"></div>
+              <div class="skeleton h-3 w-1/3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state (hidden by default) -->
+      <div id="empty-state" class="hidden text-center py-16">
+        <div class="text-4xl mb-4">📅</div>
+        <p class="font-display font-bold text-xl mb-2" style="color:var(--text)">No upcoming events</p>
+        <p class="text-sm" style="color:var(--muted)">Check back soon — more events are always being added.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="section-deep py-20 text-center">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <h2 class="font-display font-bold mb-4 fade-up delay-1" style="font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-0.03em;color:var(--text)">
+        Never Miss a Moment
+      </h2>
+      <p class="text-base font-light leading-[1.8] mb-8 fade-up delay-2" style="color:var(--muted)">
+        Stay connected with everything happening at Living Word. Visit us this Sunday and become part of the family.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="index.html#connect" class="btn-fire px-8 py-4 text-base inline-flex items-center gap-2">
+          Plan Your Visit
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="index.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold"
+           style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.25);color:#FF7A40"
+           onmouseover="this.style.background='rgba(255,77,0,0.18)'" onmouseout="this.style.background='rgba(255,77,0,0.1)'">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="py-8 text-center" style="background:var(--deep);border-top:1px solid rgba(255,255,255,0.07)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2025 Living Word Church · Adairville, Kentucky ·
+      <a href="index.html" style="color:var(--fire)" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">livingwordky.com</a>
+    </p>
+  </footer>
+
+  <script>
+    // ─── Google Sheets CSV source ───────────────────────────────────────────────
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaQQ2RcaBnVYZk60YtPnF9_dBS6wX15kp72rTDWOudFQ7f1U7d76-OB6KGpMJNa-RrbZOEM4_gaUSK/pub?gid=0&single=true&output=csv';
+
+    // ─── Ministry styling config ────────────────────────────────────────────────
+    const MINISTRY_MAP = {
+      church:   { badge:'badge-church',   color:'var(--fire)',   bg:'rgba(255,77,0,0.1)',    border:'rgba(255,77,0,0.22)',    label:'Whole Church' },
+      kids:     { badge:'badge-kids',     color:'var(--sky)',    bg:'rgba(0,194,255,0.1)',   border:'rgba(0,194,255,0.22)',   label:'Kids' },
+      nexgen:   { badge:'badge-nexgen',   color:'var(--purple)', bg:'rgba(201,122,255,0.1)',border:'rgba(201,122,255,0.22)', label:'NexGen Youth' },
+      nexlevel: { badge:'badge-nexlevel', color:'var(--gold)',   bg:'rgba(255,184,0,0.1)',  border:'rgba(255,184,0,0.22)',  label:'NexLevel' },
+      women:    { badge:'badge-women',    color:'var(--fire)',   bg:'rgba(255,77,0,0.1)',   border:'rgba(255,77,0,0.22)',   label:'Women' },
+    };
+    const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    // ─── CSV parser (handles quoted fields with commas/newlines) ────────────────
+    function parseCSV(text) {
+      const rows = [];
+      const normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      const lines = normalized.split('\n');
+      for (const line of lines) {
+        const cols = [];
+        let cur = '', inQ = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') {
+            if (inQ && line[i + 1] === '"') { cur += '"'; i++; }
+            else { inQ = !inQ; }
+          } else if (ch === ',' && !inQ) {
+            cols.push(cur); cur = '';
+          } else {
+            cur += ch;
+          }
+        }
+        cols.push(cur);
+        rows.push(cols);
+      }
+      return rows;
+    }
+
+    // ─── Helpers ────────────────────────────────────────────────────────────────
+    function monthShort(val) {
+      const n = parseInt(val, 10);
+      return (!isNaN(n) && n >= 1 && n <= 12) ? MONTH_SHORT[n - 1] : val;
+    }
+
+    function ministryCfg(key) {
+      return MINISTRY_MAP[(key || '').trim().toLowerCase()] || MINISTRY_MAP.church;
+    }
+
+    function badgesHtml(ministryStr) {
+      return (ministryStr || 'church').split(/\s+/).filter(Boolean).map(m => {
+        const c = ministryCfg(m);
+        return `<span class="text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full ${c.badge}">${c.label}</span>`;
+      }).join('');
+    }
+
+    function escHtml(s) {
+      return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // Returns a download/register button if the event has a link, empty string otherwise
+    function linkBtnHtml(ev, size) {
+      if (!ev.link_url) return '';
+      const label = ev.link_label || 'Learn More';
+      const isDownload = /\.(pdf|docx?|xlsx?|pptx?|zip)(\?|$)/i.test(ev.link_url);
+      const icon = isDownload
+        ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`
+        : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>`;
+      const px = size === 'sm' ? 'px-3.5 py-1.5 text-xs' : 'px-6 py-3 text-sm';
+      return `<a href="${escHtml(ev.link_url)}" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-1.5 ${px} rounded-full font-semibold"
+                 style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);color:var(--gold);
+                        transition:background 0.2s ease,border-color 0.2s ease"
+                 onmouseover="this.style.background='rgba(255,184,0,0.22)';this.style.borderColor='rgba(255,184,0,0.5)'"
+                 onmouseout="this.style.background='rgba(255,184,0,0.12)';this.style.borderColor='rgba(255,184,0,0.3)'">
+               ${escHtml(label)} ${icon}
+             </a>`;
+    }
+
+    // ─── Fade-up observer (declared here so loadEvents can reuse it) ────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ─── Filter logic ───────────────────────────────────────────────────────────
+    function filterEvents(ministry, btn) {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('[data-ministry]');
+      let visible = 0;
+      cards.forEach(card => {
+        const match = ministry === 'all' || (card.dataset.ministry || '').includes(ministry);
+        card.style.display = match ? '' : 'none';
+
+        // Also hide/show the month heading if all cards in that group are hidden
+        if (match) visible++;
+      });
+
+      // Hide month headings that have no visible cards underneath
+      document.querySelectorAll('.month-group').forEach(group => {
+        const cards = group.querySelectorAll('[data-ministry]');
+        const anyVisible = Array.from(cards).some(c => c.style.display !== 'none');
+        group.style.display = anyVisible ? '' : 'none';
+      });
+
+      document.getElementById('empty-state').classList.toggle('hidden', visible > 0);
+    }
+
+    // ─── Main loader ────────────────────────────────────────────────────────────
+    async function loadEvents() {
+      const featuredEl  = document.getElementById('featured-section');
+      const containerEl = document.getElementById('events-container');
+      const emptyEl     = document.getElementById('empty-state');
+      const wrapperEl   = document.getElementById('featured-section-wrapper');
+
+      try {
+        const resp = await fetch(SHEET_CSV_URL);
+        if (!resp.ok) throw new Error('Network response was not ok');
+        const text = await resp.text();
+        const rows = parseCSV(text);
+
+        if (rows.length < 2) {
+          wrapperEl.style.display = 'none';
+          containerEl.innerHTML = '';
+          emptyEl.classList.remove('hidden');
+          return;
+        }
+
+        // Build header map
+        const headers = rows[0].map(h => h.trim().toLowerCase());
+        const col = name => headers.indexOf(name);
+
+        // Parse event rows — skip rows without a date or title
+        const events = [];
+        for (let i = 1; i < rows.length; i++) {
+          const r = rows[i];
+          const date  = (r[col('date')]        || '').trim();
+          const title = (r[col('title')]       || '').trim();
+          if (!date || !title) continue;
+          events.push({
+            date,
+            day:         (r[col('day')]         || '').trim(),
+            month:       (r[col('month')]       || '').trim(),
+            month_group: (r[col('month_group')] || '').trim(),
+            title,
+            description: (r[col('description')] || '').trim(),
+            time:        (r[col('time')]         || '').trim(),
+            ministry:    (r[col('ministry')]     || 'church').trim(),
+            link_url:    (r[col('link_url')]     || '').trim(),
+            link_label:  (r[col('link_label')]   || '').trim(),
+          });
+        }
+
+        if (events.length === 0) {
+          wrapperEl.style.display = 'none';
+          containerEl.innerHTML = '';
+          emptyEl.classList.remove('hidden');
+          return;
+        }
+
+        // Sort ascending by date
+        events.sort((a, b) => a.date.localeCompare(b.date));
+
+        // Featured = first event with date >= today, else first event
+        const today = new Date().toISOString().slice(0, 10);
+        const featured = events.find(e => e.date >= today) || events[0];
+
+        // ── Render featured card ─────────────────────────────────────────────
+        const fCfg = ministryCfg(featured.ministry.split(/\s+/)[0]);
+        featuredEl.innerHTML = `
+          <div class="featured-card rounded-3xl overflow-hidden fade-up delay-1">
+            <div class="grid md:grid-cols-2">
+              <div class="relative" style="min-height:280px">
+                <img src="https://placehold.co/700x500/1a0800/FF4D00?text=Featured+Event"
+                     alt="${escHtml(featured.title)}"
+                     class="w-full h-full object-cover" style="min-height:280px" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(26,8,0,0.9));mix-blend-mode:multiply"></div>
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,8,0,0.6) 0%,transparent 40%)"></div>
+                <div class="absolute top-5 left-5">${badgesHtml(featured.ministry)}</div>
+              </div>
+              <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
+                <div class="flex items-center gap-3 mb-5">
+                  <div class="date-block" style="background:rgba(255,77,0,0.15);border:1px solid rgba(255,77,0,0.3)">
+                    <div class="font-display font-bold text-2xl leading-none" style="color:var(--fire)">${escHtml(featured.day)}</div>
+                    <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${escHtml(monthShort(featured.month))}</div>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted)">${escHtml(featured.time)}</div>
+                  </div>
+                </div>
+                <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">
+                  ${escHtml(featured.title)}
+                </h2>
+                <p class="text-sm leading-[1.8] mb-6 font-light" style="color:var(--muted)">
+                  ${escHtml(featured.description)}
+                </p>
+                <div class="flex flex-wrap gap-3 items-center">
+                  <a href="index.html#connect" class="btn-fire px-6 py-3 text-sm inline-flex items-center gap-2">
+                    Plan Your Visit
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </a>
+                  ${linkBtnHtml(featured, 'lg')}
+                </div>
+              </div>
+            </div>
+          </div>`;
+
+        // ── Group events by month_group ──────────────────────────────────────
+        const grouped = new Map();
+        for (const ev of events) {
+          const g = ev.month_group || ev.date.slice(0, 7);
+          if (!grouped.has(g)) grouped.set(g, []);
+          grouped.get(g).push(ev);
+        }
+
+        // ── Render event list ────────────────────────────────────────────────
+        let html = '';
+        let groupIdx = 0;
+        for (const [group, evList] of grouped) {
+          html += `<div class="month-group${groupIdx > 0 ? ' mt-10' : ''}">
+            <h3 class="font-semibold text-xs uppercase tracking-widest mb-4 fade-up" style="color:var(--fire)">${escHtml(group)}</h3>
+            <div class="flex flex-col gap-3">`;
+
+          evList.forEach((ev, i) => {
+            const cfg     = ministryCfg(ev.ministry.split(/\s+/)[0]);
+            const delayClass = i > 0 ? ` delay-${Math.min(i, 6)}` : '';
+            const ministryKey = ev.ministry.toLowerCase();
+            html += `
+              <div class="event-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 fade-up${delayClass}"
+                   data-ministry="${escHtml(ministryKey)}">
+                <div class="date-block" style="background:${cfg.bg};border:1px solid ${cfg.border}">
+                  <div class="font-display font-bold text-xl leading-none" style="color:${cfg.color}">${escHtml(ev.day)}</div>
+                  <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${escHtml(monthShort(ev.month))}</div>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-1">${badgesHtml(ev.ministry)}</div>
+                  <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.title)}</h3>
+                  <p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.description)}</p>
+                  ${ev.link_url ? `<div class="mt-2">${linkBtnHtml(ev, 'sm')}</div>` : ''}
+                </div>
+                <div class="text-sm font-semibold flex-shrink-0" style="color:var(--muted)">${escHtml(ev.time)}</div>
+              </div>`;
+          });
+
+          html += `</div></div>`;
+          groupIdx++;
+        }
+
+        containerEl.innerHTML = html;
+        emptyEl.classList.add('hidden');
+
+        // Observe newly added fade-up elements
+        containerEl.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        featuredEl.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+      } catch (err) {
+        console.error('Failed to load events:', err);
+        wrapperEl.style.display = 'none';
+        containerEl.innerHTML = `
+          <div class="text-center py-12">
+            <p class="font-display font-bold text-xl mb-2" style="color:var(--text)">Couldn't load events right now</p>
+            <p class="text-sm" style="color:var(--muted)">Please check back soon or contact the church office.</p>
+          </div>`;
+      }
+    }
+
+    loadEvents();
+  </script>
+
+</body>
+</html>
