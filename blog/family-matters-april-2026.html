@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Family Matters — Living Word Church Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:  #FF4D00;
+      --gold:  #FFB800;
+      --deep:  #0A0A1A;
+      --card:  #13132A;
+      --text:  #F0F0FF;
+      --muted: #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--fire); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-fire {
+      background: linear-gradient(135deg, #FF4D00, #FF8C00);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(255,77,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-fire:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 30px rgba(255,77,0,0.45); }
+
+    /* Article prose */
+    .prose p { color: var(--muted); line-height: 1.85; margin-bottom: 1.25rem; font-weight: 300; font-size: 1.05rem; }
+    .prose h2 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--text); margin-top: 2.5rem; margin-bottom: 0.85rem; letter-spacing: -0.02em; line-height: 1.2; }
+    .prose h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 1.15rem; color: var(--text); margin-top: 1.75rem; margin-bottom: 0.6rem; }
+    .prose strong { color: var(--text); font-weight: 600; }
+
+    .scripture-block {
+      border-left: 3px solid var(--fire);
+      padding: 1rem 1.25rem;
+      margin: 1.75rem 0;
+      background: rgba(255,77,0,0.06);
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+    .scripture-block p { margin-bottom: 0.25rem; font-style: italic; color: var(--text) !important; font-size: 0.95rem !important; }
+    .scripture-block .ref { font-style: normal; font-size: 0.75rem !important; font-weight: 600; color: var(--fire) !important; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.5rem !important; margin-bottom: 0 !important; }
+
+    .pullquote {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 1.25rem;
+      background: linear-gradient(135deg, rgba(255,77,0,0.08), rgba(255,184,0,0.08));
+      border: 1px solid rgba(255,184,0,0.18);
+    }
+    .pullquote p { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--text) !important; font-style: italic; font-weight: 700; margin-bottom: 0 !important; line-height: 1.5; }
+
+    .key-point {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .key-point-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 9999px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--fire), var(--gold));
+      color: #fff;
+    }
+    .key-point p { margin-bottom: 0 !important; font-size: 0.95rem !important; }
+
+    .scripture-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.2rem 0.65rem; border-radius: 9999px;
+      background: rgba(255,77,0,0.12); border: 1px solid rgba(255,77,0,0.25); color: #FF7A40;
+      margin: 0.2rem;
+    }
+
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.93);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      All Posts
+    </a>
+    <a href="../index.html" class="text-sm font-semibold" style="color:var(--muted)">Living Word Church</a>
+    <a href="../index.html#connect" class="btn-fire px-4 py-2 text-xs hidden sm:inline-flex">Plan a Visit</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-32 pb-14 md:pt-40 md:pb-20"
+           style="background:radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,77,0,0.2) 0%, transparent 65%), var(--deep)">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10">
+
+      <!-- Meta row -->
+      <div class="flex flex-wrap items-center gap-3 mb-6 fade-up">
+        <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+              style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.25);color:#FF7A40">Sermon Notes</span>
+        <span class="text-xs" style="color:var(--muted)">April 12, 2026</span>
+        <span style="color:rgba(144,144,176,0.4)">·</span>
+        <span class="text-xs" style="color:var(--muted)">Youth Pastor Luke Boisseau</span>
+      </div>
+
+      <h1 class="font-display font-bold mb-5 fade-up delay-1"
+          style="font-size:clamp(2.2rem,6vw,4rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        The Family<br/>
+        <span style="background:linear-gradient(90deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Matters</span>
+      </h1>
+
+      <p class="text-lg font-light leading-[1.75] mb-8 fade-up delay-2" style="color:var(--muted)">
+        In a culture drifting from its foundations, Youth Pastor Luke Boisseau opens God's Word to remind us why family isn't just important — it's by design.
+      </p>
+
+      <!-- Scripture tags -->
+      <div class="fade-up delay-2">
+        <span class="scripture-tag">Genesis 2:21–24</span>
+        <span class="scripture-tag">Matthew 19:4–5</span>
+        <span class="scripture-tag">Ephesians 5:22–33</span>
+        <span class="scripture-tag">Psalm 127</span>
+        <span class="scripture-tag">Proverbs 22:6</span>
+        <span class="scripture-tag">Ephesians 6</span>
+        <span class="scripture-tag">1 Corinthians 13</span>
+      </div>
+
+      <!-- Divider -->
+      <div class="mt-10 fade-up" style="height:1px;background:linear-gradient(90deg,rgba(255,77,0,0.4),transparent)"></div>
+    </div>
+  </section>
+
+  <!-- ARTICLE -->
+  <article class="max-w-3xl mx-auto px-6 lg:px-10 pb-24">
+    <div class="prose">
+
+      <!-- Intro -->
+      <p>
+        Something is happening in our culture — and it's hard to miss. The values that once held families together are being quietly abandoned. Marriage, godly roles, and the biblical view of family are increasingly treated as outdated. But on April 12th, 2026, Youth Pastor Luke Boisseau stood before Living Word Church and made one thing clear: <strong>the family still matters</strong> — to individuals, to society, and above all, to God.
+      </p>
+      <p>
+        Drawing from his own experience as a husband and father, Luke delivered a message that was honest, grounded in Scripture, and deeply personal. Here are the key truths from "The Family Matters."
+      </p>
+
+      <!-- Section 1 -->
+      <h2>1. God Is the Designer — Follow His Blueprint</h2>
+      <p>
+        Luke opened with a simple but powerful analogy: video games. Every game has a creator who designs how it's supposed to be played — the rules, the roles, the path to winning. When you follow the creator's design, you may still hit hard moments, but you move toward the intended outcome. When you go against it, you waste time, get frustrated, and miss the point entirely.
+      </p>
+      <p>
+        The same is true for the family. God created it. God designed it. And when we operate within the parameters of His design, things work the way they were meant to.
+      </p>
+
+      <div class="pullquote">
+        <p>"When we operate within the parameters of the creator's design, things work out best. When we go against it — that's when we see things not work out like they should."</p>
+      </div>
+
+      <!-- Section 2 -->
+      <h2>2. What Is Marriage? God Already Answered That</h2>
+      <p>
+        Just two chapters into the Bible, God defines marriage clearly and without ambiguity. Luke pointed out that you cannot define something you didn't create — and since God created marriage, He alone holds the original definition.
+      </p>
+
+      <div class="scripture-block">
+        <p>"This explains why a man leaves his father and mother and is joined to his wife, and the two are united into one."</p>
+        <p class="ref">Genesis 2:24</p>
+      </div>
+
+      <p>
+        And for those who wonder if that's just an Old Testament principle, Jesus himself quotes this same passage in the New Testament — affirming that the definition of marriage has never changed.
+      </p>
+
+      <div class="scripture-block">
+        <p>"Haven't you read the scriptures? They record that from the beginning God made them male and female... A man leaves his father and mother and is joined to his wife, and the two are united into one."</p>
+        <p class="ref">Matthew 19:4–5</p>
+      </div>
+
+      <div class="pullquote">
+        <p>"Time changes. Truth doesn't. Truth doesn't have an expiration date."</p>
+      </div>
+
+      <!-- Section 3 -->
+      <h2>3. Leave and Cleave — What It Really Means</h2>
+      <p>
+        Luke dug into the Hebrew behind Genesis 2:24 — two words that define the foundation of a healthy marriage: <strong>leave</strong> and <strong>cleave</strong>.
+      </p>
+      <p>
+        The Hebrew word for <em>leave</em> (<em>yah aav</em>) means to forsake — not to abandon your parents physically, but to transition out of the covenant you had with them and enter into a new one with your spouse. Your new family becomes the priority.
+      </p>
+      <p>
+        The Hebrew word for <em>cleave</em> (<em>debach</em>) means to cling, to adhere, to pursue hard, to hold fast. This isn't a relationship of convenience — it's a covenantal commitment to keep chasing after one another no matter what comes.
+      </p>
+
+      <div class="pullquote">
+        <p>"If you don't leave, you can't cleave."</p>
+      </div>
+
+      <p>
+        One of the most common ways this principle breaks down? When a spouse continues to place their parents above their partner. Luke called this out directly — in-law interference, a lack of boundaries, or constantly taking a parent's side over a spouse's are all ways the leaving-and-cleaving principle gets violated, and they can slowly destroy a marriage.
+      </p>
+
+      <!-- Section 4 -->
+      <h2>4. God Goes First — Always</h2>
+      <p>
+        Before roles in marriage, before parenting, before everything — God is top priority. Luke was direct: when we don't put God first, we make idols out of everything else. Careers, money, sports, even our own marriages and children can become idols if they take the place that only God should hold.
+      </p>
+      <p>
+        Marriage isn't just between two people. It's between three.
+      </p>
+
+      <div class="pullquote">
+        <p>"Marriage is between the husband, the wife, and God. God has to be at the very forefront of it — because if he's not, we're setting ourselves up for a very hard time."</p>
+      </div>
+
+      <!-- Section 5 -->
+      <h2>5. Roles in Marriage — Ephesians 5</h2>
+      <p>
+        Luke turned to one of the most discussed — and often misunderstood — passages on marriage. Ephesians 5 lays out the roles clearly: wives submit to their husbands, and husbands love their wives as Christ loved the church.
+      </p>
+
+      <div class="scripture-block">
+        <p>"For wives, this means submit to your husbands as to the Lord... And for husbands, this means love your wives, just as Christ loved the church."</p>
+        <p class="ref">Ephesians 5:22, 25</p>
+      </div>
+
+      <p>
+        But Luke was quick to challenge anyone who stops at verse 22. A husband who leads well — who protects, provides, and loves sacrificially — creates a marriage where submission flows naturally, not out of force, but out of respect and trust. Submission is a voluntary act of love, not a sign of inferiority.
+      </p>
+      <p>
+        He also brought in 1 Corinthians 13 — love is patient, kind, not arrogant, not rude, not self-seeking. A husband who leads that way gives his wife every reason to follow.
+      </p>
+
+      <div class="pullquote">
+        <p>"Why would my wife want to submit to my leadership if I'm not loving her well? This isn't about domination. It's about order and function within the family."</p>
+      </div>
+
+      <!-- Section 6 -->
+      <h2>6. Sacrifice Over Self — The Antidote to Individualism</h2>
+      <p>
+        One of the biggest cultural lies about marriage is that personal happiness comes first. Luke pushed back on that hard. When you say "I do," you stop being just one person — you become one with another. That takes sacrifice.
+      </p>
+      <p>
+        He asked the room a series of honest questions: Would you rather master a new video game or build a great marriage? Would you rather scroll your phone or communicate with your spouse? Where your time goes reveals what you actually value.
+      </p>
+
+      <div class="pullquote">
+        <p>"The grass isn't always greener on the other side. You know where it's greener? Where you water it."</p>
+      </div>
+
+      <p>
+        Luke's choice is clear: keep watering. Keep working. Keep God at the center. Keep dating your spouse. Keep pursuing the covenant — not because it's always easy, but because it's worth it and it honors God.
+      </p>
+
+      <!-- Section 7 -->
+      <h2>7. Children — A Gift to Be Trained Up</h2>
+      <p>
+        Shifting to parenting, Luke called children exactly what the Bible calls them: a gift and a reward from the Lord.
+      </p>
+
+      <div class="scripture-block">
+        <p>"Children are a gift from the Lord. They are a reward from him."</p>
+        <p class="ref">Psalm 127:3</p>
+      </div>
+
+      <p>
+        But a gift comes with responsibility. The Bible doesn't leave parents guessing about what to do with that gift — it gives a direct command.
+      </p>
+
+      <div class="scripture-block">
+        <p>"Train up a child in the way he should go, and even when he is old, he will not depart from it."</p>
+        <p class="ref">Proverbs 22:6</p>
+      </div>
+
+      <p>
+        Notice the promise: <em>will not depart</em>. Not "might not" or "probably won't." When we train our children in the ways of the Lord — teaching them to pray, to worship, to know His Word — that foundation stays with them even if they wander. They always have something to come back to.
+      </p>
+
+      <div class="scripture-block">
+        <p>"Fathers, do not provoke your children to anger, but bring them up in the discipline and instruction of the Lord."</p>
+        <p class="ref">Ephesians 6:4</p>
+      </div>
+
+      <p>
+        Luke also gave parents grace here — none of us get it right every time. And that's okay. What matters is that we keep trying, own our mistakes, and above all, keep pointing our children to God.
+      </p>
+
+      <!-- Closing Summary -->
+      <h2>Why Does the Family Matter to the Body of Christ?</h2>
+      <p>Luke closed with three clear reasons:</p>
+
+      <div style="margin:1.5rem 0">
+        <div class="key-point">
+          <div class="key-point-num">1</div>
+          <p>Marriage and family are designed to <strong>mirror the covenant between Christ and the church</strong> — the most sacred relationship that exists.</p>
+        </div>
+        <div class="key-point">
+          <div class="key-point-num">2</div>
+          <p>The home is <strong>where children first learn about Jesus</strong> and what it means to follow Him. The church reinforces what the home builds.</p>
+        </div>
+        <div class="key-point">
+          <div class="key-point-num">3</div>
+          <p>The family is <strong>the foundation for society and the advancement of God's kingdom</strong>. When families are strong, communities are strong.</p>
+        </div>
+      </div>
+
+      <!-- Application -->
+      <h2>Reflect & Apply</h2>
+      <p>As Luke closed the message, he invited the church to do something practical — pray. Not just for your own marriage or your own children, but for the families of Living Word, for healing in broken homes, for strength in struggling marriages, and for the next generation to know that they belong to God.</p>
+      <p>Here are a few questions to carry with you this week:</p>
+      <ul style="color:var(--muted);line-height:2;padding-left:1.25rem;list-style:disc;margin-bottom:1.25rem;font-weight:300;font-size:1.05rem">
+        <li>Is God actually at the top of your family structure — or has something else taken His place?</li>
+        <li>Are you leaving and cleaving — or are old loyalties pulling you away from your spouse?</li>
+        <li>What are you consistently training your children toward?</li>
+        <li>Where do you need to start watering instead of walking away?</li>
+      </ul>
+
+      <p style="color:var(--muted)">
+        The family matters. And as Pastor Luke reminded us — it matters to God most of all.
+      </p>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="my-12" style="height:1px;background:linear-gradient(90deg,rgba(255,77,0,0.3),rgba(255,184,0,0.3),transparent)"></div>
+
+    <!-- Watch CTA -->
+    <div class="rounded-2xl p-6 sm:p-8 text-center"
+         style="background:linear-gradient(135deg,rgba(255,77,0,0.08),rgba(255,184,0,0.06));border:1px solid rgba(255,184,0,0.15)">
+      <p class="font-semibold text-xs uppercase tracking-widest mb-3" style="color:var(--fire)">Watch the Full Message</p>
+      <h3 class="font-display font-bold text-xl mb-4" style="color:var(--text)">The Family Matters — April 12, 2026</h3>
+      <a href="https://www.youtube.com/live/NsZJibvjIZ8?t=2480" target="_blank" rel="noopener noreferrer"
+         class="btn-fire inline-flex items-center gap-2 px-6 py-3 text-sm">
+        Watch on YouTube
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+    <!-- Back link -->
+    <div class="mt-10 text-center">
+      <a href="index.html" class="back-btn justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to All Posts
+      </a>
+    </div>
+
+  </article>
+
+  <!-- FOOTER -->
+  <footer class="py-8 text-center" style="background:#060610;border-top:1px solid rgba(255,255,255,0.06)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2026 Living Word Church · Adairville, Kentucky ·
+      <a href="../index.html" style="color:var(--fire)">livingwordky.com</a>
+    </p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

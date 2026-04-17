@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sermon Blog — Living Word Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:  #FF4D00;
+      --gold:  #FFB800;
+      --deep:  #0A0A1A;
+      --card:  #13132A;
+      --text:  #F0F0FF;
+      --muted: #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--fire); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-fire {
+      background: linear-gradient(135deg, #FF4D00, #FF8C00);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(255,77,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-fire:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 30px rgba(255,77,0,0.45); }
+
+    .post-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .post-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,184,0,0.25);
+      transform: translateY(-4px);
+    }
+
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      border-radius: 2px;
+    }
+
+    .scripture-tag {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 0.18rem 0.55rem; border-radius: 9999px;
+      background: rgba(255,77,0,0.1); border: 1px solid rgba(255,77,0,0.2); color: #FF7A40;
+      margin: 0.15rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.93);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(16px)">
+    <a href="../index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <span class="font-display font-bold text-sm" style="color:var(--text)">Sermon Blog</span>
+    <a href="../index.html#connect" class="btn-fire px-4 py-2 text-xs hidden sm:inline-flex">Plan a Visit</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-20"
+           style="background:radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,77,0,0.22) 0%, transparent 65%), var(--deep)">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center">
+      <div class="fire-divider mx-auto mb-6 fade-up"></div>
+      <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--fire)">Living Word Church</p>
+      <h1 class="font-display font-bold mb-5 fade-up delay-2"
+          style="font-size:clamp(2.4rem,7vw,5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Sermon<br/>
+        <span style="background:linear-gradient(90deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Notes & Recaps</span>
+      </h1>
+      <p class="text-lg font-light leading-[1.75] max-w-xl mx-auto fade-up delay-3" style="color:var(--muted)">
+        Missed a Sunday? Want to go deeper? Each week we pull the key points, scriptures, and takeaways from our latest message.
+      </p>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  <section class="py-16 md:py-24" style="background:var(--card)">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10">
+
+      <div class="fire-divider mb-10 fade-up"></div>
+
+      <!-- Post: The Family Matters -->
+      <a href="family-matters-april-2026.html" class="block post-card rounded-2xl p-6 sm:p-8 mb-5 fade-up delay-1 no-underline">
+        <div class="flex flex-col sm:flex-row sm:items-start gap-5">
+          <!-- Date block -->
+          <div class="flex-shrink-0 text-center rounded-xl px-4 py-3"
+               style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.22);min-width:72px">
+            <div class="font-display font-bold text-2xl leading-none" style="color:var(--fire)">12</div>
+            <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">Apr</div>
+            <div class="text-xs mt-0.5" style="color:var(--muted)">2026</div>
+          </div>
+          <!-- Content -->
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full"
+                    style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.22);color:#FF7A40">Sermon Notes</span>
+              <span class="text-xs" style="color:var(--muted)">Youth Pastor Luke Boisseau</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl mb-2" style="color:var(--text);letter-spacing:-0.02em">The Family Matters</h2>
+            <p class="text-sm font-light leading-relaxed mb-3" style="color:var(--muted)">
+              In a culture drifting from its foundations, Luke Boisseau opens God's Word to show why family isn't just important — it's by design. Covering marriage, roles, sacrifice, and raising children in the ways of the Lord.
+            </p>
+            <div>
+              <span class="scripture-tag">Genesis 2</span>
+              <span class="scripture-tag">Matthew 19</span>
+              <span class="scripture-tag">Ephesians 5</span>
+              <span class="scripture-tag">Proverbs 22:6</span>
+            </div>
+          </div>
+          <!-- Arrow -->
+          <div class="hidden sm:flex items-center self-center" style="color:var(--fire)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Empty state for future posts -->
+      <div class="text-center py-16 fade-up delay-2">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"
+             style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.2)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--fire)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <p class="text-sm font-semibold mb-1" style="color:var(--text)">New posts every week</p>
+        <p class="text-xs" style="color:var(--muted)">Come back after each Sunday service for the latest sermon recap.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 text-center" style="background:var(--deep)">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="fire-divider mx-auto mb-6 fade-up"></div>
+      <h2 class="font-display font-bold mb-4 fade-up delay-1"
+          style="font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-0.03em;color:var(--text)">
+        Join Us in Person
+      </h2>
+      <p class="text-base font-light leading-[1.8] mb-8 fade-up delay-2" style="color:var(--muted)">
+        Reading the notes is great — but there's nothing like being in the room. Join us Sundays at 10:30 AM or Wednesdays at 6:00 PM.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="../index.html#connect" class="btn-fire px-8 py-4 text-base inline-flex items-center gap-2">
+          Plan Your Visit
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="../index.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold"
+           style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.25);color:#FF7A40"
+           onmouseover="this.style.background='rgba(255,77,0,0.18)'" onmouseout="this.style.background='rgba(255,77,0,0.1)'">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 text-center" style="background:#060610;border-top:1px solid rgba(255,255,255,0.06)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2026 Living Word Church · Adairville, Kentucky ·
+      <a href="../index.html" style="color:var(--fire)">livingwordky.com</a>
+    </p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
