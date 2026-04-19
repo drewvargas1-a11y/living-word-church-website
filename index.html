@@ -35,6 +35,11 @@
       pointer-events: none; z-index: 1;
     }
 
+    /* Hide video on reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      #hero-video { display: none; }
+    }
+
     /* Hero background — purple/fire/sky orbs on deep */
     .hero-bg {
       background:
@@ -303,6 +308,13 @@
 
   <!-- ==================== HERO ==================== -->
   <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg grain">
+
+    <!-- Video background -->
+    <video id="hero-video" autoplay muted loop playsinline preload="none"
+           class="absolute inset-0 w-full h-full object-cover pointer-events-none"
+           style="opacity:0.18;z-index:0">
+      <source src="https://pub-b257867a4f8147308ac8e50f363e4b4b.r2.dev/worship-1.mp4" type="video/mp4">
+    </video>
 
     <!-- Orbs -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -1547,6 +1559,16 @@
     }
 
     fetchAndRenderVideos();
+
+    // Pause hero video on slow connections (2G/saveData) to save bandwidth
+    const heroVid = document.getElementById('hero-video');
+    if (heroVid) {
+      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (conn && (conn.saveData || conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g')) {
+        heroVid.pause();
+        heroVid.style.display = 'none';
+      }
+    }
 
     function closeVideoModal(e) {
       if (e && e.target !== document.getElementById('video-modal') && !e.target.closest('button')) return;
