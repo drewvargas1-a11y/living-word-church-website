@@ -496,16 +496,16 @@
                     <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${escHtml(monthShort(featured.month))}</div>
                   </div>
                   <div class="flex flex-col gap-1">
-                    ${featured.time ? `<div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider" style="color:var(--muted)">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ${featured.time ? `<div class="flex items-center gap-2 text-base font-semibold" style="color:var(--text)">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                       ${escHtml(featured.time)}</div>` : ''}
                   </div>
                 </div>
                 <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">
                   ${escHtml(featured.title)}
                 </h2>
-                ${featured.location ? `<div class="flex items-center gap-1.5 text-sm font-semibold mb-3" style="color:var(--gold)">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${featured.location ? `<div class="flex items-center gap-2 text-base font-semibold mb-3" style="color:var(--gold)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   ${escHtml(featured.location)}</div>` : ''}
                 <p class="text-sm leading-[1.8] mb-6 font-light" style="color:var(--muted)">
                   ${escHtml(featured.description)}
@@ -552,11 +552,11 @@
                   <div class="flex flex-wrap items-center gap-2 mb-1">${badgesHtml(ev.ministry)}</div>
                   <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.title)}</h3>
                   <div class="flex flex-wrap items-center gap-3 mt-1">
-                    ${ev.time ? `<span class="flex items-center gap-1 text-xs font-semibold" style="color:var(--muted)">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ${ev.time ? `<span class="flex items-center gap-1.5 text-sm font-semibold" style="color:var(--text)">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                       ${escHtml(ev.time)}</span>` : ''}
-                    ${ev.location ? `<span class="flex items-center gap-1 text-xs font-semibold" style="color:var(--muted)">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    ${ev.location ? `<span class="flex items-center gap-1.5 text-sm font-semibold" style="color:var(--gold)">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                       ${escHtml(ev.location)}</span>` : ''}
                   </div>
                   <p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.description)}</p>
