@@ -455,6 +455,7 @@
             title,
             description: (r[col('description')] || '').trim(),
             time:        (r[col('time')]         || '').trim(),
+            location:    (r[col('location')]     || '').trim(),
             ministry:    (r[col('ministry')]     || 'church').trim(),
             link_url:    (r[col('link_url')]     || '').trim(),
             link_label:  (r[col('link_label')]   || '').trim(),
@@ -494,8 +495,13 @@
                     <div class="font-display font-bold text-2xl leading-none" style="color:var(--fire)">${escHtml(featured.day)}</div>
                     <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${escHtml(monthShort(featured.month))}</div>
                   </div>
-                  <div>
-                    <div class="text-xs font-semibold uppercase tracking-wider" style="color:var(--muted)">${escHtml(featured.time)}</div>
+                  <div class="flex flex-col gap-1">
+                    ${featured.time ? `<div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider" style="color:var(--muted)">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      ${escHtml(featured.time)}</div>` : ''}
+                    ${featured.location ? `<div class="flex items-center gap-1.5 text-xs font-semibold" style="color:var(--muted)">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                      ${escHtml(featured.location)}</div>` : ''}
                   </div>
                 </div>
                 <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">
@@ -548,7 +554,14 @@
                   <p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.description)}</p>
                   ${ev.link_url ? `<div class="mt-2">${linkBtnHtml(ev, 'sm')}</div>` : ''}
                 </div>
-                <div class="text-sm font-semibold flex-shrink-0" style="color:var(--muted)">${escHtml(ev.time)}</div>
+                <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                  ${ev.time ? `<div class="flex items-center gap-1 text-sm font-semibold" style="color:var(--muted)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ${escHtml(ev.time)}</div>` : ''}
+                  ${ev.location ? `<div class="flex items-center gap-1 text-xs font-medium" style="color:var(--muted)">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    ${escHtml(ev.location)}</div>` : ''}
+                </div>
               </div>`;
           });
 
