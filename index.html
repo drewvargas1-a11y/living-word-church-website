@@ -40,6 +40,7 @@
       #hero-video { display: none; }
     }
 
+
     /* Hero background — purple/fire/sky orbs on deep */
     .hero-bg {
       background:
@@ -1409,16 +1410,10 @@
       const liveState = document.getElementById('live-state');
       const liveBadge = document.querySelector('#player-wrapper .absolute.top-3');
 
-      if (live) {
-        cdState.classList.add('hidden');
-        liveState.classList.remove('hidden');
-        if (liveBadge) liveBadge.style.display = 'flex';
-        return;
-      }
-
+      // Always hide poster states — iframe is always loaded
+      cdState.classList.add('hidden');
       liveState.classList.add('hidden');
-      cdState.classList.remove('hidden');
-      if (liveBadge) liveBadge.style.display = 'none'; // hide LIVE badge when not live
+      if (liveBadge) liveBadge.style.display = live ? 'flex' : 'none';
 
       const diff = nextServiceUTC.getTime() - Date.now();
       if (diff <= 0) return;
@@ -1434,15 +1429,36 @@
       document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
     }
 
-    // Load iframe when user clicks play during live window
-    function loadStream() {
+    // Load live stream — fetches the active live video ID via YouTube API
+    async function loadStream() {
       const poster = document.getElementById('stream-poster');
       const iframe = document.getElementById('live-iframe');
-      poster.classList.add('hidden');
-      iframe.src = 'https://www.youtube.com/embed/live_stream?channel=livingwordchurch9763&autoplay=1';
-      iframe.classList.remove('hidden');
+
+      try {
+        // Step 1 — resolve handle → channel ID
+        const chRes  = await fetch(`https://www.googleapis.com/youtube/v3/channels?key=${YT_API_KEY}&forHandle=${YT_HANDLE}&part=id`);
+        const chData = await chRes.json();
+        if (!chData.items?.length) throw new Error('channel not found');
+        const channelId = chData.items[0].id;
+
+        // Step 2 — find active live broadcast
+        const lRes  = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${channelId}&part=id&eventType=live&type=video`);
+        const lData = await lRes.json();
+        if (!lData.items?.length) throw new Error('no live stream');
+
+        const videoId = lData.items[0].id.videoId;
+        poster.classList.add('hidden');
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        iframe.classList.remove('hidden');
+      } catch (err) {
+        console.warn('Live stream fetch failed:', err.message);
+        // Fallback — show countdown/poster
+        const cdState = document.getElementById('cd-state');
+        cdState.classList.remove('hidden');
+      }
     }
 
+    loadStream();
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
