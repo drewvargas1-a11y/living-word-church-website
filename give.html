@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Give — Living Word Church</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:  #FF4D00;
+      --gold:  #FFB800;
+      --deep:  #0A0A1A;
+      --card:  #13132A;
+      --text:  #F0F0FF;
+      --muted: #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      border-radius: 2px;
+    }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--fire); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-fire {
+      background: linear-gradient(135deg, #FF4D00, #FF8C00);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(255,77,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-fire:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 30px rgba(255,77,0,0.45); }
+
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* Subsplash embed container */
+    #subsplash-giving-form-QN4569 {
+      min-height: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.93);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <div class="flex items-center gap-2">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span class="font-display font-bold text-sm" style="color:var(--text)">Give</span>
+    </div>
+    <a href="index.html#connect" class="btn-fire px-4 py-2 text-xs hidden sm:inline-flex">Plan a Visit</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-16"
+           style="background:radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,184,0,0.18) 0%, transparent 65%), var(--deep)">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 text-center">
+      <div class="fire-divider mx-auto mb-6 fade-up"></div>
+      <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--gold)">Living Word Church</p>
+      <h1 class="font-display font-bold mb-5 fade-up delay-2"
+          style="font-size:clamp(2.4rem,7vw,5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Give<br/>
+        <span style="background:linear-gradient(90deg,var(--gold),var(--fire));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Generously</span>
+      </h1>
+      <p class="text-lg font-light leading-[1.75] max-w-xl mx-auto fade-up delay-3" style="color:var(--muted)">
+        Your generosity fuels the mission of Living Word Church — reaching families, building community, and advancing the Kingdom of God in Adairville and beyond.
+      </p>
+    </div>
+  </section>
+
+  <!-- GIVING FORM -->
+  <section class="py-10 md:py-16" style="background:var(--card)">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="rounded-2xl overflow-hidden fade-up"
+           style="border:1px solid rgba(255,184,0,0.15);box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+        <div id="subsplash-giving-form-QN4569"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRIPTURE -->
+  <section class="py-16 text-center" style="background:var(--deep)">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="rounded-2xl p-8 fade-up"
+           style="background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.15)">
+        <p class="font-display font-bold italic mb-3 leading-snug"
+           style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--text)">
+          "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."
+        </p>
+        <p class="text-xs font-bold uppercase tracking-widest" style="color:var(--gold)">2 Corinthians 9:7</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 text-center" style="background:var(--deep);border-top:1px solid rgba(255,255,255,0.06)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2026 Living Word Church · Adairville, Kentucky ·
+      <a href="index.html" style="color:var(--fire)">lwcofadairville.org</a>
+    </p>
+  </footer>
+
+  <!-- Subsplash giving embed -->
+  <script id="subsplash-giving-form-QN4569" type="text/javascript">
+    var target = document.getElementById("subsplash-giving-form-QN4569");
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.onload = function() {
+      subsplashEmbed("u/-QN4569/give?embed=true","https://subsplash.com","subsplash-giving-form-QN4569");
+    };
+    script.src = "https://dashboard.static.subsplash.com/production/web-client/external/embed-1.1.0.js";
+    target.parentElement.insertBefore(script, target);
+  </script>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
