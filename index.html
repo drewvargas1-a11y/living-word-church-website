@@ -1408,13 +1408,22 @@
       const { live, nextServiceUTC } = getServiceStatus();
       const cdState   = document.getElementById('cd-state');
       const liveState = document.getElementById('live-state');
+      const iframe    = document.getElementById('live-iframe');
       const liveBadge = document.querySelector('#player-wrapper .absolute.top-3');
+      const streamOn  = iframe && !iframe.classList.contains('hidden') && iframe.src;
 
-      // Always hide poster states — iframe is always loaded
-      cdState.classList.add('hidden');
       liveState.classList.add('hidden');
       if (liveBadge) liveBadge.style.display = live ? 'flex' : 'none';
 
+      // Show countdown only when stream is not playing
+      if (streamOn) {
+        cdState.classList.add('hidden');
+        return;
+      }
+
+      cdState.classList.remove('hidden');
+
+      if (!nextServiceUTC) return;
       const diff = nextServiceUTC.getTime() - Date.now();
       if (diff <= 0) return;
 
