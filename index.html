@@ -1429,31 +1429,25 @@
       document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
     }
 
-    // Load live stream — fetches the active live video ID via YouTube API
+    const YT_CHANNEL_ID = 'UCBqNGail7l9oBS7bmlo1bWQ';
+
+    // Load live stream — searches for active broadcast using hardcoded channel ID
     async function loadStream() {
-      const poster = document.getElementById('stream-poster');
-      const iframe = document.getElementById('live-iframe');
+      const poster  = document.getElementById('stream-poster');
+      const iframe  = document.getElementById('live-iframe');
+      const cdState = document.getElementById('cd-state');
 
       try {
-        // Step 1 — resolve handle → channel ID
-        const chRes  = await fetch(`https://www.googleapis.com/youtube/v3/channels?key=${YT_API_KEY}&forHandle=${YT_HANDLE}&part=id`);
-        const chData = await chRes.json();
-        if (!chData.items?.length) throw new Error('channel not found');
-        const channelId = chData.items[0].id;
+        const res  = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${YT_CHANNEL_ID}&part=id&eventType=live&type=video`);
+        const data = await res.json();
+        if (!data.items?.length) throw new Error('no live stream');
 
-        // Step 2 — find active live broadcast
-        const lRes  = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${channelId}&part=id&eventType=live&type=video`);
-        const lData = await lRes.json();
-        if (!lData.items?.length) throw new Error('no live stream');
-
-        const videoId = lData.items[0].id.videoId;
+        const videoId = data.items[0].id.videoId;
         poster.classList.add('hidden');
         iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
         iframe.classList.remove('hidden');
       } catch (err) {
         console.warn('Live stream fetch failed:', err.message);
-        // Fallback — show countdown/poster
-        const cdState = document.getElementById('cd-state');
         cdState.classList.remove('hidden');
       }
     }
@@ -1546,14 +1540,8 @@
       if (YT_API_KEY === 'YOUR_YOUTUBE_API_KEY') { renderFallback(); return; }
 
       try {
-        // Step 1 — resolve channel handle → channel ID
-        const chRes  = await fetch(`https://www.googleapis.com/youtube/v3/channels?key=${YT_API_KEY}&forHandle=${YT_HANDLE}&part=id`);
-        const chData = await chRes.json();
-        if (!chData.items?.length) throw new Error('channel not found');
-        const channelId = chData.items[0].id;
-
-        // Step 2 — fetch 6 most recent videos
-        const vRes  = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${channelId}&part=snippet,id&order=date&maxResults=6&type=video`);
+        // Fetch 6 most recent videos using hardcoded channel ID
+        const vRes  = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${YT_CHANNEL_ID}&part=snippet,id&order=date&maxResults=6&type=video`);
         const vData = await vRes.json();
         if (!vData.items?.length) throw new Error('no videos');
 
