@@ -228,17 +228,52 @@
         </p>
       </div>
 
-      <div class="flex justify-center">
-        <div class="leader-card rounded-2xl overflow-hidden fade-up w-full max-w-xs">
-          <div class="relative">
-            <img src="../brand_assets/Minnie-headshot.JPEG" alt="Minnie Holder" class="leader-img" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,11,2,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+      <!-- Leader card -->
+      <div class="rounded-3xl overflow-hidden fade-up delay-2"
+           style="background:linear-gradient(135deg,#180b02,#2e1605);border:1px solid rgba(240,160,112,0.3);box-shadow:0 24px 80px rgba(0,0,0,0.5)">
+        <div class="grid md:grid-cols-2">
+
+          <!-- Photo -->
+          <div class="relative" style="min-height:380px">
+            <img src="../brand_assets/Minnie-headshot.JPEG"
+                 alt="Minnie Holder"
+                 class="w-full h-full object-cover object-top" style="min-height:380px" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(24,11,2,0.88))"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,11,2,0.5) 0%,transparent 40%)"></div>
+            <div class="absolute top-5 left-5">
+              <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+                    style="background:rgba(240,160,112,0.18);border:1px solid rgba(240,160,112,0.35);color:var(--amber)">
+                Ministry Coordinator
+              </span>
+            </div>
           </div>
-          <div class="p-6">
-            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--amber)">Ministry Coordinator</div>
-            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Minnie Holder</h3>
-            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Dedicated to honoring and celebrating the elders of Living Word through intentional gatherings and heartfelt care.</p>
+
+          <!-- Content -->
+          <div class="p-7 sm:p-10 md:p-12 flex flex-col justify-center">
+            <div class="mb-6" style="width:40px;height:3px;background:linear-gradient(90deg,#C8663A,#F0A070);border-radius:2px"></div>
+
+            <h3 class="font-display font-bold mb-5"
+                style="font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-0.02em;color:var(--text);line-height:1.1">
+              Minnie Holder
+            </h3>
+
+            <p class="text-sm leading-[1.85] mb-4 font-light" style="color:var(--muted)">
+              Minnie Holder leads the Vessels of Light ministry with a heart full of love and a deep commitment to honoring the elders of Living Word Church.
+            </p>
+            <p class="text-sm leading-[1.85] mb-8 font-light" style="color:var(--muted)">
+              Through intentional gatherings, shared meals, and heartfelt fellowship, Minnie creates a space where every elder feels seen, celebrated, and deeply valued by their church family.
+            </p>
+
+            <a href="../index.html#connect"
+               class="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold"
+               style="background:linear-gradient(135deg,#C8663A,#F0A070);color:#fff;box-shadow:0 4px 20px rgba(240,160,112,0.4);transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.2s ease"
+               onmouseover="this.style.transform='translateY(-2px) scale(1.03)';this.style.boxShadow='0 8px 30px rgba(240,160,112,0.55)'"
+               onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(240,160,112,0.4)'">
+              Get Connected
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
+
         </div>
       </div>
     </div>
