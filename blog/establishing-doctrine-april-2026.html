@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Establishing Doctrine — Living Word Church Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:  #FF4D00;
+      --gold:  #FFB800;
+      --deep:  #0A0A1A;
+      --card:  #13132A;
+      --text:  #F0F0FF;
+      --muted: #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--fire); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-fire {
+      background: linear-gradient(135deg, #FF4D00, #FF8C00);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(255,77,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-fire:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 30px rgba(255,77,0,0.45); }
+
+    .prose p { color: var(--muted); line-height: 1.85; margin-bottom: 1.25rem; font-weight: 300; font-size: 1.05rem; }
+    .prose h2 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--text); margin-top: 2.5rem; margin-bottom: 0.85rem; letter-spacing: -0.02em; line-height: 1.2; }
+    .prose h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 1.15rem; color: var(--text); margin-top: 1.75rem; margin-bottom: 0.6rem; }
+    .prose strong { color: var(--text); font-weight: 600; }
+
+    .scripture-block {
+      border-left: 3px solid var(--fire);
+      padding: 1rem 1.25rem;
+      margin: 1.75rem 0;
+      background: rgba(255,77,0,0.06);
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+    .scripture-block p { margin-bottom: 0.25rem; font-style: italic; color: var(--text) !important; font-size: 0.95rem !important; }
+    .scripture-block .ref { font-style: normal; font-size: 0.75rem !important; font-weight: 600; color: var(--fire) !important; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.5rem !important; margin-bottom: 0 !important; }
+
+    .pullquote {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 1.25rem;
+      background: linear-gradient(135deg, rgba(255,77,0,0.08), rgba(255,184,0,0.08));
+      border: 1px solid rgba(255,184,0,0.18);
+    }
+    .pullquote p { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--text) !important; font-style: italic; font-weight: 700; margin-bottom: 0 !important; line-height: 1.5; }
+
+    .key-point {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .key-point-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 9999px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--fire), var(--gold));
+      color: #fff;
+    }
+    .key-point p { margin-bottom: 0 !important; font-size: 0.95rem !important; }
+
+    .scripture-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.2rem 0.65rem; border-radius: 9999px;
+      background: rgba(255,77,0,0.12); border: 1px solid rgba(255,77,0,0.25); color: #FF7A40;
+      margin: 0.2rem;
+    }
+
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.93);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      All Posts
+    </a>
+    <a href="../index.html" class="text-sm font-semibold" style="color:var(--muted)">Living Word Church</a>
+    <a href="../index.html#connect" class="btn-fire px-4 py-2 text-xs hidden sm:inline-flex">Plan a Visit</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-32 pb-14 md:pt-40 md:pb-20"
+           style="background:radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,77,0,0.2) 0%, transparent 65%), var(--deep)">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10">
+
+      <!-- Meta row -->
+      <div class="flex flex-wrap items-center gap-3 mb-6 fade-up">
+        <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+              style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.25);color:#FF7A40">Sermon Notes</span>
+        <span class="text-xs" style="color:var(--muted)">April 20, 2026</span>
+        <span style="color:rgba(144,144,176,0.4)">·</span>
+        <span class="text-xs" style="color:var(--muted)">Pastor Phil Scott</span>
+      </div>
+
+      <h1 class="font-display font-bold mb-5 fade-up delay-1"
+          style="font-size:clamp(2.2rem,6vw,4rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Establishing<br/>
+        <span style="background:linear-gradient(90deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Doctrine</span>
+      </h1>
+
+      <p class="text-lg font-light leading-[1.75] mb-8 fade-up delay-2" style="color:var(--muted)">
+        What does it take to be a strong Christian? Pastor Phil Scott makes the case that it starts with something most believers overlook — establishing sound doctrine as the foundation of your life.
+      </p>
+
+      <!-- Scripture tags -->
+      <div class="fade-up delay-2">
+        <span class="scripture-tag">2 Timothy 3:16–17</span>
+        <span class="scripture-tag">2 Timothy 4:3–4</span>
+        <span class="scripture-tag">Hebrews 5:12–14</span>
+        <span class="scripture-tag">Ephesians 4:14</span>
+        <span class="scripture-tag">Colossians 2:6–8</span>
+        <span class="scripture-tag">Romans 12:2</span>
+        <span class="scripture-tag">1 Timothy 4:16</span>
+      </div>
+
+      <!-- Divider -->
+      <div class="mt-10 fade-up" style="height:1px;background:linear-gradient(90deg,rgba(255,77,0,0.4),transparent)"></div>
+    </div>
+  </section>
+
+  <!-- ARTICLE -->
+  <article class="max-w-3xl mx-auto px-6 lg:px-10 pb-24">
+    <div class="prose">
+
+      <p>
+        Every structure needs a foundation. A house built on sand may look solid for a season — but the moment the storms come, everything built on it shifts. On April 20th, 2026, Pastor Phil Scott stepped to the pulpit and delivered a message that calls every believer to examine what they're standing on. The message: <strong>establishing doctrine in your life is not optional for the Christian who wants to stand strong.</strong>
+      </p>
+      <p>
+        In a world where truth is increasingly treated as personal, relative, and up for debate, Pastor Phil's message cuts through the noise with clarity and conviction. Here are the key truths from "Establishing Doctrine."
+      </p>
+
+      <h2>1. What Is Doctrine — And Why Does It Matter?</h2>
+      <p>
+        The word <em>doctrine</em> simply means "teaching" — the body of beliefs and truths that form the foundation of the Christian faith. But for many believers, doctrine feels academic, distant, or reserved for seminary students. Pastor Phil challenged that idea head-on.
+      </p>
+      <p>
+        Doctrine isn't just something you know about — it's something you build your life on. Every time you make a decision, respond to a trial, resist temptation, or stand for truth in a conversation, you are operating out of whatever doctrine you have established in your heart. The question isn't whether you have doctrine. The question is whether it's <em>sound</em> doctrine.
+      </p>
+
+      <div class="pullquote">
+        <p>"You're already living according to a doctrine. The only question is whether it came from God's Word — or from the world."</p>
+      </div>
+
+      <h2>2. All Scripture Is Your Foundation</h2>
+      <p>
+        Pastor Phil anchored the message in one of the most foundational passages in all of Scripture — a verse that makes clear where sound doctrine comes from and what it does in the life of a believer.
+      </p>
+
+      <div class="scripture-block">
+        <p>"All Scripture is God-breathed and is useful for teaching, rebuking, correcting and training in righteousness, so that the servant of God may be thoroughly equipped for every good work."</p>
+        <p class="ref">2 Timothy 3:16–17</p>
+      </div>
+
+      <p>
+        Notice what Paul says Scripture is <em>useful for</em>: teaching, rebuking, correcting, and training. These four functions map directly onto what it means to establish doctrine in your life. It's not a passive process — it requires engagement, surrender, and a willingness to be shaped by the Word rather than shaping the Word around you.
+      </p>
+      <p>
+        God-breathed means this Book carries the very breath of God. When you open it, you're not just reading theology — you're encountering the living God who wants to build something in you that nothing in this world can tear down.
+      </p>
+
+      <h2>3. The Warning Against Itching Ears</h2>
+      <p>
+        One of the most pressing dangers Pastor Phil raised is the tendency — especially in our current culture — to abandon sound doctrine in favor of what <em>feels good</em>. The Apostle Paul saw this coming, and he wrote about it clearly.
+      </p>
+
+      <div class="scripture-block">
+        <p>"For the time will come when people will not put up with sound doctrine. Instead, to suit their own desires, they will gather around them a great number of teachers to say what their itching ears want to hear. They will turn their ears away from the truth and turn aside to myths."</p>
+        <p class="ref">2 Timothy 4:3–4</p>
+      </div>
+
+      <p>
+        "Itching ears" — that's a vivid image. It describes someone who shops for a version of Christianity that affirms what they already want to believe, rather than submitting to the full counsel of God's Word. When doctrine becomes customizable, it stops being doctrine at all. And the Christian who builds on that kind of teaching finds themselves unprepared when life gets hard.
+      </p>
+
+      <div class="pullquote">
+        <p>"Don't look for a teacher who tells you what you want to hear. Look for a Word that tells you what you need to know."</p>
+      </div>
+
+      <h2>4. Moving from Milk to Meat</h2>
+      <p>
+        Establishing doctrine is also about spiritual maturity. Pastor Phil drew on the imagery that the writer of Hebrews uses — the contrast between milk and solid food — to describe the difference between a believer who has never moved beyond the basics and one who has done the work of rooting themselves in deeper truth.
+      </p>
+
+      <div class="scripture-block">
+        <p>"In fact, though by this time you ought to be teachers, you need someone to teach you the elementary truths of God's word all over again. You need milk, not solid food! Anyone who lives on milk, being still an infant, is not acquainted with the teaching about righteousness. But solid food is for the mature, who by constant use have trained themselves to distinguish good from evil."</p>
+        <p class="ref">Hebrews 5:12–14</p>
+      </div>
+
+      <p>
+        "By constant use have trained themselves" — that phrase is key. Doctrine isn't established in a moment; it's built over time through consistent engagement with God's Word, regular application, and a willingness to let Scripture correct you. It takes practice. It takes discipline. But it produces something the world cannot replicate: a believer who can discern truth from deception.
+      </p>
+
+      <h2>5. Rooted, Built Up, and Not Carried Away</h2>
+      <p>
+        One of the most powerful results of established doctrine is stability. The Christian who knows what they believe — and why — is not easily shaken. Paul describes this in Colossians with imagery of a tree rooted deep in the ground.
+      </p>
+
+      <div class="scripture-block">
+        <p>"So then, just as you received Christ Jesus as Lord, continue to live your lives in him, rooted and built up in him, strengthened in the faith as you were taught, and overflowing with thankfulness. See to it that no one takes you captive through hollow and deceptive philosophy, which depends on human tradition and the elemental spiritual forces of this world rather than on Christ."</p>
+        <p class="ref">Colossians 2:6–8</p>
+      </div>
+
+      <p>
+        This is the alternative to being "tossed back and forth by the waves" (Ephesians 4:14) — and it doesn't happen automatically. You have to be <em>rooted</em>. You have to be <em>built up</em>. That requires intentionality: choosing to study, to sit under sound teaching, to memorize Scripture, and to bring every thought under the authority of Christ.
+      </p>
+
+      <div class="pullquote">
+        <p>"A tree doesn't stay rooted by accident. It goes deeper every season. So does a believer who is serious about the Word."</p>
+      </div>
+
+      <h2>6. Renew Your Mind — Change Your Life</h2>
+      <p>
+        Pastor Phil brought the message home with one of the most practical and well-known verses in all of Paul's letters — a verse that shows how doctrine and transformation are inseparable.
+      </p>
+
+      <div class="scripture-block">
+        <p>"Do not conform to the pattern of this world, but be transformed by the renewing of your mind. Then you will be able to test and approve what God's will is — his good, pleasing and perfect will."</p>
+        <p class="ref">Romans 12:2</p>
+      </div>
+
+      <p>
+        Transformation begins in the mind. The world is constantly pressing its pattern onto every believer — through media, culture, relationships, and circumstances. The antidote isn't willpower. It's a renewed mind. And the way a mind gets renewed is through consistent, intentional exposure to the truth of God's Word — to established doctrine that reshapes how you think, how you see yourself, and how you respond to everything life throws at you.
+      </p>
+      <p>
+        When you know what you believe — when doctrine is established in your heart — you don't have to figure out God's will from scratch in every situation. You already have a framework. You already have a filter. And that changes everything.
+      </p>
+
+      <h2>Why Strong Christians Are Built on Sound Doctrine</h2>
+      <p>Pastor Phil closed by bringing it all together with three defining marks of a believer who has done the work of establishing doctrine:</p>
+
+      <div style="margin:1.5rem 0">
+        <div class="key-point">
+          <div class="key-point-num">1</div>
+          <p>They are <strong>stable under pressure</strong> — not tossed around by every new idea, cultural shift, or emotional storm because they are rooted in unchanging truth.</p>
+        </div>
+        <div class="key-point">
+          <div class="key-point-num">2</div>
+          <p>They are <strong>equipped to discern</strong> — able to recognize deception, false teaching, and hollow philosophy because they know the real thing.</p>
+        </div>
+        <div class="key-point">
+          <div class="key-point-num">3</div>
+          <p>They are <strong>ready for every good work</strong> — as 2 Timothy 3:17 says, thoroughly equipped. Not just to survive the Christian life, but to thrive in it and build others up.</p>
+        </div>
+      </div>
+
+      <h2>Reflect & Apply</h2>
+      <p>
+        Pastor Phil's message is a call to action — not just to hear doctrine, but to establish it. Here are a few questions to carry with you this week:
+      </p>
+      <ul style="color:var(--muted);line-height:2;padding-left:1.25rem;list-style:disc;margin-bottom:1.25rem;font-weight:300;font-size:1.05rem">
+        <li>What do you actually believe about God, salvation, Scripture, and eternity — and can you defend it from the Word?</li>
+        <li>Are you consuming more of the world's narrative than God's Word on a daily basis?</li>
+        <li>Is there an area of your life where you've been accepting "itching ears" teaching instead of sound doctrine?</li>
+        <li>What would it look like to get more rooted — to go deeper in the Word this week than you did last week?</li>
+      </ul>
+
+      <div class="scripture-block">
+        <p>"Watch your life and doctrine closely. Persevere in them, because if you do, you will save both yourself and your hearers."</p>
+        <p class="ref">1 Timothy 4:16</p>
+      </div>
+
+      <p>
+        Strong Christians are not born — they are built. And the building material is the Word of God, faithfully studied, consistently applied, and deeply established in the heart. That's the message Pastor Phil Scott brought to Living Word Church on April 20th, 2026 — and it's a message worth taking seriously.
+      </p>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="my-12" style="height:1px;background:linear-gradient(90deg,rgba(255,77,0,0.3),rgba(255,184,0,0.3),transparent)"></div>
+
+    <!-- Watch CTA -->
+    <div class="rounded-2xl p-6 sm:p-8 text-center"
+         style="background:linear-gradient(135deg,rgba(255,77,0,0.08),rgba(255,184,0,0.06));border:1px solid rgba(255,184,0,0.15)">
+      <p class="font-semibold text-xs uppercase tracking-widest mb-3" style="color:var(--fire)">Watch the Full Message</p>
+      <h3 class="font-display font-bold text-xl mb-4" style="color:var(--text)">Establishing Doctrine — April 20, 2026</h3>
+      <p class="text-sm mb-5 font-light" style="color:var(--muted)">Message begins at the 39-minute mark.</p>
+      <a href="https://www.youtube.com/watch?v=1qTUoSwa9gQ&t=2345s" target="_blank" rel="noopener noreferrer"
+         class="btn-fire inline-flex items-center gap-2 px-6 py-3 text-sm">
+        Watch on YouTube
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+    <!-- Back link -->
+    <div class="mt-10 text-center">
+      <a href="index.html" class="back-btn justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to All Posts
+      </a>
+    </div>
+
+  </article>
+
+  <!-- FOOTER -->
+  <footer class="py-8 text-center" style="background:#060610;border-top:1px solid rgba(255,255,255,0.06)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2026 Living Word Church · Adairville, Kentucky ·
+      <a href="../index.html" style="color:var(--fire)">lwcofadairville.org</a>
+    </p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
