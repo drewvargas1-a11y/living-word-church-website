@@ -1498,7 +1498,10 @@
       const id    = item.id.videoId;
       const { title, publishedAt, thumbnails } = item.snippet;
       const thumb = (thumbnails.maxres || thumbnails.high || thumbnails.medium || thumbnails.default)?.url || '';
-      const date  = new Date(publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/Chicago' });
+      const rawDate = new Date(publishedAt);
+      // If uploaded on Monday (day 1), roll back to Sunday to reflect the actual service date
+      if (rawDate.getUTCDay() === 1) rawDate.setUTCDate(rawDate.getUTCDate() - 1);
+      const date = rawDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/Chicago' });
       const safe  = title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
       const grad  = CARD_GRADS[index % CARD_GRADS.length];
 
