@@ -298,15 +298,15 @@
     <!-- Mobile menu -->
     <div id="mobile-menu" class="md:hidden flex-col gap-1 px-6 pb-5 pt-2 border-t border-white/[0.08]"
          style="background:rgba(10,10,26,0.97)">
-      <a href="#livestream" onclick="closeMobileMenu()" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150 flex items-center gap-2" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'"><span class="w-2 h-2 rounded-full bg-[#FF4D00] svc-dot"></span>Watch Live</a>
-      <a href="#messages"   onclick="closeMobileMenu()" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Messages</a>
-      <a href="#ministries" onclick="closeMobileMenu()" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Ministries</a>
-      <a href="#family"     onclick="closeMobileMenu()" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Family</a>
-      <a href="events.html"      onclick="closeMobileMenu()" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Events</a>
-      <a href="blog/index.html" onclick="closeMobileMenu()" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Blog</a>
-      <a href="#connect"         onclick="closeMobileMenu()" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Connect</a>
-      <a href="#give"       onclick="closeMobileMenu()" class="block py-3 text-sm font-bold uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--gold)">Give Online</a>
-      <a href="#connect"    onclick="closeMobileMenu()" class="btn-primary mt-3 block text-center px-5 py-3 rounded-full text-white text-sm font-bold tracking-widest uppercase">Plan a Visit</a>
+      <a href="#livestream" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150 flex items-center gap-2" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'"><span class="w-2 h-2 rounded-full bg-[#FF4D00] svc-dot"></span>Watch Live</a>
+      <a href="#messages"   class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Messages</a>
+      <a href="#ministries" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Ministries</a>
+      <a href="#family"     class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Family</a>
+      <a href="events.html"      class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Events</a>
+      <a href="blog/index.html" class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Blog</a>
+      <a href="#connect"         class="block py-3 text-sm font-medium uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--muted)" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Connect</a>
+      <a href="#give"       class="block py-3 text-sm font-bold uppercase tracking-wide border-b border-white/10 transition-colors duration-150" style="color:var(--gold)">Give Online</a>
+      <a href="#connect"    class="btn-primary mt-3 block text-center px-5 py-3 rounded-full text-white text-sm font-bold tracking-widest uppercase">Plan a Visit</a>
     </div>
   </nav>
 
@@ -1175,8 +1175,8 @@
   </section>
 
   <!-- ==================== CONNECT / VISIT ==================== -->
-  <section id="connect" class="relative overflow-hidden py-24 md:py-32 grain text-center" style="scroll-margin-top:64px"
-           style="background:linear-gradient(135deg,var(--purple) 0%,#3d0055 35%,var(--fire) 100%)">
+  <section id="connect" class="relative overflow-hidden py-24 md:py-32 grain text-center"
+           style="scroll-margin-top:64px;background:linear-gradient(135deg,var(--purple) 0%,#3d0055 35%,var(--fire) 100%)">
     <!-- Dot grid bg -->
     <div class="absolute inset-0 pointer-events-none"
          style="background-image:radial-gradient(circle,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:24px 24px"></div>
@@ -1359,11 +1359,17 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // Smooth scroll
+    // Smooth scroll — delay after mobile menu collapse so layout settles first
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const isMobileMenuOpen = menu.classList.contains('open');
+        if (isMobileMenuOpen) closeMobileMenu();
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, isMobileMenuOpen ? 120 : 0);
       });
     });
 
