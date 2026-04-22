@@ -1205,7 +1205,7 @@
         </div>
         <input class="connect-input" type="email" name="email"      placeholder="Email Address"  required />
         <input class="connect-input" type="tel"   name="phone"      placeholder="Phone Number" />
-        <select class="connect-input" name="how_can_we_help" required>
+        <select id="help-select" class="connect-input" name="how_can_we_help" required>
           <option value="" disabled selected>How can we help?</option>
           <option>Plan a Visit</option>
           <option>Learn About NexGen Youth</option>
@@ -1216,6 +1216,13 @@
           <option>Prayer Request</option>
           <option>General Info</option>
         </select>
+
+        <!-- Personal message (shown for Prayer Request / General Info) -->
+        <div id="message-wrap" style="display:none;overflow:hidden;transition:opacity 0.3s ease,transform 0.3s cubic-bezier(0.22,1,0.36,1);opacity:0;transform:translateY(8px)">
+          <textarea id="message-field" class="connect-input w-full" name="message" rows="4"
+                    placeholder="Share anything you'd like us to know…"
+                    style="resize:none;line-height:1.6"></textarea>
+        </div>
 
         <!-- Submit button -->
         <button id="connect-btn" type="submit"
@@ -1619,6 +1626,24 @@
 
     // Close modal on Escape key
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal(); });
+
+    // Show/hide personal message textarea
+    const helpSelect  = document.getElementById('help-select');
+    const messageWrap = document.getElementById('message-wrap');
+    helpSelect.addEventListener('change', () => {
+      const show = helpSelect.value === 'Prayer Request' || helpSelect.value === 'General Info';
+      if (show) {
+        messageWrap.style.display = 'block';
+        requestAnimationFrame(() => {
+          messageWrap.style.opacity = '1';
+          messageWrap.style.transform = 'translateY(0)';
+        });
+      } else {
+        messageWrap.style.opacity = '0';
+        messageWrap.style.transform = 'translateY(8px)';
+        setTimeout(() => { messageWrap.style.display = 'none'; }, 300);
+      }
+    });
 
     // Connect form — Web3Forms submission
     const connectForm    = document.getElementById('connect-form');
