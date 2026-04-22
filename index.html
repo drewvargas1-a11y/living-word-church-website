@@ -311,12 +311,12 @@
   </nav>
 
   <!-- ==================== HERO ==================== -->
-  <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg grain">
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg grain" style="isolation:isolate">
 
     <!-- Video background -->
-    <video id="hero-video" autoplay muted loop playsinline preload="none"
+    <video id="hero-video" autoplay muted loop playsinline preload="auto"
            class="absolute inset-0 w-full h-full object-cover pointer-events-none"
-           style="opacity:0.18;z-index:0">
+           style="opacity:0.18;z-index:0;will-change:transform;transform:translateZ(0);contain:strict">
       <source src="https://pub-b257867a4f8147308ac8e50f363e4b4b.r2.dev/worship-1.mp4" type="video/mp4">
     </video>
 
