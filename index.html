@@ -1605,13 +1605,30 @@
 
     fetchAndRenderVideos();
 
-    // Pause hero video on slow connections (2G/saveData) to save bandwidth
+    // Pause hero video on slow/poor connections
     const heroVid = document.getElementById('hero-video');
     if (heroVid) {
       const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      if (conn && (conn.saveData || conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g')) {
+      const slowTypes = ['slow-2g', '2g', '3g'];
+      const isSlow = conn && (conn.saveData || slowTypes.includes(conn.effectiveType));
+
+      if (isSlow) {
         heroVid.pause();
+        heroVid.removeAttribute('src');
         heroVid.style.display = 'none';
+      } else {
+        // Hide & pause if video stalls/buffers mid-play
+        let stallTimer;
+        heroVid.addEventListener('waiting', () => {
+          stallTimer = setTimeout(() => {
+            heroVid.pause();
+            heroVid.style.display = 'none';
+          }, 2000);
+        });
+        heroVid.addEventListener('playing', () => {
+          clearTimeout(stallTimer);
+          heroVid.style.display = '';
+        });
       }
     }
 
