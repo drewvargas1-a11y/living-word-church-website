@@ -678,8 +678,8 @@
         Special Events
       </h2>
 
-      <!-- Events grid — populated by JS -->
-      <div id="events-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <!-- Featured event card — populated by JS -->
+      <div id="events-grid"></div>
 
       <!-- Empty state -->
       <div id="events-empty" class="hidden text-center py-16">
@@ -1697,11 +1697,11 @@
 
     fetchAndRenderVideos();
 
-    // Special Events — Airtable
+    // Special Events — Airtable (featured only)
     (async () => {
       const WORKER_URL = 'https://lwc-events.drewvargas1.workers.dev';
-      const grid       = document.getElementById('events-grid');
-      const empty      = document.getElementById('events-empty');
+      const grid  = document.getElementById('events-grid');
+      const empty = document.getElementById('events-empty');
       if (!grid) return;
 
       try {
@@ -1717,24 +1717,40 @@
 
         if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
 
-        grid.innerHTML = records.map((r, i) => {
-          const f      = r.fields;
-          const img    = f.Image?.[0]?.url || '';
-          const name   = f.Name || 'Upcoming Event';
-          const desc   = f.Description || '';
-          const start  = f['Start Date'] ? new Date(f['Start Date']).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
-          const end    = f['End Date']   ? new Date(f['End Date']).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
-          const dates  = start && end ? `${start} – ${end}` : start;
-          return `
-          <div class="rounded-2xl overflow-hidden fade-up" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition-delay:${i*0.08}s">
-            ${img ? `<div class="relative h-52 overflow-hidden"><img src="${img}" alt="${name}" class="w-full h-full object-cover" style="filter:brightness(0.9)"><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,10,26,0.7),transparent)"></div></div>` : ''}
-            <div class="p-6">
-              ${dates ? `<p class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--fire)">${dates}</p>` : ''}
-              <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text);letter-spacing:-0.02em">${name}</h3>
-              ${desc ? `<p class="text-sm font-light leading-relaxed" style="color:var(--muted)">${desc}</p>` : ''}
+        const f    = records[0].fields;
+        const img  = f.Image?.[0]?.url || '';
+        const name = f.Name || 'Upcoming Event';
+        const desc = f.Description || '';
+        const cat  = f.Category || '';
+        const dateObj = f['Start Date'] ? new Date(f['Start Date']) : null;
+        const dateStr = dateObj ? dateObj.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
+
+        grid.innerHTML = `
+          <a href="events.html" class="block rounded-3xl overflow-hidden fade-up"
+             style="background:linear-gradient(135deg,#1a0800,#2d1200);border:1px solid rgba(255,77,0,0.3);
+                    transition:box-shadow 0.3s ease,transform 0.3s cubic-bezier(0.34,1.56,0.64,1)"
+             onmouseover="this.style.boxShadow='0 20px 60px rgba(255,77,0,0.2)';this.style.transform='translateY(-4px)'"
+             onmouseout="this.style.boxShadow='';this.style.transform=''">
+            <div class="grid md:grid-cols-2">
+              ${img ? `
+              <div class="relative" style="min-height:260px">
+                <img src="${img}" alt="${name}" class="w-full h-full object-cover" style="min-height:260px" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(26,8,0,0.85))"></div>
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,8,0,0.5),transparent 40%)"></div>
+              </div>` : ''}
+              <div class="p-8 md:p-10 flex flex-col justify-center">
+                ${cat ? `<span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4 self-start" style="background:rgba(255,77,0,0.15);border:1px solid rgba(255,77,0,0.3);color:#FF7A40">${cat}</span>` : ''}
+                ${dateStr ? `<p class="text-sm font-semibold mb-3" style="color:var(--fire)">${dateStr}</p>` : ''}
+                <h3 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">${name}</h3>
+                ${desc ? `<p class="text-sm font-light leading-relaxed mb-6" style="color:var(--muted)">${desc}</p>` : ''}
+                <span class="inline-flex items-center gap-2 self-start px-6 py-3 rounded-full text-sm font-bold uppercase tracking-widest"
+                      style="background:linear-gradient(135deg,#FF4D00,#FF8C00);color:#fff;box-shadow:0 4px 20px rgba(255,77,0,0.35)">
+                  See All Events
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
             </div>
-          </div>`;
-        }).join('');
+          </a>`;
 
         document.querySelectorAll('#events-grid .fade-up').forEach(el => observer.observe(el));
       } catch(e) {
