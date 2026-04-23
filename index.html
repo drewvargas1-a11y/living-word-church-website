@@ -1719,9 +1719,10 @@
 
         if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
 
-        const f    = records[0].fields;
-        const img  = f.Image?.[0]?.url || '';
-        const name = f.Name || 'Upcoming Event';
+        const f       = records[0].fields;
+        const imgAtt  = (f.Image || []).find(a => a.type?.startsWith('image/'));
+        const img     = imgAtt?.url || '';
+        const name    = f.Name || 'Upcoming Event';
         const desc = f.Description || '';
         const cat  = f.Category || '';
         const dateObj = f['Start Date'] ? new Date(f['Start Date']) : null;

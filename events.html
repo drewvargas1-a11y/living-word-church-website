@@ -405,15 +405,19 @@
         // Featured = first record
         const f  = records[0].fields;
         const fd = fmtDate(f['Start Date']);
-        const fImg = f.Image?.[0]?.url || 'https://placehold.co/700x500/1a0800/FF4D00?text=Featured+Event';
+        const fAttach  = f.Image?.[0] || null;
+        const fIsImage = fAttach?.type?.startsWith('image/');
+        const fImg     = fIsImage ? fAttach.url : null;
+        const fFiles   = (f.Image || []).filter(a => !a.type?.startsWith('image/'));
         featuredEl.innerHTML = `
           <div class="featured-card rounded-3xl overflow-hidden fade-up delay-1">
-            <div class="grid md:grid-cols-2">
+            <div class="grid ${fImg ? 'md:grid-cols-2' : ''}">
+              ${fImg ? `
               <div class="relative" style="min-height:280px">
                 <img src="${escHtml(fImg)}" alt="${escHtml(f.Name)}" class="w-full h-full object-cover" style="min-height:280px;object-fit:cover" />
                 <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(26,8,0,0.9))"></div>
                 <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,8,0,0.6),transparent 40%)"></div>
-              </div>
+              </div>` : ''}
               <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
                 <div class="flex items-center gap-3 mb-5">
                   <div class="date-block" style="background:rgba(255,77,0,0.15);border:1px solid rgba(255,77,0,0.3)">
@@ -424,6 +428,14 @@
                 ${fd.time ? `<p class="text-sm font-semibold mb-3 flex items-center gap-1.5" style="color:var(--muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${fd.time}</p>` : ''}
                 <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">${escHtml(f.Name)}</h2>
                 ${f.Description ? `<p class="text-sm leading-[1.8] mb-6 font-light" style="color:var(--muted)">${escHtml(f.Description)}</p>` : ''}
+                ${fFiles.length ? `<div class="flex flex-wrap gap-2 mb-5">${fFiles.map(a => `
+                  <a href="${escHtml(a.url)}" target="_blank" rel="noopener noreferrer"
+                     class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold"
+                     style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);color:var(--gold);transition:background 0.2s"
+                     onmouseover="this.style.background='rgba(255,184,0,0.22)'" onmouseout="this.style.background='rgba(255,184,0,0.12)'">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    ${escHtml(a.filename)}
+                  </a>`).join('')}</div>` : ''}
                 <a href="index.html#connect" class="btn-fire px-6 py-3 text-sm inline-flex items-center gap-2 self-start">
                   Plan Your Visit
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
@@ -447,7 +459,9 @@
             <h3 class="font-semibold text-xs uppercase tracking-widest mb-4 fade-up" style="color:var(--fire)">${escHtml(group)}</h3>
             <div class="flex flex-col gap-3">`;
           evs.forEach((ev, i) => {
-            const img = ev.Image?.[0]?.url || '';
+            const attach  = ev.Image || [];
+            const imgAtt  = attach.find(a => a.type?.startsWith('image/'));
+            const fileAtts = attach.filter(a => !a.type?.startsWith('image/'));
             const cat = ev.Category || 'Whole Church';
             const cs  = categoryStyle(cat);
             html += `
@@ -456,12 +470,20 @@
                   <div class="font-display font-bold text-xl leading-none" style="color:${cs.color}">${ev._d.day}</div>
                   <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${ev._d.mon}</div>
                 </div>
-                ${img ? `<img src="${escHtml(img)}" alt="${escHtml(ev.Name)}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 hidden sm:block" />` : ''}
+                ${imgAtt ? `<img src="${escHtml(imgAtt.url)}" alt="${escHtml(ev.Name)}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 hidden sm:block" />` : ''}
                 <div class="flex-1 min-w-0">
                   <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full mb-1 inline-block" style="background:${cs.bg};border:1px solid ${cs.border};color:${cs.color}">${escHtml(cat)}</span>
                   <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.Name)}</h3>
                   ${ev._d.time ? `<p class="text-xs font-semibold mt-0.5 flex items-center gap-1" style="color:var(--muted)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${ev._d.time}</p>` : ''}
                   ${ev.Description ? `<p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.Description)}</p>` : ''}
+                  ${fileAtts.length ? `<div class="flex flex-wrap gap-2 mt-2">${fileAtts.map(a => `
+                    <a href="${escHtml(a.url)}" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold"
+                       style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);color:var(--gold);transition:background 0.2s"
+                       onmouseover="this.style.background='rgba(255,184,0,0.22)'" onmouseout="this.style.background='rgba(255,184,0,0.12)'">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      ${escHtml(a.filename)}
+                    </a>`).join('')}</div>` : ''}
                 </div>
               </div>`;
           });
