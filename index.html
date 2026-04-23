@@ -1242,21 +1242,23 @@
   </section>
 
   <!-- ==================== SPECIAL EVENTS ==================== -->
-  <section id="events" class="relative overflow-hidden py-24 md:py-32 section-card">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+  <section id="events" class="relative overflow-hidden py-12 md:py-16 section-card">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10">
 
-      <div class="fire-divider mb-6 fade-up"></div>
-      <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--fire)">Coming Up</p>
-      <h2 class="font-display font-bold mb-14 fade-up delay-2" style="font-size:clamp(2.2rem,5vw,4rem);letter-spacing:-0.03em;color:var(--text)">
-        Special Events
-      </h2>
+      <div class="flex items-center justify-between mb-6 fade-up">
+        <div class="flex items-center gap-3">
+          <div class="w-6 h-1 rounded-full" style="background:linear-gradient(90deg,var(--fire),var(--gold))"></div>
+          <p class="font-semibold uppercase tracking-widest text-xs" style="color:var(--fire)">Coming Up</p>
+        </div>
+        <a href="events.html" class="text-xs font-semibold uppercase tracking-widest" style="color:var(--muted);transition:color 0.2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">All Events →</a>
+      </div>
 
       <!-- Featured event card — populated by JS -->
       <div id="events-grid"></div>
 
       <!-- Empty state -->
-      <div id="events-empty" class="hidden text-center py-16">
-        <p class="text-lg font-light" style="color:var(--muted)">No upcoming events right now — check back soon.</p>
+      <div id="events-empty" class="hidden text-center py-8">
+        <p class="text-sm font-light" style="color:var(--muted)">No upcoming events — check back soon.</p>
       </div>
 
     </div>
@@ -1726,30 +1728,18 @@
         const dateStr = dateObj ? dateObj.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
 
         grid.innerHTML = `
-          <a href="events.html" class="block rounded-3xl overflow-hidden fade-up"
-             style="background:linear-gradient(135deg,#1a0800,#2d1200);border:1px solid rgba(255,77,0,0.3);
-                    transition:box-shadow 0.3s ease,transform 0.3s cubic-bezier(0.34,1.56,0.64,1)"
-             onmouseover="this.style.boxShadow='0 20px 60px rgba(255,77,0,0.2)';this.style.transform='translateY(-4px)'"
-             onmouseout="this.style.boxShadow='';this.style.transform=''">
-            <div class="grid md:grid-cols-2">
-              ${img ? `
-              <div class="relative" style="min-height:260px">
-                <img src="${img}" alt="${name}" class="w-full h-full object-cover" style="min-height:260px" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(26,8,0,0.85))"></div>
-                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,8,0,0.5),transparent 40%)"></div>
-              </div>` : ''}
-              <div class="p-8 md:p-10 flex flex-col justify-center">
-                ${cat ? `<span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4 self-start" style="background:rgba(255,77,0,0.15);border:1px solid rgba(255,77,0,0.3);color:#FF7A40">${cat}</span>` : ''}
-                ${dateStr ? `<p class="text-sm font-semibold mb-3" style="color:var(--fire)">${dateStr}</p>` : ''}
-                <h3 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">${name}</h3>
-                ${desc ? `<p class="text-sm font-light leading-relaxed mb-6" style="color:var(--muted)">${desc}</p>` : ''}
-                <span class="inline-flex items-center gap-2 self-start px-6 py-3 rounded-full text-sm font-bold uppercase tracking-widest"
-                      style="background:linear-gradient(135deg,#FF4D00,#FF8C00);color:#fff;box-shadow:0 4px 20px rgba(255,77,0,0.35)">
-                  See All Events
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                </span>
-              </div>
+          <a href="events.html" class="flex items-center gap-5 rounded-2xl p-5 fade-up"
+             style="background:rgba(255,77,0,0.06);border:1px solid rgba(255,77,0,0.18);
+                    transition:background 0.25s ease,border-color 0.25s ease,transform 0.25s cubic-bezier(0.34,1.56,0.64,1)"
+             onmouseover="this.style.background='rgba(255,77,0,0.1)';this.style.borderColor='rgba(255,77,0,0.35)';this.style.transform='translateY(-2px)'"
+             onmouseout="this.style.background='rgba(255,77,0,0.06)';this.style.borderColor='rgba(255,77,0,0.18)';this.style.transform=''">
+            ${img ? `<img src="${img}" alt="${name}" class="w-20 h-20 rounded-xl object-cover flex-shrink-0" />` : ''}
+            <div class="flex-1 min-w-0">
+              ${cat ? `<span class="text-xs font-bold uppercase tracking-widest" style="color:#FF7A40">${cat}</span>` : ''}
+              <h3 class="font-display font-bold text-xl mt-0.5 mb-1" style="color:var(--text);letter-spacing:-0.02em">${name}</h3>
+              ${dateStr ? `<p class="text-xs font-semibold" style="color:var(--muted)">${dateStr}</p>` : ''}
             </div>
+            <svg class="flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--fire)"><polyline points="9 18 15 12 9 6"/></svg>
           </a>`;
 
         document.querySelectorAll('#events-grid .fade-up').forEach(el => observer.observe(el));
