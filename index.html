@@ -1683,8 +1683,8 @@
         );
         const data = await res.json();
         const records = (data.records || []).filter(r => {
-          const end = r.fields['End Date'] ? new Date(r.fields['End Date']) : null;
-          return !end || end >= today;
+          const start = r.fields['Start Date'] ? new Date(r.fields['Start Date']) : null;
+          return !start || start >= today;
         });
 
         if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
