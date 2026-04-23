@@ -435,7 +435,8 @@
                     <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${fd.mon}${fd.endMon && fd.endMon !== fd.mon ? `–${fd.endMon}` : ''}</div>
                   </div>
                 </div>
-                ${fd.time ? `<p class="text-sm font-semibold mb-3 flex items-center gap-1.5" style="color:var(--muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${fd.time}</p>` : ''}
+                ${fd.time ? `<p class="text-sm font-semibold mb-1.5 flex items-center gap-1.5" style="color:var(--muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${fd.time}</p>` : ''}
+                ${f.Location ? `<p class="text-sm font-semibold mb-3 flex items-center gap-1.5" style="color:var(--muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${escHtml(f.Location)}</p>` : ''}
                 <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">${escHtml(f.Name)}</h2>
                 ${f.Description ? `<p class="text-sm leading-[1.8] mb-6 font-light" style="color:var(--muted)">${escHtml(f.Description)}</p>` : ''}
                 ${fImg ? `<div class="mb-3"><a href="${escHtml(fImg)}" target="_blank" rel="noopener noreferrer"
@@ -488,6 +489,7 @@
                   <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full mb-1 inline-block" style="background:${cs.bg};border:1px solid ${cs.border};color:${cs.color}">${escHtml(cat)}</span>
                   <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.Name)}</h3>
                   ${ev._d.time ? `<p class="text-xs font-semibold mt-0.5 flex items-center gap-1" style="color:var(--muted)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${ev._d.time}</p>` : ''}
+                  ${ev.Location ? `<p class="text-xs font-semibold mt-0.5 flex items-center gap-1" style="color:var(--muted)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${escHtml(ev.Location)}</p>` : ''}
                   ${ev.Description ? `<p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.Description)}</p>` : ''}
                   ${(imgAtt || fileAtts.length) ? `<div class="flex flex-wrap gap-2 mt-2">
                     ${imgAtt ? `<a href="${escHtml(imgAtt.url)}" target="_blank" rel="noopener noreferrer"
