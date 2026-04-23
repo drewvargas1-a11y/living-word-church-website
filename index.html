@@ -848,6 +848,34 @@
     </div>
   </section>
 
+  <!-- ==================== RECENT HIGHLIGHTS ==================== -->
+  <section id="highlights" class="relative overflow-hidden py-24 md:py-32 section-deep">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div>
+          <div class="fire-divider mb-6 fade-up"></div>
+          <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--fire)">Recent Highlights</p>
+          <h2 class="font-display font-bold fade-up delay-2" style="font-size:clamp(2.2rem,5vw,4rem);letter-spacing:-0.03em;color:var(--text)">
+            Life at Living Word
+          </h2>
+        </div>
+        <a href="events.html#highlights" class="btn-outline flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm uppercase tracking-wide self-start md:self-auto fade-up delay-2">
+          See All Photos →
+        </a>
+      </div>
+
+      <!-- Photo grid — max 4 previewed -->
+      <div id="highlights-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+
+      <!-- Empty state -->
+      <div id="highlights-empty" class="hidden text-center py-16">
+        <p class="text-lg font-light" style="color:var(--muted)">No recent highlights — check back after our next event.</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ==================== MINISTRIES ==================== -->
   <section id="ministries" class="relative overflow-hidden py-24 md:py-32 section-card">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -1709,6 +1737,45 @@
         }).join('');
 
         document.querySelectorAll('#events-grid .fade-up').forEach(el => observer.observe(el));
+      } catch(e) {
+        grid.classList.add('hidden');
+        empty.classList.remove('hidden');
+      }
+    })();
+
+    // Recent Highlights — Airtable
+    (async () => {
+      const WORKER_URL = 'https://lwc-events.drewvargas1.workers.dev';
+      const grid  = document.getElementById('highlights-grid');
+      const empty = document.getElementById('highlights-empty');
+      if (!grid) return;
+      try {
+        const today = new Date(); today.setHours(0,0,0,0);
+        const cutoff = new Date(today); cutoff.setDate(cutoff.getDate() - 14);
+        const res  = await fetch(`${WORKER_URL}/highlights?filterByFormula={Active}=1&sort[0][field]=Date&sort[0][direction]=desc`);
+        const data = await res.json();
+        const records = (data.records || []).filter(r => {
+          const d = r.fields['Date'] ? new Date(r.fields['Date']) : null;
+          return d && d >= cutoff;
+        });
+        if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
+
+        const photos = [];
+        records.forEach(r => {
+          (r.fields['Photos'] || []).forEach(p => {
+            photos.push({ url: p.url, name: r.fields['Event Name'] || '' });
+          });
+        });
+        const preview = photos.slice(0, 4);
+
+        grid.innerHTML = preview.map((p, i) => `
+          <a href="events.html#highlights" class="block relative rounded-2xl overflow-hidden fade-up" style="aspect-ratio:1;transition-delay:${i*0.08}s">
+            <img src="${p.url}" alt="${p.name}" class="w-full h-full object-cover" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform=''" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,10,26,0.6),transparent 50%)"></div>
+            ${p.name ? `<p class="absolute bottom-3 left-3 text-xs font-semibold uppercase tracking-widest" style="color:rgba(255,255,255,0.85)">${p.name}</p>` : ''}
+          </a>`).join('');
+
+        document.querySelectorAll('#highlights-grid .fade-up').forEach(el => observer.observe(el));
       } catch(e) {
         grid.classList.add('hidden');
         empty.classList.remove('hidden');

@@ -10,9 +10,10 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    const url    = new URL(request.url);
-    const params = url.searchParams.toString();
-    const airtableUrl = `https://api.airtable.com/v0/${env.BASE_ID}/${env.TABLE_ID}${params ? '?' + params : ''}`;
+    const url      = new URL(request.url);
+    const table    = url.pathname === '/highlights' ? env.HIGHLIGHTS_TABLE_ID : env.TABLE_ID;
+    const params   = url.searchParams.toString();
+    const airtableUrl = `https://api.airtable.com/v0/${env.BASE_ID}/${table}${params ? '?' + params : ''}`;
 
     const res  = await fetch(airtableUrl, {
       headers: { Authorization: `Bearer ${env.AIRTABLE_TOKEN}` },

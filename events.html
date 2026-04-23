@@ -273,6 +273,26 @@
     </div>
   </section>
 
+  <!-- ==================== HIGHLIGHTS GALLERY ==================== -->
+  <section id="highlights" class="section-card py-16 md:py-24">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+
+      <div class="fire-divider mb-6 fade-up"></div>
+      <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--fire)">Recent Highlights</p>
+      <h2 class="font-display font-bold mb-12 fade-up delay-2" style="font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.03em;color:var(--text)">
+        Event Photos
+      </h2>
+
+      <div id="highlights-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div>
+
+      <div id="highlights-empty" class="hidden text-center py-16">
+        <p class="font-display font-bold text-xl mb-2" style="color:var(--text)">No recent photos</p>
+        <p class="text-sm" style="color:var(--muted)">Check back after our next event.</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ==================== CTA ==================== -->
   <section class="section-deep py-20 text-center">
     <div class="max-w-xl mx-auto px-6">
@@ -440,6 +460,53 @@
     }
 
     loadEvents();
+
+    // Highlights gallery
+    (async () => {
+      const WORKER_URL = 'https://lwc-events.drewvargas1.workers.dev';
+      const gallery = document.getElementById('highlights-gallery');
+      const empty   = document.getElementById('highlights-empty');
+      if (!gallery) return;
+      try {
+        const today  = new Date(); today.setHours(0,0,0,0);
+        const cutoff = new Date(today); cutoff.setDate(cutoff.getDate() - 14);
+        const res  = await fetch(`${WORKER_URL}/highlights?filterByFormula={Active}=1&sort[0][field]=Date&sort[0][direction]=desc`);
+        const data = await res.json();
+        const records = (data.records || []).filter(r => {
+          const d = r.fields['Date'] ? new Date(r.fields['Date']) : null;
+          return d && d >= cutoff;
+        });
+
+        if (!records.length) { gallery.classList.add('hidden'); empty.classList.remove('hidden'); return; }
+
+        const photos = [];
+        records.forEach(r => {
+          (r.fields['Photos'] || []).forEach(p => {
+            photos.push({ url: p.url, name: r.fields['Event Name'] || '' });
+          });
+        });
+
+        gallery.innerHTML = photos.map((p, i) => `
+          <div class="relative rounded-2xl overflow-hidden fade-up" style="aspect-ratio:1;transition-delay:${i*0.05}s">
+            <img src="${p.url}" alt="${p.name}" class="w-full h-full object-cover"
+                 style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"
+                 onmouseover="this.style.transform='scale(1.05)'"
+                 onmouseout="this.style.transform=''" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,10,26,0.6),transparent 50%)"></div>
+            ${p.name ? `<p class="absolute bottom-3 left-3 text-xs font-semibold uppercase tracking-widest" style="color:rgba(255,255,255,0.85)">${p.name}</p>` : ''}
+          </div>`).join('');
+
+        gallery.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Scroll to gallery if arriving from homepage link
+        if (window.location.hash === '#highlights') {
+          document.getElementById('highlights').scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch(e) {
+        gallery.classList.add('hidden');
+        empty.classList.remove('hidden');
+      }
+    })();
   </script>
 
 </body>
