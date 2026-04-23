@@ -332,17 +332,27 @@
     function escHtml(s) {
       return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
-    function fmtDate(iso) {
+    function fmtTime(iso) {
+      if (!iso || iso.endsWith('T00:00:00.000Z') || !iso.includes('T')) return '';
       const d = new Date(iso);
-      const hasTime = iso.includes('T') && !iso.endsWith('T00:00:00.000Z');
-      let time = '';
-      if (hasTime) {
-        let h = d.getUTCHours(), m = d.getUTCMinutes();
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        h = h % 12 || 12;
-        time = `${h}${m ? ':' + String(m).padStart(2,'0') : ''} ${ampm}`;
+      let h = d.getUTCHours(), m = d.getUTCMinutes();
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      return `${h}${m ? ':' + String(m).padStart(2,'0') : ''} ${ampm}`;
+    }
+    function fmtDate(startIso, endIso) {
+      const d = new Date(startIso);
+      const startTime = fmtTime(startIso);
+      const endTime   = fmtTime(endIso);
+      const time = startTime && endTime ? `${startTime} – ${endTime}` : startTime;
+
+      let endDay = null, endMon = null;
+      if (endIso) {
+        const e = new Date(endIso);
+        const sameDay = e.getUTCDate() === d.getUTCDate() && e.getUTCMonth() === d.getUTCMonth() && e.getUTCFullYear() === d.getUTCFullYear();
+        if (!sameDay) { endDay = e.getUTCDate(); endMon = MONTHS[e.getUTCMonth()]; }
       }
-      return { day: d.getUTCDate(), mon: MONTHS[d.getUTCMonth()], group: `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`, time };
+      return { day: d.getUTCDate(), mon: MONTHS[d.getUTCMonth()], group: `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`, time, endDay, endMon };
     }
 
     const observer = new IntersectionObserver(
@@ -404,7 +414,7 @@
 
         // Featured = first record
         const f  = records[0].fields;
-        const fd = fmtDate(f['Start Date']);
+        const fd = fmtDate(f['Start Date'], f['End Date']);
         const fAttach  = f.Image?.[0] || null;
         const fIsImage = fAttach?.type?.startsWith('image/');
         const fImg     = fIsImage ? fAttach.url : null;
@@ -421,8 +431,8 @@
               <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
                 <div class="flex items-center gap-3 mb-5">
                   <div class="date-block" style="background:rgba(255,77,0,0.15);border:1px solid rgba(255,77,0,0.3)">
-                    <div class="font-display font-bold text-2xl leading-none" style="color:var(--fire)">${fd.day}</div>
-                    <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${fd.mon}</div>
+                    <div class="font-display font-bold text-2xl leading-none" style="color:var(--fire)">${fd.day}${fd.endDay ? `<span style="font-size:0.6em;opacity:0.8">–${fd.endDay}</span>` : ''}</div>
+                    <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${fd.mon}${fd.endMon && fd.endMon !== fd.mon ? `–${fd.endMon}` : ''}</div>
                   </div>
                 </div>
                 ${fd.time ? `<p class="text-sm font-semibold mb-3 flex items-center gap-1.5" style="color:var(--muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${fd.time}</p>` : ''}
@@ -450,7 +460,7 @@
         // Group remaining by month
         const grouped = new Map();
         records.forEach(r => {
-          const d = fmtDate(r.fields['Start Date']);
+          const d = fmtDate(r.fields['Start Date'], r.fields['End Date']);
           if (!grouped.has(d.group)) grouped.set(d.group, []);
           grouped.get(d.group).push({ ...r.fields, _d: d });
         });
@@ -470,8 +480,8 @@
             html += `
               <div class="event-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 fade-up delay-${Math.min(i+1,6)}" data-ministry="${escHtml(cat)}">
                 <div class="date-block" style="background:${cs.bg};border:1px solid ${cs.border}">
-                  <div class="font-display font-bold text-xl leading-none" style="color:${cs.color}">${ev._d.day}</div>
-                  <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${ev._d.mon}</div>
+                  <div class="font-display font-bold text-xl leading-none" style="color:${cs.color}">${ev._d.day}${ev._d.endDay ? `<span style="font-size:0.6em;opacity:0.8">–${ev._d.endDay}</span>` : ''}</div>
+                  <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${ev._d.mon}${ev._d.endMon && ev._d.endMon !== ev._d.mon ? `–${ev._d.endMon}` : ''}</div>
                 </div>
                 ${imgAtt ? `<img src="${escHtml(imgAtt.url)}" alt="${escHtml(ev.Name)}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 hidden sm:block" />` : ''}
                 <div class="flex-1 min-w-0">
