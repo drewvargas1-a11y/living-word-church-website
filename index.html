@@ -1709,7 +1709,8 @@
 
         if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
 
-        const f       = records[0].fields;
+        const featured = records.find(r => (r.fields.Category||'').toLowerCase() === 'whole church') || records[0];
+        const f       = featured.fields;
         const imgAtt  = (f.Image || []).find(a => a.type?.startsWith('image/'));
         const img     = imgAtt?.url || '';
         const name    = f.Name || 'Upcoming Event';
