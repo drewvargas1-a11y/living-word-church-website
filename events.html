@@ -412,8 +412,9 @@
           return;
         }
 
-        // Featured = first record
-        const f  = records[0].fields;
+        // Featured = first Whole Church event, else first upcoming
+        const featured = records.find(r => (r.fields.Category||'').toLowerCase() === 'whole church') || records[0];
+        const f  = featured.fields;
         const fd = fmtDate(f['Start Date'], f['End Date']);
         const fAttach  = f.Image?.[0] || null;
         const fIsImage = fAttach?.type?.startsWith('image/');
