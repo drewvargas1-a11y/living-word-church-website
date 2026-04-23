@@ -334,7 +334,15 @@
     }
     function fmtDate(iso) {
       const d = new Date(iso);
-      return { day: d.getUTCDate(), mon: MONTHS[d.getUTCMonth()], group: `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}` };
+      const hasTime = iso.includes('T') && !iso.endsWith('T00:00:00.000Z');
+      let time = '';
+      if (hasTime) {
+        let h = d.getHours(), m = d.getMinutes();
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12 || 12;
+        time = `${h}${m ? ':' + String(m).padStart(2,'0') : ''} ${ampm}`;
+      }
+      return { day: d.getUTCDate(), mon: MONTHS[d.getUTCMonth()], group: `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`, time };
     }
 
     const observer = new IntersectionObserver(
@@ -413,6 +421,7 @@
                     <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${fd.mon}</div>
                   </div>
                 </div>
+                ${fd.time ? `<p class="text-sm font-semibold mb-3 flex items-center gap-1.5" style="color:var(--muted)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${fd.time}</p>` : ''}
                 <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">${escHtml(f.Name)}</h2>
                 ${f.Description ? `<p class="text-sm leading-[1.8] mb-6 font-light" style="color:var(--muted)">${escHtml(f.Description)}</p>` : ''}
                 <a href="index.html#connect" class="btn-fire px-6 py-3 text-sm inline-flex items-center gap-2 self-start">
@@ -451,6 +460,7 @@
                 <div class="flex-1 min-w-0">
                   <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full mb-1 inline-block" style="background:${cs.bg};border:1px solid ${cs.border};color:${cs.color}">${escHtml(cat)}</span>
                   <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.Name)}</h3>
+                  ${ev._d.time ? `<p class="text-xs font-semibold mt-0.5 flex items-center gap-1" style="color:var(--muted)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${ev._d.time}</p>` : ''}
                   ${ev.Description ? `<p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.Description)}</p>` : ''}
                 </div>
               </div>`;
