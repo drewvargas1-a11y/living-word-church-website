@@ -233,11 +233,11 @@
         <!-- Filter tabs -->
         <div class="flex flex-wrap gap-1.5 sm:gap-2 fade-up delay-1">
           <button class="filter-tab active" onclick="filterEvents('all', this)">All</button>
-          <button class="filter-tab" onclick="filterEvents('church', this)">Church</button>
-          <button class="filter-tab" onclick="filterEvents('kids', this)">Kids</button>
-          <button class="filter-tab" onclick="filterEvents('nexgen', this)">NexGen</button>
+          <button class="filter-tab" onclick="filterEvents('whole church', this)">Church</button>
+          <button class="filter-tab" onclick="filterEvents('nexgen youth', this)">NexGen</button>
           <button class="filter-tab" onclick="filterEvents('nexlevel', this)">NexLevel</button>
-          <button class="filter-tab" onclick="filterEvents('women', this)">Women</button>
+          <button class="filter-tab" onclick="filterEvents('vessels of light', this)">Vessels of Light</button>
+          <button class="filter-tab" onclick="filterEvents('women', this)">Women's</button>
         </div>
       </div>
 
@@ -343,12 +343,23 @@
     );
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+    const CATEGORY_COLORS = {
+      'whole church':    { color:'#FF7A40', bg:'rgba(255,77,0,0.12)',   border:'rgba(255,77,0,0.3)' },
+      'nexgen youth':    { color:'#C97AFF', bg:'rgba(201,122,255,0.12)',border:'rgba(201,122,255,0.3)' },
+      'nexlevel':        { color:'#FFB800', bg:'rgba(255,184,0,0.12)',  border:'rgba(255,184,0,0.3)' },
+      'vessels of light':{ color:'#00C2FF', bg:'rgba(0,194,255,0.12)', border:'rgba(0,194,255,0.3)' },
+      "women's ministry":{ color:'#FF7A40', bg:'rgba(255,77,0,0.12)',  border:'rgba(255,77,0,0.3)' },
+    };
+    function categoryStyle(cat) {
+      return CATEGORY_COLORS[(cat||'').toLowerCase()] || CATEGORY_COLORS['whole church'];
+    }
+
     function filterEvents(ministry, btn) {
       document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
       let visible = 0;
       document.querySelectorAll('[data-ministry]').forEach(card => {
-        const match = ministry === 'all' || (card.dataset.ministry||'').includes(ministry);
+        const match = ministry === 'all' || (card.dataset.ministry||'').toLowerCase().includes(ministry.toLowerCase());
         card.style.display = match ? '' : 'none';
         if (match) visible++;
       });
@@ -428,14 +439,17 @@
             <div class="flex flex-col gap-3">`;
           evs.forEach((ev, i) => {
             const img = ev.Image?.[0]?.url || '';
+            const cat = ev.Category || 'Whole Church';
+            const cs  = categoryStyle(cat);
             html += `
-              <div class="event-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 fade-up delay-${Math.min(i+1,6)}" data-ministry="church">
-                <div class="date-block" style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.22)">
-                  <div class="font-display font-bold text-xl leading-none" style="color:var(--fire)">${ev._d.day}</div>
+              <div class="event-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 fade-up delay-${Math.min(i+1,6)}" data-ministry="${escHtml(cat)}">
+                <div class="date-block" style="background:${cs.bg};border:1px solid ${cs.border}">
+                  <div class="font-display font-bold text-xl leading-none" style="color:${cs.color}">${ev._d.day}</div>
                   <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${ev._d.mon}</div>
                 </div>
                 ${img ? `<img src="${escHtml(img)}" alt="${escHtml(ev.Name)}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 hidden sm:block" />` : ''}
                 <div class="flex-1 min-w-0">
+                  <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full mb-1 inline-block" style="background:${cs.bg};border:1px solid ${cs.border};color:${cs.color}">${escHtml(cat)}</span>
                   <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.Name)}</h3>
                   ${ev.Description ? `<p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.Description)}</p>` : ''}
                 </div>
