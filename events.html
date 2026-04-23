@@ -337,7 +337,7 @@
       const hasTime = iso.includes('T') && !iso.endsWith('T00:00:00.000Z');
       let time = '';
       if (hasTime) {
-        let h = d.getHours(), m = d.getMinutes();
+        let h = d.getUTCHours(), m = d.getUTCMinutes();
         const ampm = h >= 12 ? 'PM' : 'AM';
         h = h % 12 || 12;
         time = `${h}${m ? ':' + String(m).padStart(2,'0') : ''} ${ampm}`;
