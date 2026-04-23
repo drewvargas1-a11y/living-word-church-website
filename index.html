@@ -668,6 +668,27 @@
     </div>
   </div>
 
+  <!-- ==================== SPECIAL EVENTS ==================== -->
+  <section id="events" class="relative overflow-hidden py-24 md:py-32 section-card">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <div class="fire-divider mb-6 fade-up"></div>
+      <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--fire)">Coming Up</p>
+      <h2 class="font-display font-bold mb-14 fade-up delay-2" style="font-size:clamp(2.2rem,5vw,4rem);letter-spacing:-0.03em;color:var(--text)">
+        Special Events
+      </h2>
+
+      <!-- Events grid — populated by JS -->
+      <div id="events-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Empty state -->
+      <div id="events-empty" class="hidden text-center py-16">
+        <p class="text-lg font-light" style="color:var(--muted)">No upcoming events right now — check back soon.</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ==================== WELCOME / ABOUT ==================== -->
   <section id="welcome" class="relative overflow-hidden py-24 md:py-32 section-card">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -1647,6 +1668,52 @@
     }
 
     fetchAndRenderVideos();
+
+    // Special Events — Airtable
+    (async () => {
+      const WORKER_URL = 'https://lwc-events.drewvargas1.workers.dev';
+      const grid       = document.getElementById('events-grid');
+      const empty      = document.getElementById('events-empty');
+      if (!grid) return;
+
+      try {
+        const today = new Date(); today.setHours(0,0,0,0);
+        const res   = await fetch(
+          `${WORKER_URL}?filterByFormula=AND({Active}=1)&sort[0][field]=Start+Date&sort[0][direction]=asc`
+        );
+        const data = await res.json();
+        const records = (data.records || []).filter(r => {
+          const end = r.fields['End Date'] ? new Date(r.fields['End Date']) : null;
+          return !end || end >= today;
+        });
+
+        if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
+
+        grid.innerHTML = records.map((r, i) => {
+          const f      = r.fields;
+          const img    = f.Image?.[0]?.url || '';
+          const name   = f.Name || 'Upcoming Event';
+          const desc   = f.Description || '';
+          const start  = f['Start Date'] ? new Date(f['Start Date']).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
+          const end    = f['End Date']   ? new Date(f['End Date']).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '';
+          const dates  = start && end ? `${start} – ${end}` : start;
+          return `
+          <div class="rounded-2xl overflow-hidden fade-up" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition-delay:${i*0.08}s">
+            ${img ? `<div class="relative h-52 overflow-hidden"><img src="${img}" alt="${name}" class="w-full h-full object-cover" style="filter:brightness(0.9)"><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,10,26,0.7),transparent)"></div></div>` : ''}
+            <div class="p-6">
+              ${dates ? `<p class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--fire)">${dates}</p>` : ''}
+              <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text);letter-spacing:-0.02em">${name}</h3>
+              ${desc ? `<p class="text-sm font-light leading-relaxed" style="color:var(--muted)">${desc}</p>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+
+        document.querySelectorAll('#events-grid .fade-up').forEach(el => observer.observe(el));
+      } catch(e) {
+        grid.classList.add('hidden');
+        empty.classList.remove('hidden');
+      }
+    })();
 
     // Pause hero video on slow/poor connections
     const heroVid = document.getElementById('hero-video');

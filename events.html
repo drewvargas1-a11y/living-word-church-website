@@ -306,117 +306,39 @@
   </footer>
 
   <script>
-    // ─── Google Sheets CSV source ───────────────────────────────────────────────
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRaQQ2RcaBnVYZk60YtPnF9_dBS6wX15kp72rTDWOudFQ7f1U7d76-OB6KGpMJNa-RrbZOEM4_gaUSK/pub?gid=0&single=true&output=csv';
-
-    // ─── Ministry styling config ────────────────────────────────────────────────
-    const MINISTRY_MAP = {
-      church:   { badge:'badge-church',   color:'var(--fire)',   bg:'rgba(255,77,0,0.1)',    border:'rgba(255,77,0,0.22)',    label:'Whole Church' },
-      kids:     { badge:'badge-kids',     color:'var(--sky)',    bg:'rgba(0,194,255,0.1)',   border:'rgba(0,194,255,0.22)',   label:'Kids' },
-      nexgen:   { badge:'badge-nexgen',   color:'var(--purple)', bg:'rgba(201,122,255,0.1)',border:'rgba(201,122,255,0.22)', label:'NexGen Youth' },
-      nexlevel: { badge:'badge-nexlevel', color:'var(--gold)',   bg:'rgba(255,184,0,0.1)',  border:'rgba(255,184,0,0.22)',  label:'NexLevel' },
-      women:    { badge:'badge-women',    color:'var(--fire)',   bg:'rgba(255,77,0,0.1)',   border:'rgba(255,77,0,0.22)',   label:'Women' },
-    };
-    const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-    // ─── CSV parser (handles quoted fields with commas/newlines) ────────────────
-    function parseCSV(text) {
-      const rows = [];
-      const normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-      const lines = normalized.split('\n');
-      for (const line of lines) {
-        const cols = [];
-        let cur = '', inQ = false;
-        for (let i = 0; i < line.length; i++) {
-          const ch = line[i];
-          if (ch === '"') {
-            if (inQ && line[i + 1] === '"') { cur += '"'; i++; }
-            else { inQ = !inQ; }
-          } else if (ch === ',' && !inQ) {
-            cols.push(cur); cur = '';
-          } else {
-            cur += ch;
-          }
-        }
-        cols.push(cur);
-        rows.push(cols);
-      }
-      return rows;
-    }
-
-    // ─── Helpers ────────────────────────────────────────────────────────────────
-    function monthShort(val) {
-      const n = parseInt(val, 10);
-      return (!isNaN(n) && n >= 1 && n <= 12) ? MONTH_SHORT[n - 1] : val;
-    }
-
-    function ministryCfg(key) {
-      return MINISTRY_MAP[(key || '').trim().toLowerCase()] || MINISTRY_MAP.church;
-    }
-
-    function badgesHtml(ministryStr) {
-      return (ministryStr || 'church').split(/\s+/).filter(Boolean).map(m => {
-        const c = ministryCfg(m);
-        return `<span class="text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full ${c.badge}">${c.label}</span>`;
-      }).join('');
-    }
+    const WORKER_URL = 'https://lwc-events.drewvargas1.workers.dev';
+    const MONTHS   = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
     function escHtml(s) {
-      return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function fmtDate(iso) {
+      const d = new Date(iso);
+      return { day: d.getUTCDate(), mon: MONTHS[d.getUTCMonth()], group: `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}` };
     }
 
-    // Returns a download/register button if the event has a link, empty string otherwise
-    function linkBtnHtml(ev, size) {
-      if (!ev.link_url) return '';
-      const label = ev.link_label || 'Learn More';
-      const isDownload = /\.(pdf|docx?|xlsx?|pptx?|zip)(\?|$)/i.test(ev.link_url);
-      const icon = isDownload
-        ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`
-        : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>`;
-      const px = size === 'sm' ? 'px-3.5 py-1.5 text-xs' : 'px-6 py-3 text-sm';
-      return `<a href="${escHtml(ev.link_url)}" target="_blank" rel="noopener noreferrer"
-                 class="inline-flex items-center gap-1.5 ${px} rounded-full font-semibold"
-                 style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);color:var(--gold);
-                        transition:background 0.2s ease,border-color 0.2s ease"
-                 onmouseover="this.style.background='rgba(255,184,0,0.22)';this.style.borderColor='rgba(255,184,0,0.5)'"
-                 onmouseout="this.style.background='rgba(255,184,0,0.12)';this.style.borderColor='rgba(255,184,0,0.3)'">
-               ${escHtml(label)} ${icon}
-             </a>`;
-    }
-
-    // ─── Fade-up observer (declared here so loadEvents can reuse it) ────────────
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1 }
+    );
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // ─── Filter logic ───────────────────────────────────────────────────────────
     function filterEvents(ministry, btn) {
       document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
-
-      const cards = document.querySelectorAll('[data-ministry]');
       let visible = 0;
-      cards.forEach(card => {
-        const match = ministry === 'all' || (card.dataset.ministry || '').includes(ministry);
+      document.querySelectorAll('[data-ministry]').forEach(card => {
+        const match = ministry === 'all' || (card.dataset.ministry||'').includes(ministry);
         card.style.display = match ? '' : 'none';
-
-        // Also hide/show the month heading if all cards in that group are hidden
         if (match) visible++;
       });
-
-      // Hide month headings that have no visible cards underneath
-      document.querySelectorAll('.month-group').forEach(group => {
-        const cards = group.querySelectorAll('[data-ministry]');
-        const anyVisible = Array.from(cards).some(c => c.style.display !== 'none');
-        group.style.display = anyVisible ? '' : 'none';
+      document.querySelectorAll('.month-group').forEach(g => {
+        const any = Array.from(g.querySelectorAll('[data-ministry]')).some(c => c.style.display !== 'none');
+        g.style.display = any ? '' : 'none';
       });
-
       document.getElementById('empty-state').classList.toggle('hidden', visible > 0);
     }
 
-    // ─── Main loader ────────────────────────────────────────────────────────────
     async function loadEvents() {
       const featuredEl  = document.getElementById('featured-section');
       const containerEl = document.getElementById('events-container');
@@ -424,166 +346,96 @@
       const wrapperEl   = document.getElementById('featured-section-wrapper');
 
       try {
-        const resp = await fetch(SHEET_CSV_URL);
-        if (!resp.ok) throw new Error('Network response was not ok');
-        const text = await resp.text();
-        const rows = parseCSV(text);
+        const today = new Date(); today.setHours(0,0,0,0);
+        const res = await fetch(
+          `${WORKER_URL}?filterByFormula=AND({Active}=1)&sort[0][field]=Start+Date&sort[0][direction]=asc`
+        );
+        const data = await res.json();
+        const records = (data.records||[]).filter(r => {
+          const end = r.fields['End Date'] ? new Date(r.fields['End Date']) : null;
+          return !end || end >= today;
+        });
 
-        if (rows.length < 2) {
+        if (!records.length) {
           wrapperEl.style.display = 'none';
           containerEl.innerHTML = '';
           emptyEl.classList.remove('hidden');
           return;
         }
 
-        // Build header map
-        const headers = rows[0].map(h => h.trim().toLowerCase());
-        const col = name => headers.indexOf(name);
-
-        // Parse event rows — skip rows without a date or title
-        const events = [];
-        for (let i = 1; i < rows.length; i++) {
-          const r = rows[i];
-          const date  = (r[col('date')]        || '').trim();
-          const title = (r[col('title')]       || '').trim();
-          if (!date || !title) continue;
-          events.push({
-            date,
-            day:         (r[col('day')]         || '').trim(),
-            month:       (r[col('month')]       || '').trim(),
-            month_group: (r[col('month_group')] || '').trim(),
-            title,
-            description: (r[col('description')] || '').trim(),
-            time:        (r[col('time')]         || '').trim(),
-            location:    (r[col('location')]     || '').trim(),
-            ministry:    (r[col('ministry')]     || 'church').trim(),
-            link_url:    (r[col('link_url')]     || '').trim(),
-            link_label:  (r[col('link_label')]   || '').trim(),
-          });
-        }
-
-        if (events.length === 0) {
-          wrapperEl.style.display = 'none';
-          containerEl.innerHTML = '';
-          emptyEl.classList.remove('hidden');
-          return;
-        }
-
-        // Sort ascending by date
-        events.sort((a, b) => a.date.localeCompare(b.date));
-
-        // Featured = first event with date >= today, else first event
-        const today = new Date().toISOString().slice(0, 10);
-        const featured = events.find(e => e.date >= today) || events[0];
-
-        // ── Render featured card ─────────────────────────────────────────────
-        const fCfg = ministryCfg(featured.ministry.split(/\s+/)[0]);
+        // Featured = first record
+        const f  = records[0].fields;
+        const fd = fmtDate(f['Start Date']);
+        const fImg = f.Image?.[0]?.url || 'https://placehold.co/700x500/1a0800/FF4D00?text=Featured+Event';
         featuredEl.innerHTML = `
           <div class="featured-card rounded-3xl overflow-hidden fade-up delay-1">
             <div class="grid md:grid-cols-2">
               <div class="relative" style="min-height:280px">
-                <img src="https://placehold.co/700x500/1a0800/FF4D00?text=Featured+Event"
-                     alt="${escHtml(featured.title)}"
-                     class="w-full h-full object-cover" style="min-height:280px" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(26,8,0,0.9));mix-blend-mode:multiply"></div>
-                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,8,0,0.6) 0%,transparent 40%)"></div>
-                <div class="absolute top-5 left-5">${badgesHtml(featured.ministry)}</div>
+                <img src="${escHtml(fImg)}" alt="${escHtml(f.Name)}" class="w-full h-full object-cover" style="min-height:280px;object-fit:cover" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(26,8,0,0.9))"></div>
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,8,0,0.6),transparent 40%)"></div>
               </div>
               <div class="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
                 <div class="flex items-center gap-3 mb-5">
                   <div class="date-block" style="background:rgba(255,77,0,0.15);border:1px solid rgba(255,77,0,0.3)">
-                    <div class="font-display font-bold text-2xl leading-none" style="color:var(--fire)">${escHtml(featured.day)}</div>
-                    <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${escHtml(monthShort(featured.month))}</div>
-                  </div>
-                  <div class="flex flex-col gap-1">
-                    ${featured.time ? `<div class="flex items-center gap-2 text-base font-semibold" style="color:var(--text)">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                      ${escHtml(featured.time)}</div>` : ''}
+                    <div class="font-display font-bold text-2xl leading-none" style="color:var(--fire)">${fd.day}</div>
+                    <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${fd.mon}</div>
                   </div>
                 </div>
-                <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">
-                  ${escHtml(featured.title)}
-                </h2>
-                ${featured.location ? `<div class="flex items-center gap-2 text-base font-semibold mb-3" style="color:var(--gold)">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  ${escHtml(featured.location)}</div>` : ''}
-                <p class="text-sm leading-[1.8] mb-6 font-light" style="color:var(--muted)">
-                  ${escHtml(featured.description)}
-                </p>
-                <div class="flex flex-wrap gap-3 items-center">
-                  <a href="index.html#connect" class="btn-fire px-6 py-3 text-sm inline-flex items-center gap-2">
-                    Plan Your Visit
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                  </a>
-                  ${linkBtnHtml(featured, 'lg')}
-                </div>
+                <h2 class="font-display font-bold mb-3" style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">${escHtml(f.Name)}</h2>
+                ${f.Description ? `<p class="text-sm leading-[1.8] mb-6 font-light" style="color:var(--muted)">${escHtml(f.Description)}</p>` : ''}
+                <a href="index.html#connect" class="btn-fire px-6 py-3 text-sm inline-flex items-center gap-2 self-start">
+                  Plan Your Visit
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
               </div>
             </div>
           </div>`;
 
-        // ── Group events by month_group ──────────────────────────────────────
+        // Group remaining by month
         const grouped = new Map();
-        for (const ev of events) {
-          const g = ev.month_group || ev.date.slice(0, 7);
-          if (!grouped.has(g)) grouped.set(g, []);
-          grouped.get(g).push(ev);
-        }
+        records.forEach(r => {
+          const d = fmtDate(r.fields['Start Date']);
+          if (!grouped.has(d.group)) grouped.set(d.group, []);
+          grouped.get(d.group).push({ ...r.fields, _d: d });
+        });
 
-        // ── Render event list ────────────────────────────────────────────────
         let html = '';
-        let groupIdx = 0;
-        for (const [group, evList] of grouped) {
-          html += `<div class="month-group${groupIdx > 0 ? ' mt-10' : ''}">
+        let gi = 0;
+        for (const [group, evs] of grouped) {
+          html += `<div class="month-group${gi > 0 ? ' mt-10' : ''}">
             <h3 class="font-semibold text-xs uppercase tracking-widest mb-4 fade-up" style="color:var(--fire)">${escHtml(group)}</h3>
             <div class="flex flex-col gap-3">`;
-
-          evList.forEach((ev, i) => {
-            const cfg     = ministryCfg(ev.ministry.split(/\s+/)[0]);
-            const delayClass = i > 0 ? ` delay-${Math.min(i, 6)}` : '';
-            const ministryKey = ev.ministry.toLowerCase();
+          evs.forEach((ev, i) => {
+            const img = ev.Image?.[0]?.url || '';
             html += `
-              <div class="event-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 fade-up${delayClass}"
-                   data-ministry="${escHtml(ministryKey)}">
-                <div class="date-block" style="background:${cfg.bg};border:1px solid ${cfg.border}">
-                  <div class="font-display font-bold text-xl leading-none" style="color:${cfg.color}">${escHtml(ev.day)}</div>
-                  <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${escHtml(monthShort(ev.month))}</div>
+              <div class="event-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 fade-up delay-${Math.min(i+1,6)}" data-ministry="church">
+                <div class="date-block" style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.22)">
+                  <div class="font-display font-bold text-xl leading-none" style="color:var(--fire)">${ev._d.day}</div>
+                  <div class="text-xs uppercase tracking-wider mt-0.5 font-semibold" style="color:var(--muted)">${ev._d.mon}</div>
                 </div>
+                ${img ? `<img src="${escHtml(img)}" alt="${escHtml(ev.Name)}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 hidden sm:block" />` : ''}
                 <div class="flex-1 min-w-0">
-                  <div class="flex flex-wrap items-center gap-2 mb-1">${badgesHtml(ev.ministry)}</div>
-                  <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.title)}</h3>
-                  <div class="flex flex-wrap items-center gap-3 mt-1">
-                    ${ev.time ? `<span class="flex items-center gap-1.5 text-sm font-semibold" style="color:var(--text)">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                      ${escHtml(ev.time)}</span>` : ''}
-                    ${ev.location ? `<span class="flex items-center gap-1.5 text-sm font-semibold" style="color:var(--gold)">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                      ${escHtml(ev.location)}</span>` : ''}
-                  </div>
-                  <p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.description)}</p>
-                  ${ev.link_url ? `<div class="mt-2">${linkBtnHtml(ev, 'sm')}</div>` : ''}
+                  <h3 class="font-display font-bold text-lg leading-snug" style="color:var(--text)">${escHtml(ev.Name)}</h3>
+                  ${ev.Description ? `<p class="text-sm font-light mt-1" style="color:var(--muted)">${escHtml(ev.Description)}</p>` : ''}
                 </div>
               </div>`;
           });
-
           html += `</div></div>`;
-          groupIdx++;
+          gi++;
         }
 
         containerEl.innerHTML = html;
         emptyEl.classList.add('hidden');
-
-        // Observe newly added fade-up elements
         containerEl.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         featuredEl.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-      } catch (err) {
-        console.error('Failed to load events:', err);
+      } catch(err) {
+        console.error(err);
         wrapperEl.style.display = 'none';
-        containerEl.innerHTML = `
-          <div class="text-center py-12">
-            <p class="font-display font-bold text-xl mb-2" style="color:var(--text)">Couldn't load events right now</p>
-            <p class="text-sm" style="color:var(--muted)">Please check back soon or contact the church office.</p>
-          </div>`;
+        containerEl.innerHTML = `<div class="text-center py-12">
+          <p class="font-display font-bold text-xl mb-2" style="color:var(--text)">Couldn't load events right now</p>
+          <p class="text-sm" style="color:var(--muted)">Please check back soon.</p></div>`;
       }
     }
 
