@@ -1038,6 +1038,29 @@
     </div>
   </section>
 
+  <!-- ==================== SPECIAL EVENTS ==================== -->
+  <section id="events" class="relative overflow-hidden py-12 md:py-16 section-card">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10">
+
+      <div class="flex items-center justify-between mb-6 fade-up">
+        <div class="flex items-center gap-3">
+          <div class="w-6 h-1 rounded-full" style="background:linear-gradient(90deg,var(--fire),var(--gold))"></div>
+          <p class="font-semibold uppercase tracking-widest text-xs" style="color:var(--fire)">Coming Up</p>
+        </div>
+        <a href="events.html" class="text-xs font-semibold uppercase tracking-widest" style="color:var(--muted);transition:color 0.2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">All Events →</a>
+      </div>
+
+      <!-- Featured event card — populated by JS -->
+      <div id="events-grid"></div>
+
+      <!-- Empty state -->
+      <div id="events-empty" class="hidden text-center py-8">
+        <p class="text-sm font-light" style="color:var(--muted)">No upcoming events — check back soon.</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ==================== LEAD PASTORS ==================== -->
   <section class="relative overflow-hidden py-20 md:py-28"
            style="background:linear-gradient(180deg,#0A0A1A 0%,#100820 50%,#0A0A1A 100%)">
@@ -1236,29 +1259,6 @@
           <div class="font-semibold text-sm mb-1" style="color:var(--text)">Safe & Secure</div>
           <p class="text-xs leading-relaxed font-light" style="color:var(--muted)">Powered by Subsplash — trusted, encrypted giving used by thousands of churches.</p>
         </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ==================== SPECIAL EVENTS ==================== -->
-  <section id="events" class="relative overflow-hidden py-12 md:py-16 section-card">
-    <div class="max-w-4xl mx-auto px-6 lg:px-10">
-
-      <div class="flex items-center justify-between mb-6 fade-up">
-        <div class="flex items-center gap-3">
-          <div class="w-6 h-1 rounded-full" style="background:linear-gradient(90deg,var(--fire),var(--gold))"></div>
-          <p class="font-semibold uppercase tracking-widest text-xs" style="color:var(--fire)">Coming Up</p>
-        </div>
-        <a href="events.html" class="text-xs font-semibold uppercase tracking-widest" style="color:var(--muted);transition:color 0.2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">All Events →</a>
-      </div>
-
-      <!-- Featured event card — populated by JS -->
-      <div id="events-grid"></div>
-
-      <!-- Empty state -->
-      <div id="events-empty" class="hidden text-center py-8">
-        <p class="text-sm font-light" style="color:var(--muted)">No upcoming events — check back soon.</p>
       </div>
 
     </div>
