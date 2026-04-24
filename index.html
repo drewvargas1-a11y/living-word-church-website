@@ -1697,7 +1697,8 @@
       if (!grid) return;
 
       try {
-        const today = new Date(); today.setHours(0,0,0,0);
+        const _n = new Date();
+        const todayUTC = Date.UTC(_n.getUTCFullYear(), _n.getUTCMonth(), _n.getUTCDate());
         const res   = await fetch(
           `${WORKER_URL}?filterByFormula=AND({Active}=1)&sort[0][field]=Start+Date&sort[0][direction]=asc`
         );
@@ -1706,7 +1707,8 @@
           const start = r.fields['Start Date'] ? new Date(r.fields['Start Date']) : null;
           const end   = r.fields['End Date']   ? new Date(r.fields['End Date'])   : null;
           const cutoff = end || start;
-          return !cutoff || cutoff >= today;
+          if (!cutoff) return true;
+          return Date.UTC(cutoff.getUTCFullYear(), cutoff.getUTCMonth(), cutoff.getUTCDate()) >= todayUTC;
         });
 
         if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
@@ -1776,13 +1778,14 @@
       const empty = document.getElementById('highlights-empty');
       if (!grid) return;
       try {
-        const today = new Date(); today.setHours(0,0,0,0);
-        const cutoff = new Date(today); cutoff.setDate(cutoff.getDate() - 14);
+        const _hn = new Date();
+        const hlTodayUTC  = Date.UTC(_hn.getUTCFullYear(), _hn.getUTCMonth(), _hn.getUTCDate());
+        const hlCutoffUTC = hlTodayUTC - 14 * 24 * 60 * 60 * 1000;
         const res  = await fetch(`${WORKER_URL}/highlights?filterByFormula={Active}=1&sort[0][field]=Date&sort[0][direction]=desc`);
         const data = await res.json();
         const records = (data.records || []).filter(r => {
           const d = r.fields['Date'] ? new Date(r.fields['Date']) : null;
-          return d && d >= cutoff;
+          return d && Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) >= hlCutoffUTC;
         });
         if (!records.length) { grid.classList.add('hidden'); empty.classList.remove('hidden'); return; }
 
