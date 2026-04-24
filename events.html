@@ -402,7 +402,9 @@
         const data = await res.json();
         const records = (data.records||[]).filter(r => {
           const start = r.fields['Start Date'] ? new Date(r.fields['Start Date']) : null;
-          return !start || start >= today;
+          const end   = r.fields['End Date']   ? new Date(r.fields['End Date'])   : null;
+          const cutoff = end || start;
+          return !cutoff || cutoff >= today;
         });
 
         if (!records.length) {
