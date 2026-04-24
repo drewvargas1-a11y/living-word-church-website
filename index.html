@@ -1716,8 +1716,34 @@
         const name    = f.Name || 'Upcoming Event';
         const desc = f.Description || '';
         const cat  = f.Category || '';
-        const dateObj = f['Start Date'] ? new Date(f['Start Date']) : null;
-        const dateStr = dateObj ? dateObj.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}) : '';
+        const startObj = f['Start Date'] ? new Date(f['Start Date']) : null;
+        const endObj   = f['End Date']   ? new Date(f['End Date'])   : null;
+        const fmtOpts  = {weekday:'long',month:'long',day:'numeric',year:'numeric'};
+        let dateStr = startObj ? startObj.toLocaleDateString('en-US', fmtOpts) : '';
+        if (endObj) {
+          const sameDay = startObj && endObj.getUTCDate() === startObj.getUTCDate() &&
+                          endObj.getUTCMonth() === startObj.getUTCMonth() &&
+                          endObj.getUTCFullYear() === startObj.getUTCFullYear();
+          if (!sameDay) {
+            dateStr = (startObj ? startObj.toLocaleDateString('en-US',{month:'long',day:'numeric'}) : '') +
+                      ' – ' + endObj.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+          } else {
+            // same day — append end time if present
+            const endHasTime = f['End Date'] && !f['End Date'].endsWith('T00:00:00.000Z') && f['End Date'].includes('T');
+            if (endHasTime) {
+              let h = endObj.getUTCHours(), m = endObj.getUTCMinutes();
+              const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+              const startHasTime = f['Start Date'] && !f['Start Date'].endsWith('T00:00:00.000Z') && f['Start Date'].includes('T');
+              if (startHasTime) {
+                let sh = startObj.getUTCHours(), sm = startObj.getUTCMinutes();
+                const sap = sh >= 12 ? 'PM' : 'AM'; sh = sh % 12 || 12;
+                dateStr += ` · ${sh}${sm?':'+String(sm).padStart(2,'0'):''} ${sap} – ${h}${m?':'+String(m).padStart(2,'0'):''} ${ap}`;
+              } else {
+                dateStr += ` · ends ${h}${m?':'+String(m).padStart(2,'0'):''} ${ap}`;
+              }
+            }
+          }
+        }
 
         grid.innerHTML = `
           <a href="events.html" class="flex items-center gap-5 rounded-2xl p-5 fade-up"
