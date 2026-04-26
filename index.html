@@ -1517,6 +1517,9 @@
       return { live: false, nextServiceUTC };
     }
 
+    const YT_API_KEY    = 'AIzaSyCGFjxKbvyez4f9LRWN-MWRsY1kGZsyf3Y';
+    const YT_CHANNEL_ID = 'UCBqNGail7l9oBS7bmlo1bWQ';
+
     function updateCountdown() {
       const { live, nextServiceUTC } = getServiceStatus();
       const cdState   = document.getElementById('cd-state');
@@ -1525,15 +1528,24 @@
       const liveBadge = document.querySelector('#player-wrapper .absolute.top-3');
       const streamOn  = iframe && !iframe.classList.contains('hidden') && iframe.src;
 
-      liveState.classList.add('hidden');
       if (liveBadge) liveBadge.style.display = live ? 'flex' : 'none';
 
-      // Show countdown only when stream is not playing
+      // iframe is playing — hide everything behind it
       if (streamOn) {
         cdState.classList.add('hidden');
+        liveState.classList.add('hidden');
         return;
       }
 
+      // Service is live but stream hasn't loaded yet — show the play button
+      if (live) {
+        cdState.classList.add('hidden');
+        liveState.classList.remove('hidden');
+        return;
+      }
+
+      // Not live — show countdown
+      liveState.classList.add('hidden');
       cdState.classList.remove('hidden');
 
       if (!nextServiceUTC) return;
@@ -1551,13 +1563,12 @@
       document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
     }
 
-    const YT_CHANNEL_ID = 'UCBqNGail7l9oBS7bmlo1bWQ';
-
-    // Load live stream — searches for active broadcast using hardcoded channel ID
+    // Load live stream — fetches active broadcast from YouTube Data API
     async function loadStream() {
-      const poster  = document.getElementById('stream-poster');
-      const iframe  = document.getElementById('live-iframe');
-      const cdState = document.getElementById('cd-state');
+      const poster    = document.getElementById('stream-poster');
+      const iframe    = document.getElementById('live-iframe');
+      const liveState = document.getElementById('live-state');
+      const cdState   = document.getElementById('cd-state');
 
       try {
         const res  = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${YT_CHANNEL_ID}&part=id&eventType=live&type=video`);
@@ -1570,19 +1581,22 @@
         iframe.classList.remove('hidden');
       } catch (err) {
         console.warn('Live stream fetch failed:', err.message);
-        cdState.classList.remove('hidden');
+        // Fall back to showing the manual play button during service hours
+        if (getServiceStatus().live) {
+          liveState.classList.remove('hidden');
+          cdState.classList.add('hidden');
+        } else {
+          cdState.classList.remove('hidden');
+        }
       }
     }
 
-    loadStream();
+    // Auto-load embed if service is already live when page opens
+    if (getServiceStatus().live) loadStream();
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
     // ── YouTube Previous Messages ─────────────────────────────────────────────
-    // ⚠️  Paste your YouTube Data API v3 key below.
-    //     Get one free at: https://console.cloud.google.com
-    //     (Create project → Enable "YouTube Data API v3" → Credentials → API key)
-    const YT_API_KEY = 'AIzaSyCGFjxKbvyez4f9LRWN-MWRsY1kGZsyf3Y';
     const YT_HANDLE  = '@livingwordchurch9763';
 
     const CARD_GRADS = [
