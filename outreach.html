@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Outreach — Living Word Church</title>
+  <meta name="description" content="Living Word Church reaches beyond the walls through community outreach. Learn about our Jail Ministry and how you can get involved." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:   #FF4D00;
+      --gold:   #FFB800;
+      --sky:    #00C2FF;
+      --purple: #8B2BE2;
+      --deep:   #0A0A1A;
+      --card:   #13132A;
+      --card2:  #1A1A35;
+      --text:   #F0F0FF;
+      --muted:  #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50%  0%,  rgba(255,77,0,0.22)  0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 15%  80%, rgba(255,184,0,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 85%  70%, rgba(255,77,0,0.10)  0%, transparent 50%),
+        var(--deep);
+    }
+
+    .section-deep  { background: var(--deep); }
+    .section-card  { background: var(--card); }
+    .section-card2 { background: var(--card2); }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      border-radius: 2px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); opacity: 0.25;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(30px,-30px) scale(1.08); }
+    }
+
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.20s; }
+    .delay-3 { transition-delay: 0.30s; }
+    .delay-4 { transition-delay: 0.40s; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--gold); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--fire), #FF7A00);
+      box-shadow: 0 4px 20px rgba(255,77,0,0.45), 0 1px 4px rgba(255,77,0,0.3);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(255,77,0,0.55); }
+    .btn-primary:active { transform: scale(0.99); }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #FF8C00, #FFB800);
+      color: #0A0A1A; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 24px rgba(255,184,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-gold:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(255,184,0,0.45); }
+
+    .outreach-card {
+      border-radius: 1.5rem; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    }
+    .outreach-card:hover { transform: translateY(-6px); }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.92);border-bottom:1px solid rgba(255,184,0,0.15);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <div class="flex items-center gap-2">
+      <span class="text-xl">🌍</span>
+      <span class="font-display font-bold text-sm sm:text-base" style="color:var(--text)">Community Outreach</span>
+    </div>
+    <a href="index.html#connect" class="btn-gold px-4 sm:px-5 py-2 text-xs sm:text-sm hidden sm:inline-flex">Get Involved</a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-bg grain relative overflow-hidden pt-36 pb-24 md:pt-44 md:pb-32">
+    <div class="orb w-96 h-96 -top-20 -left-20" style="background:#FF4D00"></div>
+    <div class="orb w-80 h-80 bottom-0 right-0 opacity-15" style="background:#FFB800;animation-delay:3.5s"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 fade-up delay-1"
+           style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.28);color:var(--fire)">
+        ✦ Living Word Church · Adairville, KY
+      </div>
+      <h1 class="font-display font-bold mb-6 fade-up delay-2"
+          style="font-size:clamp(2.6rem,7vw,5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Beyond<br/>
+        <span style="color:var(--gold)">the Walls</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-[1.75] fade-up delay-3" style="color:var(--muted)">
+        The Church doesn't stop at our doors. We go where the need is — into our community, into dark places — because every person deserves to know they are loved, seen, and not forgotten.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== MISSION STATEMENT ==================== -->
+  <section class="section-card grain relative overflow-hidden py-16 md:py-20">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(255,184,0,0.06) 0%,transparent 70%)"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
+      <p class="font-display font-bold text-2xl md:text-3xl leading-snug fade-up" style="color:var(--text);letter-spacing:-0.02em">
+        <span style="font-size:4rem;line-height:0;vertical-align:-2rem;color:rgba(255,77,0,0.3);margin-right:4px">"</span>
+        Go into all the world and preach the gospel to every creature.
+      </p>
+      <div class="inline-flex items-center gap-2 mt-6 fade-up delay-1">
+        <div class="h-px w-8" style="background:var(--gold)"></div>
+        <span class="font-semibold text-sm tracking-wider" style="color:var(--gold)">Mark 16:15</span>
+        <div class="h-px w-8" style="background:var(--gold)"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== OUTREACH INITIATIVES ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--fire)">What We Do</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Our Outreach Initiatives
+        </h2>
+        <p class="mt-4 text-base max-w-lg mx-auto leading-relaxed fade-up delay-2" style="color:var(--muted)">
+          Each initiative is driven by the same conviction — that love in action changes lives.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-8">
+
+        <!-- Jail Ministry - Full featured card -->
+        <div class="outreach-card fade-up w-full max-w-2xl"
+             style="background:linear-gradient(135deg,#0d0d00,#1a1500);border:1px solid rgba(255,184,0,0.28);box-shadow:0 24px 80px rgba(0,0,0,0.5)">
+          <div class="grid md:grid-cols-2">
+
+            <!-- Visual side -->
+            <div class="relative flex items-center justify-center p-12 md:p-16"
+                 style="background:linear-gradient(135deg,rgba(255,77,0,0.08),rgba(255,184,0,0.05));min-height:280px">
+              <div class="absolute inset-0" style="background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(255,184,0,0.10) 0%,transparent 70%)"></div>
+              <span style="font-size:6rem;position:relative;z-index:1">⛓️</span>
+              <div class="absolute top-5 left-5">
+                <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+                      style="background:rgba(255,184,0,0.15);border:1px solid rgba(255,184,0,0.3);color:var(--gold)">
+                  Active Ministry
+                </span>
+              </div>
+            </div>
+
+            <!-- Content side -->
+            <div class="p-8 md:p-10 flex flex-col justify-center">
+              <div class="mb-5" style="width:36px;height:3px;background:linear-gradient(90deg,var(--fire),var(--gold));border-radius:2px"></div>
+              <h3 class="font-display font-bold mb-4" style="font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.02em;color:var(--text)">
+                Jail Ministry
+              </h3>
+              <p class="text-sm leading-[1.85] mb-3 font-light" style="color:var(--muted)">
+                We go inside the walls to bring hope to those who can't come to us. Our team visits local correctional facilities to share the Word, pray with inmates, and remind them that they are not forgotten by God or this community.
+              </p>
+              <p class="text-sm leading-[1.85] mb-7 font-light" style="color:var(--muted)">
+                Every person — regardless of where they are or what they've done — deserves to hear that there is grace, redemption, and a God who loves them.
+              </p>
+              <div class="flex items-center gap-2 mb-6 text-xs font-semibold uppercase tracking-widest" style="color:var(--gold)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Open to Volunteers
+              </div>
+              <a href="index.html#connect"
+                 class="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold"
+                 style="background:linear-gradient(135deg,var(--fire),#FF7A00);color:#fff;box-shadow:0 4px 20px rgba(255,77,0,0.35);transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.2s ease"
+                 onmouseover="this.style.transform='translateY(-2px) scale(1.03)';this.style.boxShadow='0 8px 30px rgba(255,77,0,0.5)'"
+                 onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(255,77,0,0.35)'">
+                Get Involved
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Placeholder for future initiatives -->
+        <div class="outreach-card fade-up delay-1 w-full max-w-2xl flex flex-col items-center justify-center text-center p-14"
+             style="background:rgba(255,255,255,0.02);border:1.5px dashed rgba(255,255,255,0.12);min-height:240px">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center mb-5" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <p class="font-display font-bold text-xl mb-2" style="color:var(--text)">More Coming Soon</p>
+          <p class="text-sm max-w-xs leading-relaxed" style="color:var(--muted)">
+            Additional outreach initiatives will be added here as our community efforts continue to grow.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GET INVOLVED ==================== -->
+  <section class="section-card2 grain relative overflow-hidden py-20 md:py-28 text-center">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(255,77,0,0.08) 0%,transparent 70%)"></div>
+    <div class="max-w-2xl mx-auto px-6 lg:px-10 relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <h2 class="font-display font-bold mb-5 fade-up delay-1" style="font-size:clamp(2rem,4vw,3rem);letter-spacing:-0.03em;color:var(--text)">
+        Ready to Make a Difference?
+      </h2>
+      <p class="text-base md:text-lg leading-relaxed mb-10 fade-up delay-2" style="color:var(--muted)">
+        Outreach is a team effort. Whether you want to volunteer, give, or just learn more — we'd love to connect with you and show you how to get involved.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="index.html#connect"
+           class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-sm font-bold text-white">
+          Connect With Us
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="index.html"
+           class="inline-flex items-center gap-2 rounded-xl px-8 py-4 text-sm font-bold"
+           style="border:1.5px solid rgba(255,255,255,0.2);color:var(--text);transition:border-color 0.2s,color 0.2s"
+           onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+           onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='var(--text)'">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="py-8 text-center" style="background:var(--deep);border-top:1px solid rgba(255,184,0,0.13)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2025 Living Word Church · Adairville, Kentucky ·
+      <a href="index.html" style="color:var(--gold)" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">lwcofadairville.org</a>
+    </p>
+  </footer>
+
+  <script>
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
