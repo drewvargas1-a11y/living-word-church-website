@@ -311,32 +311,104 @@
         </p>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="gallery-item fade-up">
-          <img src="../brand_assets/womens7.jpg" alt="Women's Gathering" class="gallery-img" />
-          <div class="gallery-overlay"></div>
+      <!-- Carousel -->
+      <div class="relative fade-up delay-2" id="wmCarousel">
+        <!-- Track -->
+        <div class="overflow-hidden rounded-2xl" style="border:1px solid rgba(232,121,160,0.25);box-shadow:0 8px 40px rgba(0,0,0,0.5)">
+          <div id="wmTrack" class="flex" style="transition:transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94)">
+            <div class="flex-shrink-0 w-full relative" style="aspect-ratio:16/9">
+              <img src="../brand_assets/womens7.jpg" alt="Women's Gathering" class="w-full h-full object-cover" />
+              <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,0,18,0.45) 0%,transparent 55%)"></div>
+            </div>
+            <div class="flex-shrink-0 w-full relative" style="aspect-ratio:16/9">
+              <img src="../brand_assets/womens2.jpg" alt="Prayer & Worship" class="w-full h-full object-cover" />
+              <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,0,18,0.45) 0%,transparent 55%)"></div>
+            </div>
+            <div class="flex-shrink-0 w-full relative" style="aspect-ratio:16/9">
+              <img src="../brand_assets/womens3.jpg" alt="Fellowship Dinner" class="w-full h-full object-cover" />
+              <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,0,18,0.45) 0%,transparent 55%)"></div>
+            </div>
+            <div class="flex-shrink-0 w-full relative" style="aspect-ratio:16/9">
+              <img src="../brand_assets/womens4.jpg" alt="Bible Study" class="w-full h-full object-cover" />
+              <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,0,18,0.45) 0%,transparent 55%)"></div>
+            </div>
+            <div class="flex-shrink-0 w-full relative" style="aspect-ratio:16/9">
+              <img src="../brand_assets/womens5.jpg" alt="Community Outreach" class="w-full h-full object-cover" />
+              <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,0,18,0.45) 0%,transparent 55%)"></div>
+            </div>
+            <div class="flex-shrink-0 w-full relative" style="aspect-ratio:16/9">
+              <img src="../brand_assets/womens6.jpg" alt="Special Event" class="w-full h-full object-cover" />
+              <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,0,18,0.45) 0%,transparent 55%)"></div>
+            </div>
+          </div>
         </div>
-        <div class="gallery-item fade-up delay-1">
-          <img src="../brand_assets/womens2.jpg" alt="Prayer & Worship" class="gallery-img" />
-          <div class="gallery-overlay"></div>
-        </div>
-        <div class="gallery-item fade-up delay-2">
-          <img src="../brand_assets/womens3.jpg" alt="Fellowship Dinner" class="gallery-img" />
-          <div class="gallery-overlay"></div>
-        </div>
-        <div class="gallery-item fade-up delay-1">
-          <img src="../brand_assets/womens4.jpg" alt="Bible Study" class="gallery-img" />
-          <div class="gallery-overlay"></div>
-        </div>
-        <div class="gallery-item fade-up delay-2">
-          <img src="../brand_assets/womens5.jpg" alt="Community Outreach" class="gallery-img" />
-          <div class="gallery-overlay"></div>
-        </div>
-        <div class="gallery-item fade-up delay-3">
-          <img src="../brand_assets/womens6.jpg" alt="Special Event" class="gallery-img" />
-          <div class="gallery-overlay"></div>
-        </div>
+
+        <!-- Prev button -->
+        <button onclick="wmMove(-1)"
+          class="absolute top-1/2 left-3 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+          style="background:rgba(26,0,18,0.7);border:1px solid rgba(232,121,160,0.35);color:var(--rose);transition:background 0.2s ease,transform 0.2s ease"
+          onmouseover="this.style.background='rgba(232,121,160,0.35)';this.style.transform='translateY(-50%) scale(1.1)'"
+          onmouseout="this.style.background='rgba(26,0,18,0.7)';this.style.transform='translateY(-50%)'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <!-- Next button -->
+        <button onclick="wmMove(1)"
+          class="absolute top-1/2 right-3 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+          style="background:rgba(26,0,18,0.7);border:1px solid rgba(232,121,160,0.35);color:var(--rose);transition:background 0.2s ease,transform 0.2s ease"
+          onmouseover="this.style.background='rgba(232,121,160,0.35)';this.style.transform='translateY(-50%) scale(1.1)'"
+          onmouseout="this.style.background='rgba(26,0,18,0.7)';this.style.transform='translateY(-50%)'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <!-- Dots -->
+        <div id="wmDots" class="flex justify-center gap-2 mt-5"></div>
       </div>
+
+      <script>
+        (function() {
+          const total = 6;
+          let current = 0;
+          let timer;
+
+          const track = document.getElementById('wmTrack');
+          const dotsEl = document.getElementById('wmDots');
+          const carousel = document.getElementById('wmCarousel');
+
+          const dots = Array.from({ length: total }, (_, i) => {
+            const d = document.createElement('button');
+            d.style.cssText = 'width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;transition:transform 0.2s ease,background 0.2s ease';
+            d.onclick = () => goTo(i);
+            dotsEl.appendChild(d);
+            return d;
+          });
+
+          function goTo(n) {
+            current = (n + total) % total;
+            track.style.transform = 'translateX(-' + (current * 100) + '%)';
+            dots.forEach((d, i) => {
+              d.style.background = i === current ? '#E879A0' : 'rgba(232,121,160,0.3)';
+              d.style.transform = i === current ? 'scale(1.35)' : 'scale(1)';
+            });
+          }
+
+          window.wmMove = function(dir) {
+            clearInterval(timer);
+            goTo(current + dir);
+            startTimer();
+          };
+
+          function startTimer() {
+            timer = setInterval(() => goTo(current + 1), 4000);
+          }
+
+          carousel.addEventListener('mouseenter', () => clearInterval(timer));
+          carousel.addEventListener('mouseleave', startTimer);
+
+          goTo(0);
+          startTimer();
+        })();
+      </script>
     </div>
   </section>
 
