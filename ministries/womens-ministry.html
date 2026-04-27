@@ -179,20 +179,50 @@
         </p>
       </div>
 
-      <div class="flex justify-center">
+      <!-- Leader card -->
+      <div class="rounded-3xl overflow-hidden fade-up delay-2"
+           style="background:linear-gradient(135deg,#1a0012,#2e0020);border:1px solid rgba(232,121,160,0.25);box-shadow:0 24px 80px rgba(0,0,0,0.5)">
+        <div class="grid md:grid-cols-2">
 
-        <div class="leader-card rounded-2xl overflow-hidden fade-up w-full max-w-sm">
-          <div class="relative">
-            <img src="../brand_assets/womens1.JPEG" alt="Women's Ministry Leader" class="leader-img" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,0,18,0.7) 0%,transparent 50%);mix-blend-mode:multiply"></div>
+          <!-- Photo -->
+          <div class="relative" style="min-height:380px">
+            <img src="../brand_assets/womens1.JPEG"
+                 alt="Delores Leftrick"
+                 class="w-full h-full object-cover object-top" style="min-height:380px" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(26,0,18,0.88))"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,0,18,0.5) 0%,transparent 40%)"></div>
+            <div class="absolute top-5 left-5">
+              <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+                    style="background:rgba(232,121,160,0.18);border:1px solid rgba(232,121,160,0.35);color:var(--rose)">
+                Ministry Director
+              </span>
+            </div>
           </div>
-          <div class="p-6">
-            <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--rose)">Ministry Director</div>
-            <h3 class="font-display font-bold text-xl mb-2" style="color:var(--text)">Delores Leftrick</h3>
-            <p class="text-sm leading-relaxed font-light" style="color:var(--muted)">Passionate about seeing every woman at Living Word feel seen, valued, and deeply rooted in her identity in Christ.</p>
+
+          <!-- Content -->
+          <div class="p-7 sm:p-10 md:p-12 flex flex-col justify-center">
+            <div class="mb-6" style="width:40px;height:3px;background:linear-gradient(90deg,var(--rose),#c0398a);border-radius:2px"></div>
+            <h3 class="font-display font-bold mb-5"
+                style="font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-0.02em;color:var(--text);line-height:1.1">
+              Delores Leftrick
+            </h3>
+            <p class="text-sm leading-[1.85] mb-4 font-light" style="color:var(--muted)">
+              Passionate about seeing every woman at Living Word feel seen, valued, and deeply rooted in her identity in Christ.
+            </p>
+            <p class="text-sm leading-[1.85] mb-8 font-light" style="color:var(--muted)">
+              Delores leads Women's Ministry with warmth and purpose — creating a space where women of all ages and backgrounds can connect, grow in faith, and walk through life together.
+            </p>
+            <a href="../index.html#connect"
+               class="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold"
+               style="background:linear-gradient(135deg,var(--rose),#c0398a);color:#fff;box-shadow:0 4px 20px rgba(232,121,160,0.35);transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.2s ease"
+               onmouseover="this.style.transform='translateY(-2px) scale(1.03)';this.style.boxShadow='0 8px 30px rgba(232,121,160,0.5)'"
+               onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(232,121,160,0.35)'">
+              Get Connected
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
+
         </div>
-
       </div>
     </div>
   </section>
