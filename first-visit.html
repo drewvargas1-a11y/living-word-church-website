@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>First Time Here? — Living Word Church</title>
+  <meta name="description" content="Planning your first visit to Living Word Church in Adairville, KY? Here's everything you need to know — service times, what to expect, and what we believe." />
+  <link rel="canonical" href="https://lwcofadairville.org/first-visit.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:   #FF4D00;
+      --gold:   #FFB800;
+      --sky:    #00C2FF;
+      --purple: #8B2BE2;
+      --deep:   #0A0A1A;
+      --card:   #13132A;
+      --card2:  #1A1A35;
+      --text:   #F0F0FF;
+      --muted:  #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50%  0%,  rgba(255,184,0,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 15%  80%, rgba(255,77,0,0.18)   0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 85%  70%, rgba(139,43,226,0.12) 0%, transparent 50%),
+        var(--deep);
+    }
+
+    .section-deep  { background: var(--deep); }
+    .section-card  { background: var(--card); }
+    .section-card2 { background: var(--card2); }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      border-radius: 2px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); opacity: 0.28;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(30px,-30px) scale(1.08); }
+    }
+
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.20s; }
+    .delay-3 { transition-delay: 0.30s; }
+    .delay-4 { transition-delay: 0.40s; }
+    .delay-5 { transition-delay: 0.50s; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--gold); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--fire), #FF7A00);
+      box-shadow: 0 4px 20px rgba(255,77,0,0.45), 0 1px 4px rgba(255,77,0,0.3);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(255,77,0,0.55); }
+    .btn-primary:active { transform: scale(0.99); }
+    .btn-primary:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #FF8C00, #FFB800);
+      color: #0A0A1A; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 24px rgba(255,184,0,0.35), 0 1px 4px rgba(0,0,0,0.4);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-gold:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(255,184,0,0.45); }
+    .btn-gold:active { transform: scale(0.98); }
+
+    .pillar-card {
+      border-radius: 1.25rem; padding: 1.75rem 1.5rem;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    }
+    .pillar-card:hover { transform: translateY(-5px); }
+
+    .belief-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1rem; padding: 1.5rem;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .belief-card:hover {
+      background: rgba(255,184,0,0.05);
+      border-color: rgba(255,184,0,0.22);
+    }
+
+    .expect-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; border-radius: 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.2s ease;
+    }
+    .expect-row:hover { background: rgba(255,184,0,0.05); }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.92);border-bottom:1px solid rgba(255,184,0,0.15);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <div class="flex items-center gap-2">
+      <span class="text-xl">✝️</span>
+      <span class="font-display font-bold text-sm sm:text-base" style="color:var(--text)">First Time Here?</span>
+    </div>
+    <a href="index.html#connect" class="btn-gold px-4 sm:px-5 py-2 text-xs sm:text-sm hidden sm:inline-flex">Get Connected</a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-bg grain relative overflow-hidden pt-36 pb-24 md:pt-44 md:pb-32">
+    <div class="orb w-96 h-96 -top-20 -left-20" style="background:#FFB800"></div>
+    <div class="orb w-80 h-80 bottom-0 right-0 opacity-15" style="background:#FF4D00;animation-delay:3.5s"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 fade-up delay-1"
+           style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.28);color:var(--gold)">
+        ✦ Nondenominational Christian Church · Adairville, KY
+      </div>
+      <h1 class="font-display font-bold mb-6 fade-up delay-2"
+          style="font-size:clamp(2.6rem,7vw,5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Living Word Church<br/>
+        <span style="color:var(--gold)">Is Glad You're Here</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-[1.75] mb-10 fade-up delay-3" style="color:var(--muted)">
+        No matter where you're coming from, you'll find a warm welcome, authentic community, and a place to encounter God. Here's everything you need to know before your first visit.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-4">
+        <div class="flex items-center gap-2.5 px-5 py-3 rounded-2xl" style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.25)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Sundays · 10:30 AM</span>
+        </div>
+        <div class="flex items-center gap-2.5 px-5 py-3 rounded-2xl" style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.25)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Wednesdays · 6:00 PM</span>
+        </div>
+        <div class="flex items-center gap-2.5 px-5 py-3 rounded-2xl" style="background:rgba(255,77,0,0.08);border:1px solid rgba(255,77,0,0.22)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--fire)" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="text-sm font-medium" style="color:var(--text)">Adairville, Kentucky</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5 PILLARS ==================== -->
+  <section id="pillars" class="section-deep py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-16">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--gold)">What We're About</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Five Pillars of Our Community
+        </h2>
+        <p class="mt-4 text-base leading-relaxed max-w-xl mx-auto fade-up delay-2" style="color:var(--muted)">
+          Everything we do at Living Word Church flows from these five commitments. They shape how we gather, how we grow, and how we serve.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Worship -->
+        <div class="pillar-card fade-up" style="background:linear-gradient(135deg,rgba(255,77,0,0.10),rgba(255,120,0,0.06));border:1px solid rgba(255,77,0,0.25);box-shadow:0 8px 40px rgba(255,77,0,0.08)">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(255,77,0,0.15)">🙌</div>
+          <h3 class="font-display font-bold text-xl mb-3" style="color:var(--text)">Worship</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">
+            We believe worship is more than music — it's a lifestyle. Our Sunday gatherings are filled with Spirit-led praise, heartfelt prayer, and an atmosphere where people encounter the presence of God.
+          </p>
+        </div>
+
+        <!-- Learning -->
+        <div class="pillar-card fade-up delay-1" style="background:linear-gradient(135deg,rgba(255,184,0,0.09),rgba(255,184,0,0.04));border:1px solid rgba(255,184,0,0.22);box-shadow:0 8px 40px rgba(255,184,0,0.07)">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(255,184,0,0.15)">📖</div>
+          <h3 class="font-display font-bold text-xl mb-3" style="color:var(--text)">Learning</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">
+            We're committed to Bible-grounded teaching that is practical, relevant, and life-changing. From Sunday sermons to mid-week studies, we dig into the Word together so everyone can grow in faith.
+          </p>
+        </div>
+
+        <!-- Enrichment -->
+        <div class="pillar-card fade-up delay-2" style="background:linear-gradient(135deg,rgba(0,194,255,0.08),rgba(0,194,255,0.03));border:1px solid rgba(0,194,255,0.20);box-shadow:0 8px 40px rgba(0,194,255,0.06)">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(0,194,255,0.12)">🤝</div>
+          <h3 class="font-display font-bold text-xl mb-3" style="color:var(--text)">Enrichment</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">
+            Growth happens in community. Through discipleship groups, ministry programs, and special events, we help every person move forward in their walk with God — wherever they're starting from.
+          </p>
+        </div>
+
+        <!-- Friendship -->
+        <div class="pillar-card fade-up delay-3" style="background:linear-gradient(135deg,rgba(232,121,160,0.08),rgba(232,121,160,0.03));border:1px solid rgba(232,121,160,0.20);box-shadow:0 8px 40px rgba(232,121,160,0.06)">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(232,121,160,0.12)">❤️</div>
+          <h3 class="font-display font-bold text-xl mb-3" style="color:var(--text)">Friendship</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">
+            We are a family. You won't be a stranger here for long. Our church is a place where genuine friendships are built, where people show up for each other, and where nobody walks through life alone.
+          </p>
+        </div>
+
+        <!-- Service -->
+        <div class="pillar-card fade-up delay-4" style="background:linear-gradient(135deg,rgba(139,43,226,0.08),rgba(139,43,226,0.03));border:1px solid rgba(139,43,226,0.20);box-shadow:0 8px 40px rgba(139,43,226,0.06)">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(139,43,226,0.12)">🌍</div>
+          <h3 class="font-display font-bold text-xl mb-3" style="color:var(--text)">Service</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">
+            We believe the Church exists not for itself, but for the world. We actively serve our local community in Adairville and support global missions to bring hope and the Gospel to those who need it most.
+          </p>
+        </div>
+
+        <!-- CTA card -->
+        <div class="pillar-card fade-up delay-5 flex flex-col items-center justify-center text-center" style="background:linear-gradient(135deg,rgba(255,77,0,0.08),rgba(255,120,0,0.04));border:1px solid rgba(255,77,0,0.22)">
+          <p class="font-display font-bold text-xl mb-3" style="color:var(--text)">Ready to Visit?</p>
+          <p class="text-sm mb-6" style="color:var(--muted)">We'd love to meet you. Come as you are — there's a place for you here.</p>
+          <a href="index.html#connect"
+             class="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white">
+            Get Connected
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHAT TO EXPECT ==================== -->
+  <section class="section-card grain relative overflow-hidden py-20 md:py-28">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 60% at 100% 50%,rgba(255,184,0,0.06) 0%,transparent 60%)"></div>
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 relative z-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--gold)">Practical Info</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          What to Expect
+        </h2>
+        <p class="mt-4 text-base max-w-lg mx-auto leading-relaxed fade-up delay-2" style="color:var(--muted)">
+          We want you to feel comfortable and prepared for your first Sunday. Here's what you can look forward to.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4 fade-up delay-2">
+
+        <div class="expect-row">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(255,184,0,0.12)">🕐</div>
+          <div>
+            <p class="font-semibold text-sm mb-1" style="color:var(--text)">Service Times</p>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Sundays at 10:30 AM &amp; Wednesdays at 6:00 PM. Services typically run about 75–90 minutes.</p>
+          </div>
+        </div>
+
+        <div class="expect-row">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(255,77,0,0.12)">👕</div>
+          <div>
+            <p class="font-semibold text-sm mb-1" style="color:var(--text)">What to Wear</p>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Come as you are — casual and comfortable is perfectly fine. We care more about you being here than what you're wearing.</p>
+          </div>
+        </div>
+
+        <div class="expect-row">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(0,194,255,0.1)">🧒</div>
+          <div>
+            <p class="font-semibold text-sm mb-1" style="color:var(--text)">Children's Church</p>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Kids are welcome in the main service, and Children's Church is available every Sunday and Wednesday for a fun, age-appropriate experience.</p>
+          </div>
+        </div>
+
+        <div class="expect-row">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(139,43,226,0.1)">🚗</div>
+          <div>
+            <p class="font-semibold text-sm mb-1" style="color:var(--text)">Parking</p>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Ample free parking is available on-site. Our welcome team will greet you at the door when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="expect-row">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(255,184,0,0.12)">🎵</div>
+          <div>
+            <p class="font-semibold text-sm mb-1" style="color:var(--text)">The Service</p>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Expect Spirit-filled worship music, a practical message from the Word of God, and a warm, welcoming atmosphere where everyone belongs.</p>
+          </div>
+        </div>
+
+        <div class="expect-row">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(232,121,160,0.1)">👋</div>
+          <div>
+            <p class="font-semibold text-sm mb-1" style="color:var(--text)">First-Time Guests</p>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">No pressure — you can simply enjoy the service. If you'd like to connect with someone on our team, look for our welcome table after the service.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STATEMENT OF FAITH ==================== -->
+  <section class="section-deep py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14">
+        <div class="fire-divider mb-5 mx-auto"></div>
+        <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up" style="color:var(--gold)">What We Believe</p>
+        <h2 class="font-display font-bold fade-up delay-1" style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.03em;color:var(--text)">
+          Our Statement of Faith
+        </h2>
+        <p class="mt-4 text-base max-w-xl mx-auto leading-relaxed fade-up delay-2" style="color:var(--muted)">
+          As a nondenominational, Spirit-filled Christian church, these are the core beliefs that define who we are and how we live.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+
+        <div class="belief-card fade-up">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">01</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">The Trinity</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe in one God, eternally existing in three persons: Father, Son, and Holy Spirit — co-equal and co-eternal.</p>
+        </div>
+
+        <div class="belief-card fade-up delay-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">02</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">Salvation</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe that all people are sinners and that salvation comes by grace alone, through faith alone, in Jesus Christ alone. It is a free gift — not earned by works.</p>
+        </div>
+
+        <div class="belief-card fade-up delay-2">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">03</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">The Bible</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe the Bible is the inspired, infallible Word of God and the final authority in all matters of faith, life, and practice.</p>
+        </div>
+
+        <div class="belief-card fade-up delay-3">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">04</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">The Resurrection</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe in the bodily resurrection of Jesus Christ from the dead, and in the resurrection of all the dead — believers to eternal life, unbelievers to judgment.</p>
+        </div>
+
+        <div class="belief-card fade-up">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">05</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">Divine Healing</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe that divine healing is provided in the atonement of Christ and is available to all who believe through prayer and faith in Jesus' name.</p>
+        </div>
+
+        <div class="belief-card fade-up delay-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">06</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">Baptism of the Holy Spirit</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe in the baptism of the Holy Spirit, with the initial evidence of speaking in other tongues, as described in Acts 2 and available to all believers today.</p>
+        </div>
+
+        <div class="belief-card fade-up delay-2">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">07</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">The Second Coming</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe in the literal, physical, and imminent return of Jesus Christ to establish His eternal kingdom.</p>
+        </div>
+
+        <div class="belief-card fade-up delay-3">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">08</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">Evangelism</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe in the Great Commission — the call to go into all the world and preach the Gospel to every person, making disciples of all nations.</p>
+        </div>
+
+        <div class="belief-card fade-up">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">09</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">Sanctification</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe in the sanctifying power of the Holy Spirit — the ongoing work of being set apart and transformed into Christlikeness in thought, word, and deed.</p>
+        </div>
+
+        <div class="belief-card fade-up delay-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:rgba(255,184,0,0.18);color:var(--gold)">10</span>
+            <h3 class="font-display font-bold text-lg" style="color:var(--text)">The Church</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color:var(--muted)">We believe in the local church as the Body of Christ — a community of believers called together for worship, fellowship, discipleship, and service to the world.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="section-card2 grain relative overflow-hidden py-20 md:py-28 text-center">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(255,184,0,0.08) 0%,transparent 70%)"></div>
+    <div class="max-w-2xl mx-auto px-6 lg:px-10 relative z-10">
+      <div class="fire-divider mb-6 mx-auto fade-up"></div>
+      <h2 class="font-display font-bold mb-5 fade-up delay-1" style="font-size:clamp(2rem,4vw,3rem);letter-spacing:-0.03em;color:var(--text)">
+        We'd Love to Meet You
+      </h2>
+      <p class="text-base md:text-lg leading-relaxed mb-10 fade-up delay-2" style="color:var(--muted)">
+        Whether this is your first time in church or you're looking for a new home, Living Word Church welcomes you with open arms. Come experience it for yourself this Sunday.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="index.html#connect"
+           class="btn-primary inline-flex items-center gap-2 rounded-xl px-8 py-4 text-sm font-bold text-white">
+          Connect With Us
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="index.html#events"
+           class="inline-flex items-center gap-2 rounded-xl px-8 py-4 text-sm font-bold"
+           style="border:1.5px solid rgba(255,255,255,0.2);color:var(--text);transition:border-color 0.2s,color 0.2s"
+           onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+           onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='var(--text)'">
+          View Upcoming Events
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="py-8 text-center" style="background:var(--deep);border-top:1px solid rgba(255,184,0,0.13)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2025 Living Word Church · Adairville, Kentucky ·
+      <a href="index.html" style="color:var(--gold)" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">lwcofadairville.org</a>
+    </p>
+  </footer>
+
+  <script>
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
