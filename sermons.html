@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sermons — Living Word Church</title>
+  <meta name="description" content="Listen to sermons from Living Word Church in Adairville, Kentucky. Available on YouTube, Spotify, and Apple Podcasts." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://lwcofadairville.org/sermons.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://lwcofadairville.org/sermons.html" />
+  <meta property="og:title"       content="Sermons — Living Word Church" />
+  <meta property="og:description" content="Listen to messages from Living Word Church on YouTube, Spotify, and Apple Podcasts." />
+  <meta property="og:image"       content="https://lwcofadairville.org/brand_assets/og-image.jpg" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --fire:   #FF4D00;
+      --gold:   #FFB800;
+      --sky:    #00C2FF;
+      --purple: #8B2BE2;
+      --deep:   #0A0A1A;
+      --card:   #13132A;
+      --card2:  #1A1A35;
+      --text:   #F0F0FF;
+      --muted:  #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    .fire-divider {
+      width: 56px; height: 4px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      border-radius: 2px;
+    }
+
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); opacity: 0.25;
+      animation: floatOrb 10s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(24px,-28px) scale(1.08); }
+    }
+
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.20s; }
+    .delay-3 { transition-delay: 0.30s; }
+    .delay-4 { transition-delay: 0.40s; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--fire); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--fire), #FF7A00);
+      box-shadow: 0 4px 20px rgba(255,77,0,0.45);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+      color: #fff; font-weight: 700; border-radius: 9999px;
+    }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 32px rgba(255,77,0,0.55); }
+    .btn-primary:active { transform: scale(0.99); }
+
+    /* Platform button */
+    .platform-btn {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.5rem; border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      text-decoration: none;
+    }
+    .platform-btn:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-3px);
+    }
+    .platform-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 1rem; }
+    .platform-btn.spotify:hover  { border-color: rgba(30,215,96,0.4); }
+    .platform-btn.apple:hover    { border-color: rgba(250,48,150,0.4); }
+    .platform-btn.youtube:hover  { border-color: rgba(255,77,0,0.45); }
+
+    /* Episode card */
+    .ep-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .ep-card:hover {
+      background: rgba(255,255,255,0.055);
+      border-color: rgba(255,184,0,0.22);
+      transform: translateY(-3px);
+    }
+
+    .scripture-tag {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 0.18rem 0.55rem; border-radius: 9999px;
+      background: rgba(255,77,0,0.1); border: 1px solid rgba(255,77,0,0.2); color: #FF7A40;
+      margin: 0.15rem;
+    }
+
+    .nav-link { color: var(--muted); position: relative; transition: color 0.2s ease; }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      transition: width 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:hover { color: var(--gold); }
+
+    /* Video embed */
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* Waveform animation (decorative) */
+    .wave-bar {
+      width: 3px; border-radius: 2px;
+      background: linear-gradient(to top, var(--fire), var(--gold));
+      animation: wavePulse 1.2s ease-in-out infinite;
+    }
+    @keyframes wavePulse {
+      0%,100% { transform: scaleY(0.3); opacity: 0.5; }
+      50%      { transform: scaleY(1);   opacity: 1; }
+    }
+
+    /* Coming Soon badge */
+    .coming-soon {
+      font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 0.15rem 0.55rem; border-radius: 9999px;
+      background: rgba(255,184,0,0.1); border: 1px solid rgba(255,184,0,0.25); color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.93);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </a>
+    <span class="font-display font-bold text-sm" style="color:var(--text)">Sermons</span>
+    <a href="index.html#connect" class="btn-primary px-4 py-2 text-xs hidden sm:inline-flex">Plan a Visit</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-32 pb-16 md:pt-44 md:pb-24 grain" style="isolation:isolate;
+    background:
+      radial-gradient(ellipse 70% 55% at 50%  0%,  rgba(255,77,0,0.22)  0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 15%  85%, rgba(139,43,226,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 40% at 85%  75%, rgba(255,184,0,0.12)  0%, transparent 55%),
+      var(--deep)">
+
+    <div class="orb" style="width:320px;height:320px;background:var(--fire);top:-80px;left:10%;animation-duration:12s"></div>
+    <div class="orb" style="width:260px;height:260px;background:var(--purple);bottom:-40px;right:5%;animation-duration:9s;animation-delay:-3s"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-6 lg:px-10 text-center">
+
+      <!-- Waveform decoration -->
+      <div class="flex items-end justify-center gap-1 mb-8 fade-up" style="height:36px">
+        <div class="wave-bar" style="height:40%;animation-delay:0s"></div>
+        <div class="wave-bar" style="height:70%;animation-delay:0.1s"></div>
+        <div class="wave-bar" style="height:100%;animation-delay:0.2s"></div>
+        <div class="wave-bar" style="height:55%;animation-delay:0.3s"></div>
+        <div class="wave-bar" style="height:85%;animation-delay:0.4s"></div>
+        <div class="wave-bar" style="height:40%;animation-delay:0.5s"></div>
+        <div class="wave-bar" style="height:95%;animation-delay:0.6s"></div>
+        <div class="wave-bar" style="height:60%;animation-delay:0.7s"></div>
+        <div class="wave-bar" style="height:75%;animation-delay:0.8s"></div>
+        <div class="wave-bar" style="height:40%;animation-delay:0.9s"></div>
+        <div class="wave-bar" style="height:55%;animation-delay:1.0s"></div>
+      </div>
+
+      <div class="fire-divider mx-auto mb-6 fade-up"></div>
+      <p class="font-semibold uppercase tracking-widest text-sm mb-3 fade-up delay-1" style="color:var(--fire)">Living Word Church</p>
+
+      <h1 class="font-display font-bold mb-5 fade-up delay-1"
+          style="font-size:clamp(2.4rem,7vw,5rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Sermons<br/>
+        <span style="background:linear-gradient(90deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">On Demand</span>
+      </h1>
+
+      <p class="text-lg font-light leading-[1.75] max-w-xl mx-auto mb-8 fade-up delay-2" style="color:var(--muted)">
+        Every Sunday message — available to watch, listen, and share anywhere. Subscribe on your favorite platform so you never miss a word.
+      </p>
+
+      <!-- Platform badges -->
+      <div class="flex flex-wrap justify-center gap-3 fade-up delay-3">
+        <a href="https://www.youtube.com/@livingwordchurchadairville" target="_blank" rel="noopener noreferrer"
+           class="platform-btn youtube">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#FF4D00"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg>
+          <div class="text-left">
+            <div class="text-xs font-semibold uppercase tracking-wide" style="color:var(--muted)">Watch on</div>
+            <div class="text-sm font-bold" style="color:var(--text)">YouTube</div>
+          </div>
+        </a>
+        <div class="platform-btn spotify" style="cursor:default;opacity:0.7">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#1ED760"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          <div class="text-left">
+            <div class="text-xs font-semibold uppercase tracking-wide" style="color:var(--muted)">Listen on</div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold" style="color:var(--text)">Spotify</span>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+          </div>
+        </div>
+        <div class="platform-btn apple" style="cursor:default;opacity:0.7">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#FA3096"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          <div class="text-left">
+            <div class="text-xs font-semibold uppercase tracking-wide" style="color:var(--muted)">Listen on</div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold" style="color:var(--text)">Apple Podcasts</span>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST MESSAGE -->
+  <section class="py-16 md:py-20" style="background:var(--card)">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10">
+
+      <div class="fire-divider mb-4 fade-up"></div>
+      <p class="text-xs font-bold uppercase tracking-widest mb-2 fade-up delay-1" style="color:var(--fire)">Latest Message</p>
+      <h2 class="font-display font-bold mb-10 fade-up delay-1"
+          style="font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">
+        This Week's Sermon
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+
+        <!-- Video embed -->
+        <div class="fade-up delay-1">
+          <div class="video-wrap" style="box-shadow:0 8px 40px rgba(0,0,0,0.6)">
+            <iframe src="https://www.youtube.com/embed/PJpS6A6l0DY?start=2366&rel=0&modestbranding=1"
+                    title="Establishing Doctrine Part 2 — Pastor Phil Scott"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="fade-up delay-2">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="scripture-tag">Sermon Notes</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest"
+                  style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.25);color:var(--gold);font-size:0.65rem">Part 2</span>
+          </div>
+          <h3 class="font-display font-bold text-2xl mb-1" style="color:var(--text);letter-spacing:-0.02em">
+            Establishing Doctrine
+          </h3>
+          <p class="text-sm mb-1 font-medium" style="color:var(--fire)">Pastor Phil Scott</p>
+          <p class="text-xs mb-4" style="color:var(--muted)">April 26, 2026 · Teaching begins at 39:26</p>
+
+          <p class="text-sm font-light leading-[1.8] mb-5" style="color:var(--muted)">
+            Pastor Phil continues building the doctrine of Christ — covering the six foundations of Hebrews 6, the Parable of the Sower, and a sobering warning about departing from the faith in the latter times.
+          </p>
+
+          <div class="mb-5">
+            <span class="scripture-tag">Hebrews 6:1–2</span>
+            <span class="scripture-tag">Mark 4:1–20</span>
+            <span class="scripture-tag">1 Timothy 4:1</span>
+            <span class="scripture-tag">Galatians 5:22–23</span>
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            <a href="blog/establishing-doctrine-pt2-april-2026.html"
+               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold btn-primary">
+              Read Sermon Notes
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+            <a href="https://www.youtube.com/watch?v=PJpS6A6l0DY&t=2366s" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold"
+               style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.25);color:#FF7A40"
+               onmouseover="this.style.background='rgba(255,77,0,0.18)'" onmouseout="this.style.background='rgba(255,77,0,0.1)'">
+              Watch on YouTube
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PODCAST EMBED — paste your Spotify embed here when podcast is live -->
+  <!--
+  <section class="py-16" style="background:var(--deep)">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10">
+      <h2 class="font-display font-bold text-2xl mb-6" style="color:var(--text)">Listen on Spotify</h2>
+      PASTE SPOTIFY EMBED IFRAME HERE
+    </div>
+  </section>
+  -->
+
+  <!-- ALL EPISODES -->
+  <section class="py-16 md:py-20" style="background:var(--deep)">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10">
+
+      <div class="fire-divider mb-4 fade-up"></div>
+      <h2 class="font-display font-bold mb-10 fade-up delay-1"
+          style="font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">
+        All Episodes
+      </h2>
+
+      <!-- Episode: Establishing Doctrine Pt 2 -->
+      <div class="ep-card rounded-2xl p-5 sm:p-6 mb-4 fade-up delay-1">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <!-- Date block -->
+          <div class="flex-shrink-0 text-center rounded-xl px-3 py-2.5"
+               style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.2);min-width:64px">
+            <div class="font-display font-bold text-xl leading-none" style="color:var(--fire)">26</div>
+            <div class="text-xs uppercase tracking-wide font-semibold mt-0.5" style="color:var(--muted)">Apr</div>
+          </div>
+          <!-- Info -->
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap gap-1.5 mb-1.5">
+              <span class="scripture-tag">Pastor Phil Scott</span>
+              <span class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-widest"
+                    style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.22);color:var(--gold);font-size:0.6rem">Part 2</span>
+            </div>
+            <h3 class="font-display font-bold text-lg mb-0.5" style="color:var(--text);letter-spacing:-0.01em">Establishing Doctrine</h3>
+            <p class="text-xs font-light" style="color:var(--muted)">Hebrews 6:1–2 · Mark 4 · 1 Timothy 4:1</p>
+          </div>
+          <!-- Actions -->
+          <div class="flex flex-wrap gap-2 flex-shrink-0">
+            <a href="blog/establishing-doctrine-pt2-april-2026.html"
+               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold"
+               style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.3);color:#FF7A40"
+               onmouseover="this.style.background='rgba(255,77,0,0.2)'" onmouseout="this.style.background='rgba(255,77,0,0.12)'">
+              Notes
+            </a>
+            <a href="https://www.youtube.com/watch?v=PJpS6A6l0DY&t=2366s" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold"
+               style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.3);color:#FF7A40"
+               onmouseover="this.style.background='rgba(255,77,0,0.2)'" onmouseout="this.style.background='rgba(255,77,0,0.12)'">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg>
+              Watch
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episode: Establishing Doctrine Pt 1 -->
+      <div class="ep-card rounded-2xl p-5 sm:p-6 mb-4 fade-up delay-2">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div class="flex-shrink-0 text-center rounded-xl px-3 py-2.5"
+               style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.2);min-width:64px">
+            <div class="font-display font-bold text-xl leading-none" style="color:var(--fire)">19</div>
+            <div class="text-xs uppercase tracking-wide font-semibold mt-0.5" style="color:var(--muted)">Apr</div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap gap-1.5 mb-1.5">
+              <span class="scripture-tag">Pastor Phil Scott</span>
+              <span class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-widest"
+                    style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.22);color:var(--gold);font-size:0.6rem">Part 1</span>
+            </div>
+            <h3 class="font-display font-bold text-lg mb-0.5" style="color:var(--text);letter-spacing:-0.01em">Establishing Doctrine</h3>
+            <p class="text-xs font-light" style="color:var(--muted)">2 Timothy 3:16–17 · Hebrews 5:12–14 · Colossians 2:6–8</p>
+          </div>
+          <div class="flex flex-wrap gap-2 flex-shrink-0">
+            <a href="blog/establishing-doctrine-april-2026.html"
+               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold"
+               style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.3);color:#FF7A40"
+               onmouseover="this.style.background='rgba(255,77,0,0.2)'" onmouseout="this.style.background='rgba(255,77,0,0.12)'">
+              Notes
+            </a>
+            <a href="https://www.youtube.com/watch?v=1qTUoSwa9gQ&t=2345s" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold"
+               style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.3);color:#FF7A40"
+               onmouseover="this.style.background='rgba(255,77,0,0.2)'" onmouseout="this.style.background='rgba(255,77,0,0.12)'">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg>
+              Watch
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episode: The Family Matters -->
+      <div class="ep-card rounded-2xl p-5 sm:p-6 mb-4 fade-up delay-3">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div class="flex-shrink-0 text-center rounded-xl px-3 py-2.5"
+               style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.2);min-width:64px">
+            <div class="font-display font-bold text-xl leading-none" style="color:var(--fire)">12</div>
+            <div class="text-xs uppercase tracking-wide font-semibold mt-0.5" style="color:var(--muted)">Apr</div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap gap-1.5 mb-1.5">
+              <span class="scripture-tag">Youth Pastor Luke Boisseau</span>
+            </div>
+            <h3 class="font-display font-bold text-lg mb-0.5" style="color:var(--text);letter-spacing:-0.01em">The Family Matters</h3>
+            <p class="text-xs font-light" style="color:var(--muted)">Genesis 2 · Ephesians 5 · Proverbs 22:6</p>
+          </div>
+          <div class="flex flex-wrap gap-2 flex-shrink-0">
+            <a href="blog/family-matters-april-2026.html"
+               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold"
+               style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.3);color:#FF7A40"
+               onmouseover="this.style.background='rgba(255,77,0,0.2)'" onmouseout="this.style.background='rgba(255,77,0,0.12)'">
+              Notes
+            </a>
+            <a href="https://www.youtube.com/@livingwordchurchadairville" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold"
+               style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.3);color:#FF7A40"
+               onmouseover="this.style.background='rgba(255,77,0,0.2)'" onmouseout="this.style.background='rgba(255,77,0,0.12)'">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg>
+              Watch
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center fade-up">
+        <a href="https://www.youtube.com/@livingwordchurchadairville" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold"
+           style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.25);color:#FF7A40"
+           onmouseover="this.style.background='rgba(255,77,0,0.18)'" onmouseout="this.style.background='rgba(255,77,0,0.1)'">
+          View Full YouTube Channel
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO SUBSCRIBE -->
+  <section class="py-16 md:py-20" style="background:var(--card)">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 text-center">
+
+      <div class="fire-divider mx-auto mb-6 fade-up"></div>
+      <h2 class="font-display font-bold mb-4 fade-up delay-1"
+          style="font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.02em;color:var(--text)">
+        Never Miss a Message
+      </h2>
+      <p class="text-base font-light leading-[1.8] mb-10 fade-up delay-2" style="color:var(--muted)">
+        Subscribe on YouTube now — and soon on Spotify and Apple Podcasts so you can listen hands-free wherever you are.
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-4 fade-up delay-2">
+
+        <a href="https://www.youtube.com/@livingwordchurchadairville" target="_blank" rel="noopener noreferrer"
+           class="platform-btn youtube flex-col items-center text-center py-6 rounded-2xl">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="#FF4D00" class="mb-3"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg>
+          <div class="text-sm font-bold mb-0.5" style="color:var(--text)">YouTube</div>
+          <div class="text-xs" style="color:var(--muted)">Watch & subscribe free</div>
+        </a>
+
+        <div class="platform-btn spotify flex-col items-center text-center py-6 rounded-2xl" style="cursor:default;opacity:0.6">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="#1ED760" class="mb-3"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          <div class="text-sm font-bold mb-0.5" style="color:var(--text)">Spotify</div>
+          <div class="text-xs" style="color:var(--muted)">Podcast launching soon</div>
+        </div>
+
+        <div class="platform-btn apple flex-col items-center text-center py-6 rounded-2xl" style="cursor:default;opacity:0.6">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="#FA3096" class="mb-3"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          <div class="text-sm font-bold mb-0.5" style="color:var(--text)">Apple Podcasts</div>
+          <div class="text-xs" style="color:var(--muted)">Podcast launching soon</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 text-center" style="background:var(--deep)">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="fire-divider mx-auto mb-6 fade-up"></div>
+      <h2 class="font-display font-bold mb-4 fade-up delay-1"
+          style="font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-0.03em;color:var(--text)">
+        Join Us in Person
+      </h2>
+      <p class="text-base font-light leading-[1.8] mb-8 fade-up delay-2" style="color:var(--muted)">
+        Listening is great — but there's nothing like being in the room. Sundays at 10:30 AM · Wednesdays at 6:00 PM.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 fade-up delay-3">
+        <a href="index.html#connect" class="btn-primary px-8 py-4 text-base inline-flex items-center gap-2">
+          Plan Your Visit
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="blog/index.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold"
+           style="background:rgba(255,77,0,0.1);border:1px solid rgba(255,77,0,0.25);color:#FF7A40"
+           onmouseover="this.style.background='rgba(255,77,0,0.18)'" onmouseout="this.style.background='rgba(255,77,0,0.1)'">
+          Read Sermon Notes
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 text-center" style="background:#060610;border-top:1px solid rgba(255,255,255,0.06)">
+    <p class="text-sm" style="color:var(--muted)">
+      &copy; 2026 Living Word Church · Adairville, Kentucky ·
+      <a href="index.html" style="color:var(--fire)">lwcofadairville.org</a>
+    </p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
