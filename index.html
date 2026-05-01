@@ -131,18 +131,21 @@
     }
 
     /* Ministry card glows */
-    .min-card { transform: translateZ(0); transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+    .min-card { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s cubic-bezier(0.34,1.56,0.64,1); }
     .min-card.nexgen   { background: linear-gradient(135deg,#0d0022,#1f0055); border: 1px solid rgba(139,43,226,0.35); }
     .min-card.nexlevel { background: linear-gradient(135deg,#1a0e00,#3d2000); border: 1px solid rgba(255,184,0,0.35); }
     .min-card.kids     { background: linear-gradient(135deg,#001224,#003060); border: 1px solid rgba(0,194,255,0.35); }
     .min-card.vessels  { background: linear-gradient(135deg,#180b02,#2e1605); border: 1px solid rgba(240,160,112,0.35); }
     .min-card.women    { background: linear-gradient(135deg,#1a0012,#2e0020); border: 1px solid rgba(232,121,160,0.35); }
-    .min-card:hover { transform: translateY(-8px) scale(1.015) translateZ(0); }
-    .min-card.nexgen:hover   { box-shadow: 0 20px 60px rgba(139,43,226,0.35); }
-    .min-card.nexlevel:hover { box-shadow: 0 20px 60px rgba(255,184,0,0.25); }
-    .min-card.kids:hover     { box-shadow: 0 20px 60px rgba(0,194,255,0.25); }
-    .min-card.vessels:hover  { box-shadow: 0 20px 60px rgba(240,160,112,0.22); }
-    .min-card.women:hover    { box-shadow: 0 20px 60px rgba(232,121,160,0.28); }
+    @media (hover: hover) {
+      .min-card:hover { transform: translateY(-8px) scale(1.015); }
+      .min-card.nexgen:hover   { box-shadow: 0 20px 60px rgba(139,43,226,0.35); }
+      .min-card.nexlevel:hover { box-shadow: 0 20px 60px rgba(255,184,0,0.25); }
+      .min-card.kids:hover     { box-shadow: 0 20px 60px rgba(0,194,255,0.25); }
+      .min-card.vessels:hover  { box-shadow: 0 20px 60px rgba(240,160,112,0.22); }
+      .min-card.women:hover    { box-shadow: 0 20px 60px rgba(232,121,160,0.28); }
+      .min-card:hover .min-glow { opacity: 0.65; }
+    }
 
     /* Nav link */
     .nav-link { position: relative; transition: color 0.2s ease; color: var(--muted); }
@@ -230,7 +233,6 @@
       filter: blur(50px); opacity: 0.35; pointer-events: none;
       transition: opacity 0.3s;
     }
-    .min-card:hover .min-glow { opacity: 0.65; }
     .nexgen   .min-glow { background: var(--purple); }
     .nexlevel .min-glow { background: var(--gold); }
     .kids     .min-glow { background: var(--sky); }
@@ -908,8 +910,8 @@
       <div class="flex flex-wrap justify-center gap-6">
 
         <!-- Children's Church -->
-        <a href="ministries/childrens-church.html" class="min-card kids rounded-3xl p-6 sm:p-8 relative overflow-hidden fade-up block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
-          <div class="min-glow"></div>
+        <a href="ministries/childrens-church.html" class="min-card kids rounded-3xl p-6 sm:p-8 relative fade-up block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
+          <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"><div class="min-glow"></div></div>
           <span class="text-4xl mb-4 block">📖</span>
           <div class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
                style="background:rgba(0,194,255,0.15);color:var(--sky)">Children's Ministry</div>
@@ -940,8 +942,8 @@
         </a>
 
         <!-- NexGen Youth -->
-        <a href="ministries/nexgen-youth.html" class="min-card nexgen rounded-3xl p-6 sm:p-8 relative overflow-hidden fade-up delay-1 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
-          <div class="min-glow"></div>
+        <a href="ministries/nexgen-youth.html" class="min-card nexgen rounded-3xl p-6 sm:p-8 relative fade-up delay-1 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
+          <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"><div class="min-glow"></div></div>
           <span class="text-4xl mb-4 block">⚡</span>
           <div class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
                style="background:rgba(139,43,226,0.25);color:#C97AFF">Youth Ministry</div>
@@ -972,8 +974,8 @@
         </a>
 
         <!-- NexLevel Young Adults -->
-        <a href="ministries/nexlevel-young-adults.html" class="min-card nexlevel rounded-3xl p-6 sm:p-8 relative overflow-hidden fade-up delay-2 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
-          <div class="min-glow"></div>
+        <a href="ministries/nexlevel-young-adults.html" class="min-card nexlevel rounded-3xl p-6 sm:p-8 relative fade-up delay-2 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
+          <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"><div class="min-glow"></div></div>
           <span class="text-4xl mb-4 block">🚀</span>
           <div class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
                style="background:rgba(255,184,0,0.2);color:var(--gold)">Young Adults</div>
@@ -1004,8 +1006,8 @@
         </a>
 
         <!-- Vessels of Light -->
-        <a href="ministries/vessels-of-light.html" class="min-card vessels rounded-3xl p-6 sm:p-8 relative overflow-hidden fade-up delay-3 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
-          <div class="min-glow"></div>
+        <a href="ministries/vessels-of-light.html" class="min-card vessels rounded-3xl p-6 sm:p-8 relative fade-up delay-3 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
+          <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"><div class="min-glow"></div></div>
           <span class="text-4xl mb-4 block">🕯️</span>
           <div class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
                style="background:rgba(240,160,112,0.15);color:#F0A070">Elders Ministry</div>
@@ -1036,8 +1038,8 @@
         </a>
 
         <!-- Women's Ministry -->
-        <a href="ministries/womens-ministry.html" class="min-card women rounded-3xl p-6 sm:p-8 relative overflow-hidden fade-up delay-4 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
-          <div class="min-glow"></div>
+        <a href="ministries/womens-ministry.html" class="min-card women rounded-3xl p-6 sm:p-8 relative fade-up delay-4 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer">
+          <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"><div class="min-glow"></div></div>
           <span class="text-4xl mb-4 block">🌸</span>
           <div class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
                style="background:rgba(232,121,160,0.15);color:#E879A0">Women's Ministry</div>
@@ -1068,8 +1070,8 @@
         </a>
 
         <!-- Outreach -->
-        <a href="outreach.html" class="min-card rounded-3xl p-6 sm:p-8 relative overflow-hidden fade-up delay-4 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer;background:linear-gradient(135deg,#0d0d00,#1a1500);border:1px solid rgba(255,184,0,0.35)">
-          <div class="min-glow" style="background:var(--gold)"></div>
+        <a href="outreach.html" class="min-card rounded-3xl p-6 sm:p-8 relative fade-up delay-4 block w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]" style="text-decoration:none;cursor:pointer;background:linear-gradient(135deg,#0d0d00,#1a1500);border:1px solid rgba(255,184,0,0.35)">
+          <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"><div class="min-glow" style="background:var(--gold)"></div></div>
           <span class="text-4xl mb-4 block">🌍</span>
           <div class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
                style="background:rgba(255,184,0,0.15);color:var(--gold)">Community Outreach</div>
