@@ -1699,7 +1699,7 @@
 
         const videoId = data.items[0].id.videoId;
         poster.classList.add('hidden');
-        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&origin=https://lwcofadairville.org`;
         iframe.classList.remove('hidden');
       } catch (err) {
         console.warn('Live stream fetch failed:', err.message);
