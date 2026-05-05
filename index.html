@@ -1659,10 +1659,11 @@
         return;
       }
 
-      // Service is live but stream hasn't loaded yet — show the play button
+      // Service is live but stream hasn't loaded yet — show the play button and start polling
       if (live) {
         cdState.classList.add('hidden');
         liveState.classList.remove('hidden');
+        startStreamPoller();
         return;
       }
 
@@ -1686,6 +1687,8 @@
     }
 
     // Load live stream — fetches active broadcast from YouTube Data API
+    let streamPoller = null;
+
     async function loadStream() {
       const poster    = document.getElementById('stream-poster');
       const iframe    = document.getElementById('live-iframe');
@@ -1699,22 +1702,43 @@
 
         const videoId = data.items[0].id.videoId;
         poster.classList.add('hidden');
+        liveState.classList.add('hidden');
         iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&origin=https://lwcofadairville.org`;
         iframe.classList.remove('hidden');
+        // Stream found — stop polling
+        stopStreamPoller();
       } catch (err) {
-        console.warn('Live stream fetch failed:', err.message);
-        // Fall back to showing the manual play button during service hours
+        console.warn('Live stream not found yet, will retry:', err.message);
         if (getServiceStatus().live) {
           liveState.classList.remove('hidden');
           cdState.classList.add('hidden');
         } else {
           cdState.classList.remove('hidden');
+          stopStreamPoller();
         }
       }
     }
 
+    function startStreamPoller() {
+      if (streamPoller) return;
+      loadStream();
+      streamPoller = setInterval(() => {
+        const iframe = document.getElementById('live-iframe');
+        const alreadyLoaded = iframe && !iframe.classList.contains('hidden') && iframe.src;
+        if (alreadyLoaded || !getServiceStatus().live) {
+          stopStreamPoller();
+          return;
+        }
+        loadStream();
+      }, 30000); // retry every 30 seconds until stream is found
+    }
+
+    function stopStreamPoller() {
+      if (streamPoller) { clearInterval(streamPoller); streamPoller = null; }
+    }
+
     // Auto-load embed if service is already live when page opens
-    if (getServiceStatus().live) loadStream();
+    if (getServiceStatus().live) startStreamPoller();
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
