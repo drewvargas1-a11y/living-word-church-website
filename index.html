@@ -1659,11 +1659,10 @@
         return;
       }
 
-      // Service is live but stream hasn't loaded yet — show the play button and start polling
+      // Service is live — load the embed if not already loaded
       if (live) {
-        cdState.classList.add('hidden');
-        liveState.classList.remove('hidden');
-        startStreamPoller();
+        const iframe = document.getElementById('live-iframe');
+        if (!iframe || iframe.classList.contains('hidden')) loadStream();
         return;
       }
 
@@ -1686,59 +1685,22 @@
       document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
     }
 
-    // Load live stream — fetches active broadcast from YouTube Data API
-    let streamPoller = null;
-
-    async function loadStream() {
+    // Load live stream — uses YouTube's channel live embed URL directly (no API quota)
+    function loadStream() {
       const poster    = document.getElementById('stream-poster');
       const iframe    = document.getElementById('live-iframe');
       const liveState = document.getElementById('live-state');
       const cdState   = document.getElementById('cd-state');
 
-      try {
-        const res  = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${YT_CHANNEL_ID}&part=id&eventType=live&type=video`);
-        const data = await res.json();
-        if (!data.items?.length) throw new Error('no live stream');
-
-        const videoId = data.items[0].id.videoId;
-        poster.classList.add('hidden');
-        liveState.classList.add('hidden');
-        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&origin=https://lwcofadairville.org`;
-        iframe.classList.remove('hidden');
-        // Stream found — stop polling
-        stopStreamPoller();
-      } catch (err) {
-        console.warn('Live stream not found yet, will retry:', err.message);
-        if (getServiceStatus().live) {
-          liveState.classList.remove('hidden');
-          cdState.classList.add('hidden');
-        } else {
-          cdState.classList.remove('hidden');
-          stopStreamPoller();
-        }
-      }
-    }
-
-    function startStreamPoller() {
-      if (streamPoller) return;
-      loadStream();
-      streamPoller = setInterval(() => {
-        const iframe = document.getElementById('live-iframe');
-        const alreadyLoaded = iframe && !iframe.classList.contains('hidden') && iframe.src;
-        if (alreadyLoaded || !getServiceStatus().live) {
-          stopStreamPoller();
-          return;
-        }
-        loadStream();
-      }, 30000); // retry every 30 seconds until stream is found
-    }
-
-    function stopStreamPoller() {
-      if (streamPoller) { clearInterval(streamPoller); streamPoller = null; }
+      poster.classList.add('hidden');
+      liveState.classList.add('hidden');
+      cdState.classList.add('hidden');
+      iframe.src = `https://www.youtube.com/embed/live_stream?channel=${YT_CHANNEL_ID}&autoplay=1&rel=0&origin=https://lwcofadairville.org`;
+      iframe.classList.remove('hidden');
     }
 
     // Auto-load embed if service is already live when page opens
-    if (getServiceStatus().live) startStreamPoller();
+    if (getServiceStatus().live) loadStream();
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
