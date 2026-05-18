@@ -48,6 +48,7 @@
   }
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mux/mux-player" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -601,13 +602,14 @@
               </div>
             </div>
 
-            <!-- iframe injected by JS when poster is clicked -->
-            <iframe id="live-iframe" class="absolute inset-0 w-full h-full hidden"
-                    src=""
-                    title="Living Word Church Live Stream"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe>
+            <!-- Mux live player -->
+            <mux-player id="live-iframe"
+                        class="absolute inset-0 w-full h-full hidden"
+                        playback-id="pNB01mQxNxN02pjU2dzPMtJPGQnJCV9p9wwKHVPagtk8E"
+                        stream-type="live"
+                        autoplay
+                        muted
+                        style="--controls:none;width:100%;height:100%"></mux-player>
           </div>
         </div>
 
@@ -1646,23 +1648,23 @@
       const { live, nextServiceUTC } = getServiceStatus();
       const cdState   = document.getElementById('cd-state');
       const liveState = document.getElementById('live-state');
-      const iframe    = document.getElementById('live-iframe');
+      const player    = document.getElementById('live-iframe');
       const liveBadge = document.querySelector('#player-wrapper .absolute.top-3');
-      const streamOn  = iframe && !iframe.classList.contains('hidden') && iframe.src;
+      const streamOn  = player && !player.classList.contains('hidden');
 
       if (liveBadge) liveBadge.style.display = live ? 'flex' : 'none';
 
-      // iframe is playing — hide everything behind it
+      // Mux player is showing — hide everything behind it
       if (streamOn) {
         cdState.classList.add('hidden');
         liveState.classList.add('hidden');
         return;
       }
 
-      // Service is live — load the embed if not already loaded
+      // Service is live — show Mux player if not already visible
       if (live) {
-        const iframe = document.getElementById('live-iframe');
-        if (!iframe || iframe.classList.contains('hidden')) loadStream();
+        const player = document.getElementById('live-iframe');
+        if (!player || player.classList.contains('hidden')) loadStream();
         return;
       }
 
@@ -1685,18 +1687,17 @@
       document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
     }
 
-    // Load live stream — uses YouTube's channel live embed URL directly (no API quota)
+    // Load live stream via Mux — no API, no quota, no YouTube dependency
     function loadStream() {
       const poster    = document.getElementById('stream-poster');
-      const iframe    = document.getElementById('live-iframe');
+      const player    = document.getElementById('live-iframe');
       const liveState = document.getElementById('live-state');
       const cdState   = document.getElementById('cd-state');
 
       poster.classList.add('hidden');
       liveState.classList.add('hidden');
       cdState.classList.add('hidden');
-      iframe.src = `https://www.youtube.com/embed/live_stream?channel=${YT_CHANNEL_ID}&autoplay=1&rel=0&origin=https://lwcofadairville.org`;
-      iframe.classList.remove('hidden');
+      player.classList.remove('hidden');
     }
 
     // Auto-load embed if service is already live when page opens
