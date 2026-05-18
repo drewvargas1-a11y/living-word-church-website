@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Establishing Doctrine: Whosoever Will — Living Word Church Blog</title>
+  <meta name="description" content="Pastor Phil Scott continues the Establishing Doctrine series — tracing the Reformation, confronting Calvinism, and making the case that the gospel is for absolutely everyone. May 17, 2026." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://lwcofadairville.org/blog/establishing-doctrine-pt3-may-2026.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fire:  #FF4D00;
+      --gold:  #FFB800;
+      --deep:  #0A0A1A;
+      --card:  #13132A;
+      --text:  #F0F0FF;
+      --muted: #9090B0;
+    }
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    body { background: var(--deep); color: var(--text); overflow-x: hidden; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--fire); font-size: 0.875rem; font-weight: 600;
+      transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+    .back-btn:hover { gap: 0.75rem; opacity: 0.8; }
+
+    .btn-fire {
+      background: linear-gradient(135deg, #FF4D00, #FF8C00);
+      color: #fff; font-weight: 700; border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(255,77,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+    }
+    .btn-fire:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 30px rgba(255,77,0,0.45); }
+
+    .prose p { color: var(--muted); line-height: 1.85; margin-bottom: 1.25rem; font-weight: 300; font-size: 1.05rem; }
+    .prose h2 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--text); margin-top: 2.5rem; margin-bottom: 0.85rem; letter-spacing: -0.02em; line-height: 1.2; }
+    .prose h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 1.15rem; color: var(--text); margin-top: 1.75rem; margin-bottom: 0.6rem; }
+    .prose strong { color: var(--text); font-weight: 600; }
+
+    .scripture-block {
+      border-left: 3px solid var(--fire);
+      padding: 1rem 1.25rem;
+      margin: 1.75rem 0;
+      background: rgba(255,77,0,0.06);
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+    .scripture-block p { margin-bottom: 0.25rem; font-style: italic; color: var(--text) !important; font-size: 0.95rem !important; }
+    .scripture-block .ref { font-style: normal; font-size: 0.75rem !important; font-weight: 600; color: var(--fire) !important; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.5rem !important; margin-bottom: 0 !important; }
+
+    .pullquote {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 1.25rem;
+      background: linear-gradient(135deg, rgba(255,77,0,0.08), rgba(255,184,0,0.08));
+      border: 1px solid rgba(255,184,0,0.18);
+    }
+    .pullquote p { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--text) !important; font-style: italic; font-weight: 700; margin-bottom: 0 !important; line-height: 1.5; }
+
+    .key-point {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .key-point-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 9999px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--fire), var(--gold));
+      color: #fff;
+    }
+    .key-point p { margin-bottom: 0 !important; font-size: 0.95rem !important; }
+
+    .scripture-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.2rem 0.65rem; border-radius: 9999px;
+      background: rgba(255,77,0,0.12); border: 1px solid rgba(255,77,0,0.25); color: #FF7A40;
+      margin: 0.2rem;
+    }
+
+    .series-tag {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem; border-radius: 9999px;
+      background: rgba(255,184,0,0.1); border: 1px solid rgba(255,184,0,0.25); color: var(--gold);
+    }
+
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 h-16"
+       style="background:rgba(10,10,26,0.93);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(16px)">
+    <a href="index.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      All Posts
+    </a>
+    <a href="../index.html" class="text-sm font-semibold" style="color:var(--muted)">Living Word Church</a>
+    <a href="../index.html#connect" class="btn-fire px-4 py-2 text-xs hidden sm:inline-flex">Plan a Visit</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-32 pb-14 md:pt-40 md:pb-20"
+           style="background:radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,77,0,0.2) 0%, transparent 65%), var(--deep)">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10">
+
+      <div class="flex flex-wrap items-center gap-3 mb-6 fade-up">
+        <span class="series-tag">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          Series · Establishing Doctrine
+        </span>
+        <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+              style="background:rgba(255,77,0,0.12);border:1px solid rgba(255,77,0,0.25);color:#FF7A40">Sermon Notes</span>
+        <span class="text-xs" style="color:var(--muted)">May 17, 2026</span>
+        <span style="color:rgba(144,144,176,0.4)">·</span>
+        <span class="text-xs" style="color:var(--muted)">Pastor Phil Scott</span>
+      </div>
+
+      <h1 class="font-display font-bold mb-5 fade-up delay-1"
+          style="font-size:clamp(2.2rem,6vw,4rem);letter-spacing:-0.03em;line-height:1.05;color:var(--text)">
+        Establishing Doctrine:<br/>
+        <span style="background:linear-gradient(90deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Whosoever Will</span>
+      </h1>
+
+      <p class="text-lg font-light leading-[1.75] mb-8 fade-up delay-2" style="color:var(--muted)">
+        The gospel isn't a lottery where God picks favorites. It never has been. Pastor Phil traces the Reformation, confronts Calvinism head-on, and lands on the clearest truth in Scripture — the door is open to <em>whosoever will</em> call on the name of the Lord.
+      </p>
+
+      <div class="fade-up delay-2">
+        <span class="scripture-tag">Psalm 115:3</span>
+        <span class="scripture-tag">Jeremiah 29:11–12</span>
+        <span class="scripture-tag">Romans 10:11–15</span>
+        <span class="scripture-tag">John 3:16–17</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WATCH LINK -->
+  <div class="max-w-3xl mx-auto px-6 lg:px-10 mb-10">
+    <a href="https://www.youtube.com/watch?v=optsn9a9T5U&t=2340s" target="_blank" rel="noopener"
+       class="flex items-center gap-3 px-5 py-4 rounded-xl fade-up"
+       style="background:rgba(255,77,0,0.07);border:1px solid rgba(255,77,0,0.2)">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="8" fill="#FF4D00" fill-opacity="0.15"/>
+        <path d="M14 12l12 6-12 6V12z" fill="#FF4D00"/>
+      </svg>
+      <div>
+        <p class="text-sm font-semibold" style="color:var(--text)">Watch the Full Message</p>
+        <p class="text-xs" style="color:var(--muted)">YouTube · starts at 39:00</p>
+      </div>
+      <svg class="ml-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF4D00" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  </div>
+
+  <!-- BODY -->
+  <main class="max-w-3xl mx-auto px-6 lg:px-10 pb-24">
+
+    <!-- KEY TAKEAWAYS -->
+    <div class="mb-12 fade-up">
+      <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--fire)">Key Takeaways</p>
+      <div class="key-point">
+        <div class="key-point-num">1</div>
+        <p><strong>Base your belief on Scripture, not opinion.</strong> If you can't back it up with the Word, leave it alone — your conviction should outlast the next persuasive preacher you hear.</p>
+      </div>
+      <div class="key-point">
+        <div class="key-point-num">2</div>
+        <p><strong>God is sovereign — and his sovereign will is for everyone to be saved.</strong> His sovereignty isn't a selection system; it's a promise. John 3:16 says the <em>world</em>, not the elect.</p>
+      </div>
+      <div class="key-point">
+        <div class="key-point-num">3</div>
+        <p><strong>The chain is: preach → believe → call.</strong> Salvation isn't predestined apart from preaching. Faith comes by hearing — so keep preaching.</p>
+      </div>
+      <div class="key-point">
+        <div class="key-point-num">4</div>
+        <p><strong>You are a preacher.</strong> The Great Commission wasn't given to the fivefold ministry — it was given to the whole church. Don't count anyone out.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+
+      <!-- SECTION 1 -->
+      <h2>Know What You Believe — and Why</h2>
+
+      <p>Pastor Phil opened with a charge that's been building across this series: <strong>establish your belief system from Scripture, not from someone else's opinion.</strong> If somebody gets on social media and blasts what other Christians believe without a single scripture to back it up — that's not theology, that's noise. And if your own convictions are built on a sermon you liked rather than the Word of God, the next preacher who comes along with a better delivery will move you.</p>
+
+      <p>Living Word Church is in the business of building believers who know what they stand on. That starts with history.</p>
+
+      <h2>Luther, Calvin, and the Reformation</h2>
+
+      <p>In 1517, a monk named Martin Luther had a revelation that cracked the religious world open. At that time, Catholicism controlled the spiritual landscape almost entirely — and one of its central practices was blending culture with Scripture to create doctrine, interpreted exclusively by the hierarchy of the Church. No one else could read it. No one else could interpret it. It was the dark ages in more ways than one.</p>
+
+      <p>Luther confronted them. His two core convictions were simple and revolutionary:</p>
+
+      <div class="key-point">
+        <div class="key-point-num">1</div>
+        <p><strong>Faith Alone</strong> — Salvation comes through faith in Jesus Christ, not through good works or church rituals.</p>
+      </div>
+      <div class="key-point" style="margin-bottom:1.5rem">
+        <div class="key-point-num">2</div>
+        <p><strong>Scripture Alone</strong> — The Bible, not the pope or church tradition, is the ultimate authority for Christians.</p>
+      </div>
+
+      <p>These ideas seem obvious to us today. But in 1517 they were dangerous. Thank God for a man who stood up against tradition and said: you don't need the Catholic Church to get to heaven. You need Jesus.</p>
+
+      <p>Not long after, another scholar named John Calvin built his own theological system — what we now call <strong>Calvinism</strong>. It's still very much alive in 2026. The TULIP acronym sums it up:</p>
+
+      <div class="scripture-block">
+        <p><strong>T</strong> — Total Depravity: humans are spiritually dead and incapable of choosing God on their own.</p>
+        <p><strong>U</strong> — Unconditional Election: God chose before creation who would be saved, based solely on his will.</p>
+        <p><strong>L</strong> — Limited Atonement: Jesus died only for the elect, not for every person.</p>
+        <p><strong>I</strong> — Irresistible Grace: those God chooses cannot resist his salvation.</p>
+        <p><strong>P</strong> — Perseverance of the Saints: the truly saved cannot lose their salvation.</p>
+        <p class="ref">Calvinism (TULIP)</p>
+      </div>
+
+      <p>Pastor Phil's challenge is direct: <strong>if God has already predetermined who's saved and who's lost, why do we preach? Why do we have church? Why pray?</strong> If salvation is entirely in God's hands regardless of human response, the whole enterprise of evangelism becomes theater.</p>
+
+      <div class="pullquote">
+        <p>"God don't play the lottery. God don't have balls up there spinning, picking out who he's gonna save."</p>
+      </div>
+
+      <!-- SECTION 2 -->
+      <h2>God Is Sovereign — And That's Exactly the Point</h2>
+
+      <p>This isn't a denial of God's sovereignty. Pastor Phil made that clear. God is sovereign. He does not need our permission. But sovereignty doesn't mean randomness — it means God operates according to his own will, and his will is revealed in his Word.</p>
+
+      <div class="scripture-block">
+        <p>"But our God is in the heavens: he hath done whatsoever he hath pleased."</p>
+        <p class="ref">Psalm 115:3</p>
+      </div>
+
+      <p>The question then becomes: <em>what has he pleased?</em> Because that's what he does. And we don't get that from opinions or church tradition. We get it from Scripture. God, in his sovereignty, gave us a book. And in that book, he told us exactly what he's pleased to do — and it looks nothing like an exclusive guest list.</p>
+
+      <div class="scripture-block">
+        <p>"For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end. Then shall ye call upon me, and ye shall go and pray unto me, and I will hearken unto you."</p>
+        <p class="ref">Jeremiah 29:11–12</p>
+      </div>
+
+      <p>Notice: God announces his sovereign intentions — and then immediately says <em>then you will call on me</em>. If God was going to do it regardless, why would he ask us to call? Because prayer isn't formality. It's the mechanism. It's how his sovereignty works in our lives. We don't pray <em>"if it be your will"</em> when we've already read what his will is in Scripture. We pray from knowledge, not from hoping our number comes up.</p>
+
+      <!-- SECTION 3 -->
+      <h2>The Chain That Changes Everything</h2>
+
+      <p>Romans 10 lays out the clearest picture of how salvation actually works — and it runs exactly opposite to Calvinism's flow:</p>
+
+      <div class="scripture-block">
+        <p>"How then shall they call on him in whom they have not believed? And how shall they believe in him of whom they have not heard? And how shall they hear without a preacher?"</p>
+        <p class="ref">Romans 10:14</p>
+      </div>
+
+      <p>The order is non-negotiable: <strong>Preaching → Hearing → Believing → Calling.</strong> God doesn't skip steps. He doesn't bypass the Word. He chose to work through preaching — and that means the responsibility for reaching the lost sits with the people who've already been reached.</p>
+
+      <div class="scripture-block">
+        <p>"So then faith cometh by hearing, and hearing by the word of God."</p>
+        <p class="ref">Romans 10:17</p>
+      </div>
+
+      <p>And if they don't believe yet? Keep preaching. The word does not return void. It will accomplish what it was sent to do — but it has to be spoken. It has to be published. It has to be shared.</p>
+
+      <div class="pullquote">
+        <p>"It's not in the hands of God — it's in the hands of preaching."</p>
+      </div>
+
+      <!-- SECTION 4 -->
+      <h2>Whosoever Will</h2>
+
+      <p>Every scripture Pastor Phil brought that morning had one thing in common: not a select few, not the elect, not those who fit a certain profile. Every single one said <em>whosoever.</em></p>
+
+      <div class="scripture-block">
+        <p>"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life. For God sent not his Son into the world to condemn the world; but that the world through him might be saved."</p>
+        <p class="ref">John 3:16–17</p>
+      </div>
+
+      <div class="scripture-block">
+        <p>"For whosoever shall call upon the name of the Lord shall be saved."</p>
+        <p class="ref">Romans 10:13</p>
+      </div>
+
+      <p>The world. Not the chosen. Not the Americans. Not the people who seem worth saving. Every nation, every tribe, every tongue. That means the person living under a bridge. That means the drug addict. That means the people we've already written off in our hearts. <strong>God has not written them off.</strong></p>
+
+      <p>Pastor Phil shared the story of a man he met years ago in Nashville — a street person who walked into the church one Sunday, sat in the back, and left. A couple of weeks later he showed up at the church office in the daytime, pulled out a handful of drugs, and said he was going to take them all and die. His girlfriend had died in his arms a week before — she'd OD'd on that same bridge where they lived.</p>
+
+      <p>Pastor Phil looked at him and said: <em>"The sad part is, you can do that. You won't make the news. You won't be on the headlines. Nobody will even know. But there's a God in heaven who loves you so much that he grieves over you."</em> The man asked to use the restroom. Five minutes later he walked back out and said he'd flushed every one of those drugs. He gave his life to the Lord. Over a year later, Pastor Phil spotted him at the Tennessee State Fair — working, clean, eyes clear.</p>
+
+      <p>The gospel is for him. It's always been for him.</p>
+
+      <div class="pullquote">
+        <p>"Don't ever let the idea come in your mind — are they worthy? Does God have their number? Every creation of God, God wants back in his fold."</p>
+      </div>
+
+      <!-- SECTION 5 -->
+      <h2>You Are a Preacher</h2>
+
+      <p>The Great Commission — <em>go into all the world and preach the gospel</em> — was not addressed to pastors, evangelists, or the fivefold ministry. Jesus gave it to the church. That means you.</p>
+
+      <p>Two 14-year-old boys once showed up to a tent revival and almost left because they couldn't find seats together. An usher caught them on the way out, got them seated, and they stayed for the whole service. Both boys gave their lives to the Lord that night. One of them was Billy Graham. The other became his office manager and helped carry the gospel around the world for decades. Neither of them would have stayed without one usher who refused to let them walk away.</p>
+
+      <p>That usher wasn't a preacher by title. But they did the work of one. And seven people gave their hearts to the Lord just last Thursday night at the local jail — because John Paul went and preached.</p>
+
+      <p>Don't count anybody out. Don't go passive and say it's in God's hands. It's in the hands of preaching — and you've got a part to play.</p>
+
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="my-14 fade-up" style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,184,0,0.2),transparent)"></div>
+
+    <!-- SERIES NAV -->
+    <div class="mb-12 fade-up">
+      <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:var(--muted)">More in This Series</p>
+      <div class="flex flex-col gap-3">
+        <a href="establishing-doctrine-april-2026.html" class="flex items-center gap-3 px-4 py-3 rounded-xl no-underline"
+           style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
+          <span class="text-xs font-bold" style="color:var(--fire)">Part 1</span>
+          <span class="text-sm" style="color:var(--text)">Establishing Doctrine</span>
+          <span class="text-xs ml-auto" style="color:var(--muted)">April 2026</span>
+        </a>
+        <a href="establishing-doctrine-pt2-april-2026.html" class="flex items-center gap-3 px-4 py-3 rounded-xl no-underline"
+           style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
+          <span class="text-xs font-bold" style="color:var(--fire)">Part 2</span>
+          <span class="text-sm" style="color:var(--text)">Establishing Doctrine — Part 2</span>
+          <span class="text-xs ml-auto" style="color:var(--muted)">April 2026</span>
+        </a>
+        <div class="flex items-center gap-3 px-4 py-3 rounded-xl"
+             style="background:rgba(255,77,0,0.07);border:1px solid rgba(255,77,0,0.2)">
+          <span class="text-xs font-bold" style="color:var(--fire)">Part 3</span>
+          <span class="text-sm font-semibold" style="color:var(--text)">Whosoever Will <span class="text-xs font-normal ml-1" style="color:var(--fire)">← You are here</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="fade-up text-center">
+      <p class="text-sm mb-6" style="color:var(--muted)">
+        Missed the service? Watch the full message on YouTube.
+      </p>
+      <a href="https://www.youtube.com/watch?v=optsn9a9T5U&t=2340s" target="_blank" rel="noopener"
+         class="btn-fire inline-flex items-center gap-2 px-6 py-3 text-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Watch on YouTube
+      </a>
+    </div>
+
+    <!-- BACK -->
+    <div class="mt-16 fade-up">
+      <a href="index.html" class="back-btn text-base">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to All Posts
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
