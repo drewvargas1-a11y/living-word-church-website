@@ -121,6 +121,11 @@
     .podcast-btn:hover { transform: translateY(-2px); background: rgba(139,43,226,0.22); border-color: rgba(201,122,255,0.5); }
     .podcast-btn:focus-visible { outline: 2px solid #C97AFF; outline-offset: 3px; }
     .podcast-btn:active { transform: scale(0.97); }
+    .all-episodes-link { font-size: 0.8rem; font-weight: 600; color: var(--muted); transition: color 0.2s ease, opacity 0.2s ease; }
+    .all-episodes-link:hover { color: #C97AFF; }
+    .all-episodes-link:focus-visible { outline: 2px solid #C97AFF; outline-offset: 3px; border-radius: 4px; }
+    .all-episodes-link:active { opacity: 0.7; }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
 <body>
@@ -153,7 +158,7 @@
   </div>
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero-bg grain relative overflow-hidden pt-44 pb-24 md:pt-52 md:pb-32">
+  <section class="hero-bg grain relative overflow-hidden pt-44 pb-24 md:pt-40 md:pb-32">
     <div class="orb w-96 h-96 -top-20 -left-20" style="background:#8B2BE2"></div>
     <div class="orb w-80 h-80 bottom-0 right-0 opacity-20" style="background:#C97AFF;animation-delay:4s"></div>
     <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center relative z-10">
@@ -176,6 +181,24 @@
         <div class="flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-3 rounded-2xl" style="background:rgba(139,43,226,0.15);border:1px solid rgba(139,43,226,0.3)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C97AFF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span class="text-sm font-medium" style="color:var(--text)">Wednesdays · 6:00 PM</span>
+        </div>
+      </div>
+
+      <!-- Latest podcast episode — compact Spotify show embed, updates automatically -->
+      <div class="max-w-xl mx-auto mt-10 fade-up delay-4">
+        <div class="flex items-center justify-between mb-3 px-1">
+          <span class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest" style="color:#C97AFF">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg>
+            Latest Message
+          </span>
+          <a href="#podcast" class="all-episodes-link">All episodes ↓</a>
+        </div>
+        <div class="rounded-xl overflow-hidden"
+             style="border:1px solid rgba(139,43,226,0.3);box-shadow:0 2px 8px rgba(0,0,0,0.4),0 16px 48px rgba(139,43,226,0.25)">
+          <iframe src="https://open.spotify.com/embed/show/053BfFUjkTkoATIOt6k1mq?utm_source=generator&theme=0"
+                  title="Latest NexGen YTH podcast episode"
+                  width="100%" height="152" frameborder="0" style="display:block"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
         </div>
       </div>
     </div>
@@ -279,7 +302,7 @@
   </section>
 
   <!-- ==================== PODCAST ==================== -->
-  <section class="section-card2 py-20 md:py-28">
+  <section id="podcast" class="section-card2 py-20 md:py-28" style="scroll-margin-top:110px">
     <div class="max-w-3xl mx-auto px-6 lg:px-10">
       <div class="text-center mb-10">
         <div class="fire-divider mb-5 mx-auto"></div>
